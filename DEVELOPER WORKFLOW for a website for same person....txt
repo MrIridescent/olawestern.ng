@@ -1,0 +1,197 @@
+﻿Here is the complete end-to-end Developer Workflow and Technical Specification for building the official campaign website for Hon. Folorunso Olaitan Segun (Ola Western), APC candidate for Amuwo-Odofin Constituency I.
+1. Technical Stack & Systems Architecture
+To ensure high performance across mobile devices in Lagos, low bandwidth consumption, tight security, and real-time synchronization with the Campaign War Room CRM, the web platform uses a headless, jamstack architecture.
+* Frontend Framework: Next.js 14+ (App Router, Server-Driven Rendering, TypeScript).
+* Styling & Design System: Tailwind CSS, Shadcn UI, Framer Motion (lightweight animations).
+* Database & Auth: Supabase (PostgreSQL, Row Level Security, Edge Functions) for storing constituent registrations and contact inquiries.
+* Content Management System (CMS): Payload CMS or Strapi (Headless CMS allowing the campaign press team at 32 Road to publish news and speeches without developer intervention).
+* Hosting & Deployment: Vercel (Edge Network) with automated GitHub CI/CD integration.
+* Integrations & Webhooks:
+   * WhatsApp Business API: Webhooks forwarding voter registrations directly to the War Room assistant (+234 904 125 8180 / +234 803 400 5708).
+   * Media Hosting: Cloudinary or AWS S3 (optimized image delivery).
+   * Maps & Geolocation: Mapbox GL / Google Maps API (for ward and polling unit locating across Festac I, II, III, and Mile 2).
+2. Directory & Repository Structure
+
+
+
+
+
+
+ola-western-campaign-web/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml            # CI/CD Production Build & Deployment Pipeline
+├── src/
+│   ├── app/                      # Next.js 14 App Router
+│   │   ├── (public)/
+│   │   │   ├── page.tsx          # Homepage (Hero, Manifesto Preview, News, Volunteer CTA)
+│   │   │   ├── about/page.tsx    # Candidate Profile & Track Record
+│   │   │   ├── manifesto/page.tsx# Legislative Agenda ("Towards Responsible Representation")
+│   │   │   ├── news/page.tsx     # Press Room & FestacOnline Aggregator
+│   │   │   ├── wards/page.tsx    # Interactive Ward & Polling Unit Finder
+│   │   │   └── join/page.tsx     # Volunteer & Canvasser Onboarding Form
+│   │   └── api/
+│   │       ├── volunteer/route.ts# API Route: Validates lead & sends to Supabase/WhatsApp CRM
+│   │       └── webhooks/
+│   │           └── cms/route.ts  # Trigger revalidation on CMS update
+│   ├── components/
+│   │   ├── ui/                   # Buttons, Inputs, Dialogs, Cards
+│   │   ├── forms/                # Volunteer Onboarding & Contact Forms
+│   │   ├── maps/                 # Ward Geofencing Map Component
+│   │   └── layout/               # Header, Mobile Navigation, Footer
+│   ├── lib/
+│   │   ├── supabase.ts           # Supabase Client Config
+│   │   ├── whatsapp.ts           # Meta Cloud API Direct Integration
+│   │   └── utils.ts              # Data Formatters & Sanitizers
+│   └── types/                    # TypeScript Data Interfaces
+├── public/                       # Static Images, Logos, Web Manifests
+├── tailwind.config.ts            # APC Brand Palette & Custom Tokens
+├── next.config.mjs               # Edge Configuration & Security Headers
+└── README.md
+
+3. Database Schema (Supabase PostgreSQL)
+
+
+
+
+
+
+SQL
+-- Create Volunteers Table for Ward & Polling Unit Synchronization
+CREATE TABLE volunteers (
+   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+   full_name TEXT NOT NULL,
+   phone_number TEXT NOT NULL UNIQUE,
+   email TEXT,
+   ward_location TEXT NOT NULL CHECK (ward_location IN ('Festac I', 'Festac II', 'Festac III', 'Mile 2 / Housing Estate')),
+   address_street TEXT,
+   polling_unit_code TEXT,
+   primary_concern TEXT, -- E.g., 'Road Infrastructure', 'Drainage', 'Youth/SME Empowerment'
+   status TEXT DEFAULT 'pending_verification'
+);
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE volunteers ENABLE ROW LEVEL SECURITY;
+
+-- Allow public insertion (for website visitors)
+CREATE POLICY "Enable insertion for website visitors" ON volunteers 
+FOR INSERT WITH CHECK (true);
+
+4. Step-by-Step Developer Execution Phases
+Phase 1: Environment Setup & CMS Integration (Days 1–2)
+1. Initialize local repository: npx create-next-app@latest ola-western-web --typescript --tailwind --app.
+2. Set up Supabase project and execute the SQL migration script for volunteers and press_releases.
+3. Configure environment variables (.env.local):
+
+
+
+
+
+
+Code snippet
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+WHATSAPP_CLOUD_API_TOKEN=your-meta-token
+WHATSAPP_PHONE_NUMBER_ID=your-phone-id
+WAR_ROOM_WEBHOOK_URL=https://warroom.i2sltd.tech/api/v1/leads
+
+Phase 2: Design System & Brand Styling (Days 3–4)
+1. Configure Tailwind CSS color palette matching APC and candidate branding:
+   * Primary Green: #008751 (APC Green)
+   * Accent Blue: #00A3E0
+   * Accent Red: #E30613
+   * Neutral Dark: #1A1A1A
+2. Implement mobile-first design, optimizing for fast page loads on 3G/4G networks across Amuwo-Odofin.
+Phase 3: Core Page Development (Days 5–8)
+1. Homepage (app/page.tsx):
+   * Hero section featuring Hon. Folorunso Olaitan Segun, APC flag, campaign slogan ("... towards responsible representation"), and rapid CTA buttons ("Join Movement" / "View Manifesto").
+   * Interactive Ward Selector letting residents jump directly to information regarding their immediate area (Festac 1, Festac II, Festac III, or Mile 2).
+   * Live Newsfeed pulling press updates and local coverage from FestacOnline and official releases.
+2. Manifesto & Policy Hub (app/manifesto/page.tsx):
+   * Clear breakdown of legislative priorities: FHA infrastructure oversight, drainage maintenance, 23 Road rehabilitation, and SME trade protection.
+3. Ward & Polling Unit Finder (app/wards/page.tsx):
+   * Embedded Mapbox UI showing ward limits and helping constituents locate their voting stations.
+Phase 4: API Route Implementation & WhatsApp CRM Sync (Days 9–10)
+Create app/api/volunteer/route.ts to process volunteer forms, save them to PostgreSQL, and trigger a WhatsApp message to both the campaign war room and the constituent:
+
+
+
+
+
+
+TypeScript
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+ process.env.NEXT_PUBLIC_SUPABASE_URL!,
+ process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
+export async function POST(request: Request) {
+ try {
+   const body = await request.json();
+   const { fullName, phoneNumber, wardLocation, addressStreet, primaryConcern } = body;
+
+   // 1. Insert lead into Supabase DB
+   const { data, error } = await supabase
+     .from('volunteers')
+     .insert([
+       { 
+         full_name: fullName, 
+         phone_number: phoneNumber, 
+         ward_location: wardLocation, 
+         address_street: addressStreet, 
+         primary_concern: primaryConcern 
+       }
+     ]);
+
+   if (error) throw error;
+
+   // 2. Forward lead directly to War Room CRM Endpoint
+   await fetch(process.env.WAR_ROOM_WEBHOOK_URL!, {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ fullName, phoneNumber, wardLocation, addressStreet, primaryConcern })
+   });
+
+   // 3. Send automated WhatsApp confirmation via Meta Cloud API
+   await fetch(`https://graph.facebook.com/v18.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`, {
+     method: 'POST',
+     headers: {
+       'Authorization': `Bearer ${process.env.WHATSAPP_CLOUD_API_TOKEN}`,
+       'Content-Type': 'application/json'
+     },
+     body: JSON.stringify({
+       messaging_product: "whatsapp",
+       to: phoneNumber,
+       type: "template",
+       template: {
+         name: "campaign_welcome_ola_western",
+         language: { code: "en" },
+         components: [
+           {
+             type: "body",
+             parameters: [{ type: "text", text: fullName }]
+           }
+         ]
+       }
+     })
+   });
+
+   return NextResponse.json({ success: true, message: "Volunteer registered successfully!" });
+ } catch (err: any) {
+   return NextResponse.json({ success: false, error: err.message }, { status: 500 });
+ }
+}
+
+Phase 5: Security, Performance Optimization & Compliance (Days 11–12)
+1. Security Measures: Implement Cloudflare DNS & DDoS mitigation, turn on OWASP secure headers in next.config.mjs, and enforce reCAPTCHA v3 on all forms to prevent spam submissions.
+2. Performance Optimization: Enforce image compression via WebP/AVIF, set caching headers (s-maxage=3600, stale-while-revalidate), and verify Lighthouse scores exceed 90+ on Mobile.
+3. Data Compliance: Add a Nigeria Data Protection Act (NDPA) privacy disclosure on all lead capture forms.
+Phase 6: Production Build, Testing & Launch (Days 13–14)
+1. Deploy production domain (www.olawestern.ng or [www.olawestern.com](https://www.olawestern.com).ng).
+2. Configure automated Vercel preview deployments for the campaign communications team.
+3. Conduct end-to-end integration testing: submit a test volunteer form on the website and verify its real-time arrival in the War Room database and mobile dashboard (+234 803 400 5708).
+Would you like me to do a more in-depth research instead and propose a research plan?

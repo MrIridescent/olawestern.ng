@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="System dossier, documentation map and verified state of the official campaign website for a 2027 Lagos State House of Assembly candidacy (Amuwo-Odofin Constituency I). Compiled 3 November 2026 by i2sltd.tech. Measured numbers, architecture, gate evidence, open defects, risks and standing refusals — one self-contained, printable page.">
+<title>Ola Western Campaign Platform — System Dossier &amp; Documentation Map</title>
+<style>
+/* ============================================================
+   CIVIC BROADSHEET / INTELLIGENCE DOSSIER
+   Paper ground, hairline rules, serif numerals, mono labels.
+   Colour contract:
+     green #00794A  = verified / applied / published only
+     petrol #17607F = architecture / system / informational only
+     brick  #B72329 = risk / block findings / gaps / refusals only
+     gold   #7E6310 = measured figures and evidence quotations only
+   No shadows, no radii above 3px, no gradients, no images.
+   ============================================================ */
+:root{
+  --paper:#F7F5F0;
+  --panel:#FCFAF6;
+  --rule:#D8D2C4;
+  --ink:#14181A;
+  --ink-2:#5A5F63;
+  --green:#00794A;
+  --petrol:#17607F;
+  --brick:#B72329;
+  --gold:#7E6310;
+  --serif:Georgia,'Iowan Old Style','Times New Roman',serif;
+  --sans:ui-sans-serif,system-ui,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --nav-h:44px;
+  --nav-off:44px;
+  /* Display numerals must decisively outrank the section h2s (max 40px):
+     60px vs 40px at desktop = 1.5x, and never below 1.35x at phone widths. */
+  --num:clamp(2.2rem,4.6vw,3.75rem);
+}
+@media (max-width:759px){
+  /* 2-up band on a phone: the numeral is sized so the widest token, 11,932,
+     still fits its cell without the document scrolling sideways. */
+  :root{--num:clamp(1.95rem,8.6vw,2.35rem)}
+}
+*{box-sizing:border-box}
+/* Long unbroken code/URL tokens must never set page width: overflow-wrap:anywhere
+   also reduces min-content size, so a 52-char identifier cannot drag a block wide. */
+code,a{overflow-wrap:anywhere}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-off) + 12px)}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-text-size-adjust:100%;
+}
+/* Grid and flex items must be allowed to shrink below their min-content,
+   otherwise a 560px table inside .tscroll drags the whole page wide. */
+.grid2>div,.strip3>div,.twocol>div,.track>div,.rail>div,.tiles>div,.fsplit>div,
+.paths>div,.docmap>div,.ev>div,.metarail>div,.tl>div,.fdiag,.frow>*,.flink>*{min-width:0}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+/* ---------- typography primitives ---------- */
+h1,h2,h3,h4{font-family:var(--serif);font-weight:normal;margin:0;line-height:1.12;letter-spacing:-.01em}
+p{margin:0 0 .8em}
+p.t{max-width:70ch}
+a{color:var(--petrol);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible{
+  outline:2px solid var(--ink);outline-offset:2px;border-radius:1px;
+}
+#main:focus{outline:2px solid var(--ink);outline-offset:-2px}
+.kicker{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-2);margin:0 0 .5rem;max-width:70ch;
+}
+.kicker .secno{color:var(--ink)}
+.lede{font-size:17px}
+/* Mono meta lines are the hardest thing on a broadsheet when set as long uppercase.
+   Default = sentence-case mono at 13px, capped at 70ch; .cap keeps the uppercase
+   11.5px treatment for genuinely short labels (under ~40 characters). */
+.meta{
+  font-family:var(--mono);font-size:13px;letter-spacing:.03em;line-height:1.6;
+  color:var(--ink-2);max-width:70ch;
+}
+.meta.cap{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+.num{font-family:var(--serif);font-variant-numeric:lining-nums;text-wrap:balance}
+hr.hair{border:0;border-top:1px solid var(--rule);margin:1.4rem 0}
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+.skip a{
+  position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
+  padding:8px 14px;z-index:60;font-family:var(--mono);font-size:12px;
+}
+.skip a:focus{left:8px;top:8px}
+/* ---------- sticky nav strip ---------- */
+nav.brok{
+  position:sticky;top:0;z-index:50;background:var(--paper);
+  border-bottom:1px solid var(--rule);scrollbar-width:thin;-webkit-overflow-scrolling:touch;
+}
+nav.brok .wrap{display:flex;align-items:stretch;gap:0}
+nav.brok .navlinks{display:flex;flex-wrap:wrap;flex:1 1 auto;min-width:0}
+nav.brok .brand{
+  flex:0 0 auto;display:flex;align-items:center;font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  padding:0 14px 0 0;border-right:1px solid var(--rule);margin-right:2px;white-space:nowrap;
+}
+nav.brok a{
+  flex:0 0 auto;display:flex;align-items:center;min-height:var(--nav-h);padding:0 10px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-2);text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;
+}
+nav.brok a:hover{color:var(--ink)}
+nav.brok a[aria-current="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+nav.brok a .n{color:var(--petrol);margin-right:6px}
+nav.brok a .navshort{display:none}
+.navend{
+  flex:0 0 auto;display:flex;align-items:center;gap:8px;margin-left:auto;
+  background:var(--paper);
+}
+.navhint{
+  display:none;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-2);white-space:nowrap;padding-right:2px;
+}
+#printbtn{
+  flex:0 0 auto;align-self:center;min-height:30px;
+  background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-radius:2px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 12px;cursor:pointer;white-space:nowrap;
+}
+#printbtn:hover{background:var(--ink);color:var(--paper)}
+@media (min-width:761px){
+  /* Two ruled rows instead of one clipped strip: every anchor plus Print is on screen.
+     JS re-measures the real strip height into --nav-off; these are the no-JS fallbacks. */
+  :root{--nav-off:98px}
+  nav.brok .navlinks{gap:0 2px}
+}
+@media (min-width:761px) and (max-width:1179px){
+  /* the awkward band: brand is a duplicate of the dateline, and full labels cost a row */
+  :root{--nav-off:150px}
+  nav.brok .brand{display:none}
+  nav.brok a{padding:0 8px}
+  nav.brok a .navfull{display:none}
+  nav.brok a .navshort{display:inline}
+}
+@media (max-width:760px){
+  /* the strip is the scroll region: keyboard users get it, sighted users get the hint */
+  nav.brok{overflow-x:auto}
+  nav.brok .wrap{width:max-content;min-width:100%;flex-wrap:nowrap;padding-right:34px}
+  nav.brok .navlinks{flex-wrap:nowrap}
+  .navend{position:sticky;right:0;border-left:1px solid var(--rule);padding-left:10px}
+  .navhint{display:flex;align-items:center}
+  nav.brok .brand{position:sticky;left:0;background:var(--paper);z-index:2}
+}
+/* ---------- masthead ---------- */
+header.mast{padding:30px 0 8px}
+.mast .dateline{
+  display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  padding:7px 0;margin-bottom:26px;
+}
+.mast h1{
+  font-size:clamp(2.4rem,5vw,4.2rem);letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance;
+}
+.mast h1 em{font-style:normal;color:var(--petrol)}
+.mast .sub{font-size:17px;max-width:70ch;margin:0 0 22px;color:var(--ink)}
+.metarail{
+  display:grid;grid-template-columns:1fr;
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin:0 0 26px;
+}
+@media (min-width:480px){.metarail{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:761px){.metarail{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.metarail .kv{
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:9px 12px;background:var(--panel);
+}
+.metarail .k{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+.metarail .v{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--ink);overflow-wrap:anywhere}
+.pull{
+  font-family:var(--serif);font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.28;font-style:italic;
+  border-left:3px solid var(--gold);padding:6px 0 6px 22px;margin:30px 0 18px;max-width:46ch;text-wrap:pretty;
+}
+.pull .attrib{display:block;font-style:normal;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-top:12px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin:14px 0 6px;padding:10px 12px;border:1px solid var(--rule);background:var(--panel)}
+.legend span{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;display:inline-flex;align-items:center;gap:7px}
+.legend i{display:inline-block;width:12px;height:12px;border:1px solid var(--ink)}
+.legend .lg{background:var(--green)}.legend .lp{background:var(--petrol)}
+.legend .lb{background:var(--brick)}.legend .lgo{background:var(--gold)}
+/* ---------- section scaffolding ---------- */
+section.sec{padding:34px 0 8px;border-top:2px solid var(--ink);margin-top:34px}
+/* the h2 floor is deliberately below the numeral floor: §2 must read as the moment */
+section.sec>h2{font-size:clamp(1.5rem,3.1vw,2.5rem);margin:0 0 4px}
+section.sec .deck{color:var(--ink-2);font-size:15.5px;max-width:70ch;margin:0 0 20px}
+h3{font-size:1.25rem;margin:26px 0 10px}
+h4,h3.mh{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:20px 0 8px;font-weight:600;line-height:1.35}
+/* ---------- chips ---------- */
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:2px;padding:1.5px 7px;white-space:nowrap;line-height:1.5;
+  max-width:100%;
+}
+.chip.v{color:var(--green)}.chip.m{color:var(--gold)}.chip.g{color:var(--brick)}
+.chip.r{color:var(--brick);font-weight:bold}.chip.u{color:var(--ink-2)}
+.chip.p{color:var(--petrol)}
+/* A chip is a tag, not a paragraph: nothing may set the page width. */
+@media (max-width:420px){.chip,.sev{white-space:normal}}
+/* ---------- two-column ideas panel ---------- */
+.twocol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--rule);background:var(--panel)}
+.twocol>div{padding:20px 22px}
+.twocol>div+div{border-left:1px solid var(--rule)}
+.twocol h3{margin-top:0}
+@media (max-width:760px){.twocol{grid-template-columns:1fr}.twocol>div+div{border-left:0;border-top:1px solid var(--rule)}}
+/* ---------- measured numbers band ---------- */
+.band{border:1px solid var(--ink);background:var(--panel);margin:8px 0 12px}
+.band .bandhead{
+  display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between;align-items:center;
+  padding:9px 14px;border-bottom:1px solid var(--ink);
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:760px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{padding:16px 14px 14px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);min-width:0}
+@media (max-width:420px){.tile{padding:12px 8px 11px}}
+.tile:nth-child(2n){border-right:0}
+@media (min-width:760px){
+  .tile:nth-child(2n){border-right:1px solid var(--rule)}
+  .tile:nth-child(4n){border-right:0}
+}
+.tile .big{
+  font-family:var(--serif);font-size:var(--num);line-height:.86;color:var(--gold);
+  letter-spacing:-.03em;font-variant-numeric:lining-nums;overflow-wrap:normal;
+}
+.tile .big .unit{font-size:.5em;color:var(--ink-2);letter-spacing:-.01em}
+.tile .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-top:9px;line-height:1.45;overflow-wrap:anywhere}
+.tile .note{font-size:13px;color:var(--ink-2);margin-top:4px;line-height:1.45;max-width:34ch}
+.tile.risk{border-top:3px solid var(--brick);background:var(--paper)}
+.tile.risk .big{color:var(--brick)}
+.bandnote{padding:11px 14px;font-size:13.5px;color:var(--ink-2);max-width:70ch}
+.bandnote strong{color:var(--brick)}
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto;border:1px solid var(--rule);background:var(--panel);scrollbar-width:thin;max-width:100%}
+.tscroll:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+/* 560px is the legibility floor, but it is never a claim on the page's width:
+   the scroll container clips it, and min() stops any future grid item being dragged wide. */
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:min(560px,100%)}
+col.w6{width:6%}col.w10{width:10%}col.w12{width:12%}col.w13{width:13%}col.w15{width:15%}
+col.w16{width:16%}col.w18{width:18%}col.w20{width:20%}col.w22{width:22%}col.w24{width:24%}
+col.w26{width:26%}col.w30{width:30%}col.w34{width:34%}col.w40{width:40%}col.w14{width:14%}
+caption{caption-side:top;text-align:left;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);padding:10px 12px 6px}
+th,td{padding:8px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule)}
+thead th{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink);border-bottom:1px solid var(--ink);background:var(--paper);
+  position:sticky;top:0;
+}
+tbody tr:nth-child(even){background:var(--panel)}
+tbody tr:nth-child(odd){background:var(--paper)}
+/* the deliberately-excluded fourth option: greyed, ink-muted, brick "EXCLUDED" tag */
+tr.excluded td{background:var(--paper);color:var(--ink-2);font-style:normal}
+tr.excluded td:first-child{border-top:1px solid var(--ink)}
+tr.excluded .nb{color:var(--ink)}
+td.num,th.num{font-family:var(--serif);text-align:right;font-variant-numeric:lining-nums}
+td.m,th.m{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em}
+td code{overflow-wrap:anywhere}
+.nb{white-space:nowrap}
+td .sev{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;padding:1px 6px;border-radius:2px;white-space:nowrap}
+/* Severity vocabulary deliberately avoids the reserved palette: gold = measured/evidence,
+   green = verified/applied/met, so WARN and INFO are set in ink, never in a reserved colour. */
+.sev.b{color:var(--brick)}.sev.w{color:var(--ink)}.sev.i{color:var(--ink-2)}.sev.p{color:var(--petrol)}.sev.gap{color:var(--brick)}
+.swipe{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);padding:5px 12px;background:var(--paper);border:1px solid var(--rule);border-top:0;margin:0}
+/* ---------- definition/key-value rails ---------- */
+.rail{border-top:1px solid var(--rule);border-left:1px solid var(--rule);display:flex;flex-wrap:wrap;margin:0 0 16px}
+.rail .kv{flex:1 1 240px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:9px 12px;min-width:0}
+.rail .k{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+.rail .v{font-family:var(--mono);font-size:12.5px;color:var(--ink);overflow-wrap:anywhere}
+/* ---------- architecture schematic: boxes, spurs, connectors ---------- */
+.fdiag{margin:16px 0 6px}
+.frow{display:grid;grid-template-columns:minmax(0,58ch) 22px minmax(0,1fr);align-items:stretch}
+.fnode{border:1px solid var(--ink);background:var(--panel);padding:11px 14px}
+.fnode .mh{margin:0 0 4px}
+.fnode .fd{font-size:13.5px;color:var(--ink);margin:0}
+.fnode .fm{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);margin:6px 0 0;letter-spacing:.02em;overflow-wrap:anywhere}
+.fnode.sys .mh{color:var(--petrol)}
+.fnode.gate{border-left:3px solid var(--brick)}
+.fspur{position:relative}
+.fspur::before{content:"";position:absolute;left:6px;right:0;top:50%;border-top:1px solid var(--petrol)}
+.fspur::after{content:"";position:absolute;left:0;top:calc(50% - 3px);width:7px;height:7px;background:var(--paper);border:1px solid var(--petrol)}
+.fann{border-left:1px solid var(--rule);padding:8px 0 8px 14px}
+.fann .al{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--petrol);margin-bottom:3px}
+.fann p{margin:0;font-size:12.5px;color:var(--ink-2);max-width:46ch}
+.fann p + p{margin-top:5px}
+.fann.ref .al{color:var(--brick)}
+.flink{display:grid;grid-template-columns:minmax(0,58ch) 22px minmax(0,1fr);align-items:start}
+.flink .down{grid-column:1;display:flex;flex-direction:column;align-items:center}
+.flink .stem{width:0;height:11px;border-left:2px solid var(--petrol)}
+.flink .head{font-size:11px;line-height:1;color:var(--petrol);margin:-2px 0 1px}
+.flink .cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--petrol);text-align:center;padding:0 6px 2px}
+.fback{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;border-top:2px solid var(--petrol);margin-top:12px;padding:9px 14px;background:var(--panel)}
+.fback .up{font-family:var(--mono);font-size:11.5px;color:var(--petrol)}
+.fback p{margin:0;font-size:13px;color:var(--ink);max-width:70ch}
+.fsplit{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.fnote{font-size:12.5px;color:var(--ink-2);border-left:3px solid var(--petrol);padding:4px 0 4px 12px;margin:12px 0;max-width:70ch}
+@media (max-width:680px){.fsplit{grid-template-columns:1fr}}
+@media (max-width:900px){
+  .frow,.flink{grid-template-columns:minmax(0,1fr)}
+  .fspur{display:none}
+  .fann{border-left:3px solid var(--petrol);padding:8px 12px;margin-top:-1px}
+  .flink .down{grid-column:1}
+}
+/* ---------- formula / evidence blocks ---------- */
+.cmd{
+  font-family:var(--mono);font-size:12.5px;line-height:1.7;letter-spacing:.02em;
+  background:var(--panel);border:1px solid var(--rule);border-left:3px solid var(--gold);
+  padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap;
+}
+.cmd .c{color:var(--ink);font-weight:bold}
+.cmd .o{color:var(--ink)}
+.cmd .b{color:var(--brick)}
+.formula{
+  font-family:var(--mono);font-size:13.5px;line-height:2;background:var(--panel);
+  border:1px solid var(--ink);padding:12px 16px;margin:12px 0;overflow-x:auto;letter-spacing:.03em;
+}
+.formula .w{color:var(--gold)}
+/* Estimated or derived arithmetic is NOT a measured count: it wears petrol, the
+   informational colour, so gold keeps meaning exactly one thing ("we counted this"). */
+.formula .est{color:var(--petrol)}
+/* ---------- lists ---------- */
+ul.plain{list-style:none;margin:0;padding:0}
+ul.plain li{padding:7px 0 7px 2px;border-bottom:1px solid var(--rule)}
+ul.plain li:last-child{border-bottom:0}
+ol.dec{padding-left:0;list-style:none;counter-reset:dec}
+ol.dec>li{counter-increment:dec;position:relative;padding:9px 0 9px 44px;border-bottom:1px solid var(--rule)}
+ol.dec>li::before{
+  content:counter(dec,decimal-leading-zero);position:absolute;left:0;top:9px;
+  font-family:var(--mono);font-size:12px;color:var(--petrol);letter-spacing:.08em;
+}
+ul.dash{list-style:none;margin:0;padding:0}
+ul.dash li{padding:5px 0 5px 20px;position:relative}
+ul.dash li::before{content:"—";position:absolute;left:0;color:var(--ink-2)}
+/* ---------- timeline ---------- */
+.tl{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border:1px solid var(--ink);background:var(--panel);margin:12px 0}
+.tl .era{padding:12px;border-right:1px solid var(--rule);position:relative}
+.tl .era:last-child{border-right:0}
+.tl .era .e{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--petrol);text-transform:uppercase}
+.tl .era h3{font-size:1.1rem;font-weight:normal;margin:5px 0;letter-spacing:-.01em}
+.tl .era p{font-size:12.5px;color:var(--ink-2);margin:0}
+.tl .era::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--petrol)}
+@media (max-width:900px){.tl{grid-template-columns:repeat(3,minmax(0,1fr))}.tl .era:nth-child(3n){border-right:0}.tl .era{border-bottom:1px solid var(--rule)}}
+@media (max-width:560px){.tl{grid-template-columns:1fr}.tl .era{border-right:0}}
+.track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--ink);background:var(--panel);margin:12px 0}
+.track>div{padding:14px 16px;border-right:1px solid var(--rule)}
+.track>div:last-child{border-right:0}
+.track h4{margin-top:0}
+@media (max-width:760px){.track{grid-template-columns:1fr}.track>div{border-right:0;border-bottom:1px solid var(--rule)}}
+/* ---------- three-column strip ---------- */
+.strip3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--ink);background:var(--panel)}
+.strip3>div{padding:16px 18px;border-right:1px solid var(--rule)}
+.strip3>div:last-child{border-right:0}
+.strip3 h3{margin-top:0;font-size:1.15rem}
+@media (max-width:900px){.strip3{grid-template-columns:1fr}.strip3>div{border-right:0;border-bottom:1px solid var(--rule)}}
+/* ---------- details ---------- */
+details{border:1px solid var(--rule);background:var(--panel);margin:12px 0}
+details>summary{
+  cursor:pointer;padding:10px 14px;font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink);list-style:none;
+  display:flex;align-items:center;gap:10px;min-height:var(--nav-h);
+}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"+";font-weight:bold;color:var(--petrol)}
+details[open]>summary::before{content:"–"}
+details[open]>summary{border-bottom:1px solid var(--rule)}
+details .inner{padding:4px 14px 14px}
+/* ---------- doc map ---------- */
+.docmap{display:grid;grid-template-columns:64px minmax(0,1fr);gap:0;border:1px solid var(--ink);background:var(--panel)}
+.docmap .dn{font-family:var(--serif);font-size:1.7rem;color:var(--petrol);padding:12px 0 0 14px;border-right:1px solid var(--rule);text-align:center;line-height:1}
+.docmap .dc{padding:10px 14px;border-bottom:1px solid var(--rule)}
+.docmap .dn{border-bottom:1px solid var(--rule)}
+.docmap .dc h3{margin:0 0 3px;font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-transform:none;color:var(--ink);font-weight:600;line-height:1.35;overflow-wrap:anywhere}
+.docmap .dc .stage{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);margin:0 0 4px}
+.docmap .dc p{margin:0;font-size:13.5px}
+.docmap>div:nth-last-child(-n+2){border-bottom:0}
+@media (max-width:560px){.docmap{grid-template-columns:52px minmax(0,1fr)}.docmap .dn{font-size:1.3rem}}
+/* ---------- ladder ---------- */
+.ladder{counter-reset:ladder;margin:10px 0;padding:0;list-style:none;border-left:2px solid var(--petrol)}
+.ladder li{counter-increment:ladder;position:relative;padding:8px 0 8px 46px;border-bottom:1px solid var(--rule)}
+.ladder li::before{
+  content:counter(ladder);position:absolute;left:12px;top:6px;width:22px;height:22px;
+  border:1px solid var(--ink);border-radius:2px;background:var(--paper);
+  font-family:var(--mono);font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--petrol);
+}
+/* ---------- reading paths ---------- */
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:12px 0}
+.path{border:1px solid var(--rule);background:var(--panel);padding:12px 14px}
+.path h4{margin:0 0 6px;color:var(--petrol)}
+.path ol{margin:0;padding-left:1.1em;font-size:13px}
+.path li{margin:3px 0}
+/* ---------- glossary ---------- */
+.gloss{columns:2;column-gap:34px;margin:8px 0}
+@media (max-width:760px){.gloss{columns:1}}
+.gloss div{break-inside:avoid;padding:8px 0;border-bottom:1px solid var(--rule)}
+.gloss dt{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--ink);margin:0 0 3px}
+.gloss dd{margin:0;font-size:13.5px;color:var(--ink)}
+/* ---------- events rail ---------- */
+.ev{border:1px solid var(--ink);background:var(--panel)}
+.ev .row{display:grid;grid-template-columns:150px minmax(0,1fr) minmax(0,1fr);gap:0;border-bottom:1px solid var(--rule)}
+.ev .row:last-child{border-bottom:0}
+.ev .row>*{padding:10px 14px;border-right:1px solid var(--rule)}
+.ev .row>*:last-child{border-right:0}
+.ev .d{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);text-transform:uppercase}
+.ev .e{font-size:13.5px}
+.ev .r{font-size:13.5px;color:var(--ink)}
+.ev .r b{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--petrol);font-weight:600}
+@media (max-width:760px){.ev .row{grid-template-columns:1fr}.ev .row>*{border-right:0;border-bottom:1px dashed var(--rule)}}
+/* ---------- refusals ---------- */
+.refuse{border:1px solid var(--brick);background:var(--panel);padding:14px 18px;margin:12px 0}
+.refuse h3{margin-top:0;color:var(--brick)}
+.refuse li{border-bottom:1px solid var(--rule)}
+/* ---------- footer ---------- */
+footer.colophon{border-top:2px solid var(--ink);margin-top:44px;padding:30px 0 46px}
+footer.colophon .credit{font-family:var(--serif);font-size:1.35rem;margin:18px 0 6px}
+.srcs{counter-reset:src;list-style:none;margin:10px 0;padding:0}
+.srcs li{counter-increment:src;position:relative;padding:7px 0 7px 40px;border-bottom:1px solid var(--rule);font-size:13.5px}
+.srcs li::before{content:"[" counter(src) "]";position:absolute;left:2px;top:7px;font-family:var(--mono);font-size:11.5px;color:var(--petrol)}
+.srcs .u{display:block;margin-top:3px;font-size:12.5px;letter-spacing:.02em}
+.srcs a{word-break:break-all}
+.statline{font-family:var(--mono);font-size:12px;letter-spacing:.05em;border:1px solid var(--ink);background:var(--panel);padding:11px 14px;margin:16px 0}
+/* ---------- misc ---------- */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+/* ============================================================
+   PRINT — first-class contract
+   ============================================================ */
+@media print{
+  @page{size:A4;margin:14mm}
+  html{scroll-behavior:auto}
+  :root{--num:38px} /* print keeps the ratio: 38px numerals vs ~25px section h2s */
+  body{background:#fff;font-size:11px;line-height:1.5}
+  .wrap{max-width:none;padding:0}
+  nav.brok,#printbtn,.skip,.swipe,.navhint{display:none!important}
+  #main:focus{outline:none}
+  section.sec{break-inside:auto;margin-top:18px;padding-top:14px;border-top-width:1px}
+  .mast h1{font-size:30px}
+  .pull{font-size:17px}
+  /* Three independent locks so no print path can lose a section:
+     (1) ::details-content is the real hiding mechanism in Chromium — content-visibility,
+         not display — so it is overridden here directly;
+     (2) every long block also carries `open` in the markup, so a JS-off reader prints it;
+     (3) JS forces all disclosures open on beforeprint / matchMedia('print') change.
+     Breaks are kept granular: no whole-section `break-inside:avoid` pretences — every
+     section here is taller than one A4 page, so the units below (rows, tiles, schematic
+     nodes, ledger lines) are what stay whole, and headings never strand at a page foot. */
+  details{break-inside:auto}
+  details::details-content{content-visibility:visible}
+  details>*{display:block!important}
+  details:not([open])>*{display:block!important}
+  details>summary::before{content:""}
+  h2,h3,.kicker,caption,summary{break-after:avoid}
+  p,li{orphans:2;widows:2}
+  .tscroll{overflow:visible;border:0}
+  table{min-width:0;font-size:10px}
+  thead th{position:static}
+  tr,.tile,.fnode,.fann,.path,.docmap>div,.ev .row,.rail .kv,.metarail .kv,.band{break-inside:avoid}
+  #docs,#environment,#evidence{break-before:page}
+  .band,.twocol,.strip3,.track,.tl,.docmap,.ev,.fnode,.cmd,.formula,.refuse,.fback,.rail .kv{
+    background:#fff!important;
+  }
+  .tile,.path{background:#fff!important}
+  tbody tr:nth-child(even),tbody tr:nth-child(odd){background:#fff}
+  .metarail .kv,.rail .kv{background:#fff}
+  .chip{border-width:1px}
+  a{color:var(--ink);text-decoration:none}
+  main a[href^="http"]::after{
+    content:" (" attr(href) ")";font-family:var(--mono);font-size:8.5px;color:var(--ink-2);
+    word-break:break-all;
+  }
+  .srcs .u{display:block!important;font-size:9.5px}
+}
+</style>
+</head>
+<body>
+<div class="skip"><a href="#main">Skip to dossier</a></div>
+
+<nav class="brok" role="navigation" aria-label="Dossier sections">
+  <div class="wrap">
+    <span class="brand">Dossier · 3 Nov 2026</span>
+    <div class="navlinks">
+      <a href="#numbers" aria-label="§2 Measured numbers"><span class="n">§2</span><span class="navfull">Numbers</span><span class="navshort">Numbers</span></a>
+      <a href="#architecture" aria-label="§3 Architecture"><span class="n">§3</span><span class="navfull">Architecture</span><span class="navshort">Arch</span></a>
+      <a href="#integrity" aria-label="§4 Integrity rail"><span class="n">§4</span><span class="navfull">Integrity</span><span class="navshort">Integ</span></a>
+      <a href="#docs" aria-label="§5 Document set"><span class="n">§5</span><span class="navfull">Docs</span><span class="navshort">Docs</span></a>
+      <a href="#deploy" aria-label="§6 Deployment"><span class="n">§6</span><span class="navfull">Deploy</span><span class="navshort">Deploy</span></a>
+      <a href="#environment" aria-label="§7 Environment and hardware"><span class="n">§7</span><span class="navfull">Environment</span><span class="navshort">Env</span></a>
+      <a href="#timeline" aria-label="§8 Timeline"><span class="n">§8</span><span class="navfull">Timeline</span><span class="navshort">Time</span></a>
+      <a href="#compliance" aria-label="§9 Compliance"><span class="n">§9</span><span class="navfull">Compliance</span><span class="navshort">Compl</span></a>
+      <a href="#evidence" aria-label="§10 Evidence"><span class="n">§10</span><span class="navfull">Evidence</span><span class="navshort">Evid</span></a>
+      <a href="#risks" aria-label="§12 Top risks"><span class="n">§12</span><span class="navfull">Risks</span><span class="navshort">Risks</span></a>
+      <a href="#sources" aria-label="§15 Sources"><span class="n">§15</span><span class="navfull">Sources</span><span class="navshort">Src</span></a>
+    </div>
+    <div class="navend">
+      <span class="navhint" aria-hidden="true">swipe ›</span>
+      <button id="printbtn" type="button">Print / save as PDF</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+<div class="wrap">
+
+<!-- ================= §0 MASTHEAD ================= -->
+<header class="mast" id="top">
+  <div class="dateline">
+    <span>System dossier №&nbsp;13 · broadsheet edition</span>
+    <span>Compiled 3 November 2026 · 13:48–13:49 UTC evidence window</span>
+    <span>Scan: 5 min · Read: 20 min · Print: A4 / Letter</span>
+  </div>
+  <h1>Ola Western Campaign Platform<br><em>System Dossier &amp; Documentation Map</em></h1>
+  <p class="sub">System dossier, documentation map and verified state of the official campaign website for a 2027 Lagos State House of Assembly candidacy (Amuwo-Odofin Constituency I). This page is the five-minute front door to a twelve-document engineering lifecycle dossier plus an index. It records what was built, what was measured, what the running system says about itself, and what has deliberately been left open. It is a communication artefact, not a specification — the precedence ladder in §5 says where truth actually lives.</p>
+
+  <div class="metarail">
+    <div class="kv"><span class="k">Compiled</span><span class="v">3 November 2026 · i2sltd.tech</span></div>
+    <div class="kv"><span class="k">Codebase</span><span class="v">ola-western-web · OlaWestern.ng</span></div>
+    <div class="kv"><span class="k">Stack</span><span class="v">Next.js 14.2.15 · TypeScript 5.5 · Tailwind 3.4 · Node 20 LTS</span></div>
+    <div class="kv"><span class="k">Build</span><span class="v">Production build verified 3 Nov 2026 (E3)</span></div>
+    <div class="kv"><span class="k">Document set</span><span class="v">v1.0 · 13 files + 2 repo-root docs</span></div>
+    <div class="kv"><span class="k">Subject</span><span class="v">Anonymised: “the candidate”, “the campaign”, “the desk”</span></div>
+  </div>
+
+  <blockquote class="pull">“The public record is the product: a self-auditing document in which the record itself is the editing surface.”
+    <span class="attrib">Product thesis — 01-PRD.md §2 · verbatim</span>
+  </blockquote>
+
+  <p class="t lede"><strong>What this is, for the non-technical reader.</strong> The campaign has a website that its own staff update without an engineer, and that refuses — in code, not in policy — to publish any claim about a real person unless a link to a published report is attached to it. The site then grades its own trustworthiness and prints the grade. Today that grade is <strong>40 out of 100</strong>, because four published lines do not yet have their evidence documents, and nobody was willing to invent one. This page summarises the entire build: the numbers, the architecture, the evidence, the legal posture, the risks, and the things the team refused to do. Every figure carries a date; every unresolved item carries the tag <span class="chip g">[gap]</span> and stays that way on purpose.</p>
+
+  <div class="legend" role="note" aria-label="Colour and tag contract used on this page">
+    <span><i class="lg"></i> Green = verified / applied / published</span>
+    <span><i class="lp"></i> Petrol = architecture / informational</span>
+    <span><i class="lb"></i> Brick = risk, block findings, gaps, refusals — nothing else</span>
+    <span><i class="lgo"></i> Gold = measured figures &amp; evidence quotations</span>
+    <span>Severity: BLOCK and GAP = brick · WARN = ink · INFO = muted ink</span>
+    <span>Tags: VERIFIED · MEASURED · [gap] · [unverified] · REFUSED</span>
+  </div>
+</header>
+
+<!-- ================= §1 TWO DEFINING IDEAS ================= -->
+<section class="sec" id="ideas" data-obs aria-labelledby="h-ideas">
+  <p class="kicker"><span class="secno">§1</span> — THE TWO DEFINING IDEAS</p>
+  <h2 id="h-ideas">One rule the server enforces, one surface the public page is</h2>
+  <p class="deck">Everything else in the platform is in service of these two commitments, or of the environment they operate in: a low-data, phone-first electorate, a data-protection statute that just came into force, and a rival campaign with an incentive to quote the site back at it.</p>
+  <div class="twocol">
+    <div>
+      <h3>The publish gate</h3>
+      <p><span class="chip v">VERIFIED</span> <span class="meta">— asserted by scripts/check-cms-gates.mjs, E2</span></p>
+      <ul class="dash">
+        <li>No track-record entry or Truth Room ruling can be <em>created</em> without an evidence link to the published report or document that proves it. Enforced server-side on <code>POST /api/admin/record</code> and <code>POST /api/admin/fact-checks</code> — not in the form, not in the UI.</li>
+        <li>The evidence link may be <em>replaced</em> but never <em>emptied</em>: <code>PATCH</code> refuses a blank. Softening a claim in place is not the same decision as taking it down.</li>
+        <li><code>DELETE</code> (or unpublish) is the only takedown, and for seed-owned rows it records a tombstone so no future content bundle can resurrect the withdrawn line.</li>
+        <li>Enforcement lives in <code>EVIDENCE_RULE</code> (<code>src/lib/cms.ts</code>). One sentence everywhere, so the campaign learns one rule instead of one rule per endpoint: <span class="mono">“A public claim about a real person needs its evidence: paste the link to the published report or document that proves it.”</span></li>
+        <li>Rows published before the gate existed stay editable (refusing a typo fix would keep a wrong sentence live) but are graded <code>block</code> by the site’s own audit until they carry a report — see §4.</li>
+      </ul>
+      <p class="meta">“Unsourced” is a state the software refuses, not a standard people are reminded of. (01-PRD FR-1 · ADR-008, era P5)</p>
+    </div>
+    <div>
+      <h3>The Live Desk</h3>
+      <p><span class="chip v">VERIFIED</span> <span class="meta">— browser-verified 3 Nov 2026 (E4); two interactions untestable, see §10: scroll-follow of the rings and screenshot-level visual parity are verified by reading, not observation</span></p>
+      <ul class="dash">
+        <li>The public page <em>is</em> the CMS. <code>⌘E</code> reveals <strong>38 annotated <code>data-ow</code> sites</strong> as rings on the live page; tap-to-edit opens a sheet prefilled with the rendered value; <strong>25 field specs across 5 field kinds</strong> (<code>text · area · url · choice · boolean</code>) map each tapped attribute to the admin route that already validates it.</li>
+        <li><code>⌘K</code> command deck parses a pasted link into an intent (publish this clip / cite this source / jump). It does not generate content — there is no model in the editing layer (ADR-013).</li>
+        <li><code>⌘Z</code> replays the same route with the previous value. In-memory, per-session; the durable history is the backup.</li>
+        <li>After every write: same route, same validation, same refusal wording, then <code>revalidatePath()</code> on the server and <code>router.refresh()</code> in place — the page the desk is standing on redraws without a reload or lost scroll position.</li>
+        <li>Anonymous visitors receive <strong>zero DOM</strong>: the overlay probes <code>GET /api/admin/login</code>; a cookie-less probe renders no dock, no rings, no listeners, nothing in the server HTML. An unfinished sentence is never advertised to the other side.</li>
+      </ul>
+      <p class="meta">No second admin UI to drift. “The cost of a website in a campaign is not the build; it is the twenty-six small changes between the build and the election.” (06-USE-CASES B4 · FR-7…FR-13)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §2 MEASURED NUMBERS ================= -->
+<section class="sec" id="numbers" data-obs aria-labelledby="h-numbers">
+  <p class="kicker"><span class="secno">§2</span> — MEASURED NUMBERS</p>
+  <h2 id="h-numbers">The counts, with their units and their date</h2>
+  <p class="deck">Every figure below was measured on 3 November 2026 against the built application — <code>wc -l</code>, the route tree, the build output, <code>.next/prerender-manifest.json</code>, the store API and the gate script — not estimated. Sources: 02-RESEARCH §6, 09-QA E1–E6, 11-HARDWARE §1.</p>
+
+  <div class="band">
+    <div class="bandhead">
+      <span>Band A · Codebase &amp; serving surface</span>
+      <span><span class="chip m">MEASURED 3 Nov 2026</span></span>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="big num">11</div><div class="lab">Public pages</div><div class="note">+ <code>/admin</code> behind the session cookie</div></div>
+      <div class="tile"><div class="big num">12</div><div class="lab">Page routes</div><div class="note">eleven public · one admin</div></div>
+      <div class="tile"><div class="big num">34</div><div class="lab">API route handlers</div><div class="note">all <code>force-dynamic</code> · 1 declares <code>nodejs</code></div></div>
+      <div class="tile"><div class="big num">87.2<span class="unit"> kB</span></div><div class="lab">Shared first-load JS</div><div class="note">per-page 87–102 kB</div></div>
+      <div class="tile"><div class="big num">11,932</div><div class="lab">Lines TS/TSX in <code>src/</code></div><div class="note">app 3,192 · lib 2,979 · components 5,540 · types 221</div></div>
+      <div class="tile"><div class="big num">1,097</div><div class="lab">Lines in <code>scripts/</code></div><div class="note">the gate harness — no test framework</div></div>
+      <div class="tile"><div class="big num">4</div><div class="lab">Runtime dependencies</div><div class="note">next · react · react-dom · supabase-js</div></div>
+      <div class="tile"><div class="big num">6</div><div class="lab">Security headers set</div><div class="note">CSP still absent — §12</div></div>
+    </div>
+    <div class="bandnote">Measured with <code>wc -l</code>, the route tree, <code>next.config.mjs</code> and the build output; HTTP Archive puts global JS medians at ~558–646 kB, so this site ships roughly one sixth of a normal page.</div>
+  </div>
+
+  <div class="band">
+    <div class="bandhead">
+      <span>Band B · Content &amp; editing contract</span>
+      <span><span class="chip m">MEASURED 3 Nov 2026</span></span>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="big num">27</div><div class="lab">Published photographs</div><div class="note">every one outlet-credited with a source link</div></div>
+      <div class="tile"><div class="big num">4</div><div class="lab">Frames deliberately empty</div><div class="note"><code>exact</code> frames refuse stand-ins — §13 <span class="chip r">REFUSED</span></div></div>
+      <div class="tile"><div class="big num">12</div><div class="lab">Track-record ledger entries</div><div class="note">3 graded <code>block</code>: a6 · a11 · a12</div></div>
+      <div class="tile"><div class="big num">4</div><div class="lab">Truth Room rulings</div><div class="note">one without its document — <code>fc-accessible</code></div></div>
+      <div class="tile"><div class="big num">7</div><div class="lab">Video clips</div><div class="note">each id oEmbed-verified as embeddable</div></div>
+      <div class="tile"><div class="big num">21</div><div class="lab">Cited press references</div><div class="note">dated · filterable at <code>/impact#sources</code></div></div>
+      <div class="tile"><div class="big num">83</div><div class="lab">Press files in <code>public/</code></div><div class="note">13 MB · 3 generated graphics · 0 uploads</div></div>
+      <div class="tile"><div class="big num">52<span class="unit"> KB</span></div><div class="lab"><code>data/db.json</code></div><div class="note">the entire live state of the site</div></div>
+      <div class="tile"><div class="big num">38</div><div class="lab"><code>data-ow</code> annotated sites</div><div class="note">⌘E reveals them as rings</div></div>
+      <div class="tile"><div class="big num">25</div><div class="lab">Live Desk field specs</div><div class="note">5 input kinds in <code>contract.ts</code></div></div>
+      <div class="tile"><div class="big num">14</div><div class="lab">Prerendered entries</div><div class="note">8 timed ISR · 6 immutable</div></div>
+      <div class="tile"><div class="big num">0</div><div class="lab">Desk-uploaded image files</div><div class="note">uploads empty at measurement — §7</div></div>
+    </div>
+    <div class="bandnote">Ledger and ruling counts read from the live store through <code>/api/admin/*</code> (E6); photographs are 27 of 28 media rows published, filling 16 of 20 declared frames.</div>
+  </div>
+
+  <div class="band">
+    <div class="bandhead">
+      <span>Band C · Integrity — the site’s own verdict</span>
+      <span><span class="chip m">MEASURED 3 Nov 2026</span> <span class="chip v">VERIFIED via E2</span></span>
+    </div>
+    <div class="tiles">
+      <div class="tile risk"><div class="big num">40<span class="unit">/100</span></div><div class="lab">Self-audit score — “not ready to share”</div><div class="note">computed from the live store · published anyway</div></div>
+      <div class="tile risk"><div class="big num">6</div><div class="lab">Findings</div><div class="note">unsourced lines · frames · drafts</div></div>
+      <div class="tile risk"><div class="big num">4</div><div class="lab">Published lines graded <code>block</code></div><div class="note">3 record entries + 1 ruling — §4</div></div>
+      <div class="tile risk"><div class="big num">1</div><div class="lab">Open defect found this pass</div><div class="note"><code>/api/volunteer</code> awaits with no timeout — §10</div></div>
+      <div class="tile"><div class="big num">12<span class="unit">/12</span></div><div class="lab">CMS gates passing</div><div class="note">against the running server — E2</div></div>
+      <div class="tile"><div class="big num">1</div><div class="lab">Evidence attached this pass</div><div class="note"><code>fc-ballot</code> → flagbearer report · 4 refused</div></div>
+      <div class="tile"><div class="big num">15</div><div class="lab">Threats modelled</div><div class="note">T1–T15 in 10-SECURITY §3</div></div>
+      <div class="tile"><div class="big num">11</div><div class="lab">Items not tested</div><div class="note">each with cost to close — §10</div></div>
+    </div>
+    <div class="bandnote"><strong>Self-audit score 40 / 100 — not ready to share.</strong> The campaign’s own health endpoint computes it from the live store, and the site publishes it anyway. It is not green. It is not close to green. That is the truth as at 3 Nov 2026, and it sits in the top third of this page on purpose. A system whose gate could be satisfied by any link would have scored near 100 today: it went up by one line’s worth and the rail still calls the site <strong>not defensible</strong>. The score is capped and grouped so that thirty unsourced claims cost the same points as three, and deleting the worst line buys nothing (§4).</div>
+  </div>
+  <p class="t"><strong>A campaign site that publishes its own failing audit score is the point.</strong> The self-audit score is 40 and the status is “not ready to share”: that is the truth, not a rough edge to be sanded off.</p>
+</section>
+<!-- ================= §3 ARCHITECTURE ================= -->
+<section class="sec" id="architecture" data-obs aria-labelledby="h-arch">
+  <p class="kicker"><span class="secno">§3</span> — ARCHITECTURE, AS DRAWN</p>
+  <h2 id="h-arch">One store interface over two interchangeable backends</h2>
+  <p class="deck">Drawn from divs and rules, the way the system is actually shaped: a small, mostly-read, bursty, mobile-heavy public site with a tiny writable state and an image folder that grows. That is a storage-and-bandwidth problem, not a compute problem. (11-HARDWARE §1 · ADR-001/002/026)</p>
+
+  <figure class="fdiag">
+    <div class="frow">
+      <div class="fnode sys"><h3 class="mh">Browser — phone-first</h3>
+        <p class="fd">Lagos/West African mobile audience; page weight judged on a 4–5-inch screen. 87–102 kB first-load JS; click-to-play YouTube facade (<code>youtube-nocookie</code>); <strong>zero third-party bytes before a tap</strong>. The public page is also the editing surface when a session cookie is present — anonymous markup contains none of it.</p>
+        <p class="fm">verified reduced-motion · 44–48 px targets · sticky thumb bar with safe-area inset</p>
+      </div>
+      <div class="fspur" aria-hidden="true"></div>
+      <div class="fann"><span class="al">Client edge</span>
+        <p>One HTML document does both jobs: the voter’s page and the desk’s CMS. Which one it is depends only on the cookie in the request.</p>
+      </div>
+    </div>
+
+    <div class="flink" aria-hidden="true"><span class="down"><span class="stem"></span><span class="head">▼</span><span class="cap">HTTPS · 6 headers attached</span></span></div>
+
+    <div class="frow">
+      <div class="fnode sys"><h3 class="mh">Next.js 14.2.15 App Router — SSR + ISR</h3>
+        <p class="fd">Server components render the record; 14 prerender entries (8 content pages carry a timed <code>revalidate</code>: <code>/</code> <code>/about</code> <code>/impact</code> <code>/gallery</code> <code>/contact</code> 3600 s · <code>/news</code> <code>/truth-room</code> 900 s · <code>/help-desk</code> 300 s; <code>/privacy</code> <code>/join</code> <code>/blueprint</code> robots, sitemap, icon immutable). The ISR window is an <em>editorial staleness budget</em>, not a performance flag.</p>
+        <p class="fm">next start · Node 20 LTS · Tailwind 3.4 · TypeScript 5.5 · no middleware · no native binaries</p>
+      </div>
+      <div class="fspur" aria-hidden="true"></div>
+      <div class="fann"><span class="al">Serving model</span>
+        <p>Reads are cached and aged on purpose; writes never are. Every handler below is <code>force-dynamic</code>, so a desk edit is validated against live data, not build-time data.</p>
+      </div>
+    </div>
+
+    <div class="flink" aria-hidden="true"><span class="down"><span class="stem"></span><span class="head">▼</span><span class="cap">34 route handlers — the whole write surface</span></span></div>
+
+    <div class="frow">
+      <div class="fnode sys"><h3 class="mh">Session gate — <code>isAdminRequest()</code> on every <code>/api/admin/**</code></h3>
+        <p class="fd">Stateless <code>ow_admin_session</code> cookie, HMAC-SHA256 over <code>ADMIN_SECRET</code>, <code>httpOnly</code>, <code>sameSite=lax</code>, <code>secure</code> in production, 12 h TTL, <code>timingSafeEqual</code> with a length guard, fail-closed when <code>ADMIN_PASSWORD</code> is unset in production.</p>
+        <p class="fm">no middleware · the check is per-route — 7 handlers asserted, 27 reviewed (§12)</p>
+      </div>
+      <div class="fspur" aria-hidden="true"></div>
+      <div class="fann"><span class="al">Annotation · gate 1</span>
+        <p>Anonymous requests stop here with a 401. There is no anonymous write path in the graph to stop elsewhere.</p>
+      </div>
+    </div>
+
+    <div class="flink" aria-hidden="true"><span class="down"><span class="stem"></span><span class="head">▼</span><span class="cap">only a verified session may mutate</span></span></div>
+
+    <div class="frow">
+      <div class="fnode gate"><h3 class="mh"><code>EVIDENCE_RULE</code> — <code>src/lib/cms.ts</code></h3>
+        <p class="fd">Sits <em>between the mutation route and the store</em>: POST refuses a row without a real <code>http(s)</code> evidence link (<code>javascript:</code> URLs refused); PATCH may replace the link, never empty it; DELETE is the only takedown. The Live Desk and the tabbed dashboard get the identical 400 because they hit the identical route.</p>
+        <p class="fm">asserted by scripts/check-cms-gates.mjs (12 checks) — §10</p>
+      </div>
+      <div class="fspur" aria-hidden="true"></div>
+      <div class="fann ref"><span class="al">Annotation · refusal surface</span>
+        <p>“A public claim about a real person needs its evidence: paste the link to the published report or document that proves it.” One sentence, everywhere.</p>
+        <p><span class="chip r">REFUSED</span> four attachments this pass rather than inventing links — §13.</p>
+      </div>
+    </div>
+
+    <div class="flink" aria-hidden="true"><span class="down"><span class="stem"></span><span class="head">▼</span><span class="cap">only attested rows reach the store</span></span></div>
+
+    <div class="frow">
+      <div class="fnode"><h3 class="mh">src/lib/store.ts — one interface, two interchangeable backends</h3>
+        <p class="fd">The backend is chosen by credentials, not configuration: Supabase Postgres when the URL + anon key exist, otherwise the file store. Reads and writes deliberately use different keys (ADR-003/FR-27).</p>
+        <div class="fsplit">
+          <div class="fnode"><h4>File store — live, default</h4>
+            <p class="fd"><code>data/db.json</code>, 52 KB. Atomic tmp+rename writes with <code>EPERM/EBUSY/EACCES</code> retry (ADR-029, born of a real Windows defect). In-process read cache; tombstones in <code>db.removed</code>; <code>SEED_VERSION</code> triggers <code>resyncSeeds()</code> — content upgrades, collected data survives. One writer only.</p></div>
+          <div class="fnode"><h4>Supabase Postgres — configured path</h4>
+            <p class="fd">Reads with the anon key so <strong>RLS</strong> keeps unpublished rows and reporter PII out of public HTML; every mutation goes through <code>getWriteClient()</code> preferring <code>SUPABASE_SERVICE_ROLE_KEY</code>. Migrations <code>0001_init</code> → <code>0002_cms_content_tables</code>, applied in that order. Not exercised in the 3 Nov pass — §10 <span class="chip g">[gap]</span>.</p></div>
+        </div>
+      </div>
+      <div class="fspur" aria-hidden="true"></div>
+      <div class="fann"><span class="al">Annotation · state</span>
+        <p>52 KB of JSON holds the ledger, rulings, newsroom, media index, leads, issues and tombstones. The growth axis is the photograph folder beside it, not these rows.</p>
+      </div>
+    </div>
+
+    <div class="fback" aria-hidden="true"><span class="up">▲ revalidatePath()</span>
+      <p>After every write the server cache for that route is regenerated and <code>router.refresh()</code> redraws the page the desk is standing on. Behind a CDN the edge keeps serving until <code>s-maxage</code> expires: RFC 9111 defines no invalidation API, so purge is always a vendor extension — and none is wired (§6, host constraint 3).</p>
+    </div>
+
+    <figcaption class="fnote">Headers attached in <code>next.config.mjs</code> for <code>/:path*</code>: Strict-Transport-Security (preload) · X-Frame-Options SAMEORIGIN · X-Content-Type-Options nosniff · Referrer-Policy · Permissions-Policy · X-DNS-Prefetch-Control, with <code>poweredByHeader</code> off. Content-Security-Policy is still absent — §12 <span class="sev w">WARN</span>.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div>
+      <h3>Storage growth note</h3>
+      <p class="t">The axis of growth is photographs, not rows. <code>db.json</code> stays under 1 MB even at 30,000 volunteer records — the row count is the compliance concern, not the byte count. A desk that photographs a rally on a phone produces 3–4 MB per frame; 500–2,000 uploads project to <strong>1–8 GB</strong> against a 20 GB minimum disk. There is no resize step because <code>sharp</code> was deliberately excluded (ADR-017) — if uploads go daily, the honest fix is object storage or edge optimisation, not a bigger box. (11-HARDWARE §5)</p>
+    </div>
+    <div>
+      <h3>Honest footnote — what is <em>not</em> in the box</h3>
+      <ul class="dash">
+        <li><strong>No middleware</strong> — the auth check is per-route and forgettable; it constrains which hosts are possible and moves rate limiting and IP allowlists to the edge.</li>
+        <li><strong>No ORM, no raw SQL path</strong> in the file store; the Supabase client is parameterised by construction.</li>
+        <li><strong>No test framework</strong> — the gate script plus type check plus build replace it (§10).</li>
+        <li><strong>No <code>.git</code></strong> — the folder is not yet a repository; rollback by revert is currently impossible. <span class="chip r">BLOCK</span></li>
+        <li>No queue, cron, worker, analytics, object-storage SDK or <code>output:'standalone'</code> in the current build.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §4 INTEGRITY RAIL ================= -->
+<section class="sec" id="integrity" data-obs aria-labelledby="h-int">
+  <p class="kicker"><span class="secno">§4</span> — THE INTEGRITY RAIL</p>
+  <h2 id="h-int">How the site grades itself — and why 40 is honest</h2>
+  <p class="deck"><code>GET /api/admin/health</code> recomputes the live store into a 0–100 score, a <code>ready</code> boolean and findings weighted by severity, each carrying the offending sentence’s page and <code>data-ow</code> key so a finding is a to-do, not a description. It grades content, not tool usage, so it cannot be farmed by editing more. <span class="chip v">VERIFIED</span> <span class="meta">E2, 3 Nov 2026</span></p>
+
+  <div class="formula" role="figure" aria-label="Integrity score formula">
+    score&nbsp; =&nbsp; max(0,&nbsp;min(100,&nbsp; 100 − Σ&nbsp; <span class="w">min(</span> WEIGHTS[sev] × max(1,&nbsp;⌈count/3⌉),&nbsp; WEIGHTS[sev] × 3 <span class="w">)</span>)<br>
+    WEIGHTS&nbsp; =&nbsp; { <span class="w">block: 18</span>,&nbsp; warn: 7,&nbsp; info: 2 }<br>
+    observed&nbsp; =&nbsp; 100 − (18 + 18)&nbsp;·&nbsp;block&nbsp; − …&nbsp; =&nbsp; <span class="w">40</span>&nbsp; ·&nbsp; ready: false · 6 findings · 4 block lines
+  </div>
+  <p class="t">The grouping (<code>ceil(count/3)</code>) and the per-severity cap (weight × 3) mean <strong>a hundred unsourced claims cost the same 54 points as three</strong>, and deleting the single worst line buys no score. The metric is designed to be hard to satisfy and impossible to grind upward by cosmetic edits. (01-PRD FR-2 · ADR-014 · <code>src/lib/liveDesk/integrity.ts</code>)</p>
+
+  <h3>The six findings, with the four blocking lines named</h3>
+  <div class="tscroll" tabindex="0" role="region" aria-label="Published lines graded block, scrollable table" aria-describedby="swipe1">
+    <table>
+      <caption>Published lines graded `block` — store state at 3 Nov 2026, verbatim classes from E2 · E6</caption>
+      <colgroup><col class="w13"><col class="w15"><col class="w20"><col class="w26"><col class="w26"></colgroup>
+      <thead><tr><th scope="col">Line</th><th scope="col">Where</th><th scope="col">Claim graded block</th><th scope="col">Why it blocks</th><th scope="col">Engineering answer</th></tr></thead>
+      <tbody>
+        <tr><td class="m">record.a6</td><td class="m">/impact <span class="chip p">data-ow</span></td><td>Indigent healthcare relief</td><td>No published report in the 21-reference library states it — missing evidence link</td><td><span class="chip r">REFUSED</span> to fabricate a link. HQ must supply a report or withdraw the line</td></tr>
+        <tr><td class="m">record.a11</td><td class="m">/impact</td><td>Youth tournament sponsorship</td><td>None of the cited references attests it</td><td><span class="chip r">REFUSED</span> — same bar as the flagbearer precedent: the report must name the party, the office and the constituency</td></tr>
+        <tr><td class="m">record.a12</td><td class="m">/impact <span class="chip p">data-ow="record.a12.verification_source_url"</span></td><td>Community vigilante / estate security work</td><td>Attested nowhere in the library</td><td><span class="chip r">REFUSED</span> — gate refuses creation; pre-gate rows stay visible and stay blocking</td></tr>
+        <tr><td class="m">fact.fc-accessible</td><td class="m">/truth-room <span class="chip p">data-ow="fact.fc-accessible.official_document_url"</span></td><td>Truth Room ruling with no document attached</td><td>A rebuttal without its official document is exactly what the rail exists to flag</td><td><span class="chip r">REFUSED</span> — “an invented verdict” is a standing refusal, §13</td></tr>
+        <tr><td class="m">(+2)</td><td class="m">rail classes</td><td>Non-blocking findings: frames on the branded panel (4 <code>exact</code>), unconfirmed candidate-file rows, sitting drafts, queue states</td><td>Graded warn/info per the weights</td><td>Listed, dated, kept — closing a gap gets a date, it is not deleted</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="swipe" id="swipe1">↔ swipe / scroll sideways — 5 columns kept whole, never wrapped mid-cell</p>
+
+  <div class="grid2">
+    <div>
+      <h3>The publish-gate ruleset, three lines</h3>
+      <ol class="dec">
+        <li><strong>Evidence on creation, server-side.</strong> POST refuses a row whose report link is absent, non-<code>http(s)</code>, or a <code>javascript:</code> URL. Asserted twice by script.</li>
+        <li><strong>Immutable once attached.</strong> PATCH may replace the link; it can never blank it. This closes the “soften the claim in place at 22:00” path — the panic path a desk actually takes.</li>
+        <li><strong>Takedown is one honest act.</strong> DELETE/unpublish only, with tombstones so re-synced bundles cannot resurrect withdrawn rows. The rail grades pre-gate lines <code>block</code> rather than grandfathering them.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>What moved this week</h3>
+      <ul class="dash">
+        <li><strong>+1 evidence attached:</strong> <code>fc-ballot.official_document_url</code> → the FestacOnline flagbearer report, PATCHed through the CMS API and verified by fetching the article and confirming it names the party, the office and the constituency. <span class="chip v">VERIFIED</span></li>
+        <li><strong>+0 fabrications:</strong> four lines refused rather than filled with plausible links. <span class="chip r">REFUSED</span></li>
+        <li><strong>Score:</strong> 40 · “not yet defensible” · the rail is currently failing its own campaign honestly, which is the state this system was built to produce.</li>
+      </ul>
+      <p class="meta">Nothing generates text: ⌘K parses; no model in the editing layer; the War Room writes only what a human approved. A fabricated sentence about a real person is refused at the architecture level. (10-SECURITY §7)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §5 DOCUMENT SET MAP ================= -->
+<section class="sec" id="docs" data-obs aria-labelledby="h-docs">
+  <p class="kicker"><span class="secno">§5</span> — THE DOCUMENT SET MAP</p>
+  <h2 id="h-docs">Thirteen files, lifecycle-ordered, each stating its own date</h2>
+  <p class="deck">The documents follow the real lifecycle of the project: what was understood before code, what was decided, what was built, what was verified, how it is run, and what it is for. This infographic sits at the bottom of the precedence ladder below — it is the summary, not the source.</p>
+
+  <div class="docmap">
+    <div class="dn">00</div><div class="dc"><h3>00-DOCUMENT-INDEX.md</h3><p class="stage">Index · maintained</p><p>What exists, what is authoritative, what is stale; status table of the whole system; precedence ladder; four reading paths; maintenance rules. This page mirrors its §“Status of the system” row-for-row.</p></div>
+    <div class="dn">01</div><div class="dc"><h3>01-PRD.md</h3><p class="stage">Pre-programming, maintained · Product, client, reviewer</p><p>Problem, thesis, objectives O1–O7, the seven hard constraints given by the campaign, product surface, <strong>FR-1…FR-34</strong> with enforcement · code · status, <strong>NFR-1…NFR-15</strong>, priority tiers <strong>P0–P3</strong>, 12 acceptance criteria, go/no-go release criteria, 9 non-goals, risks, traceability to the dossier inputs.</p></div>
+    <div class="dn">02</div><div class="dc"><h3>02-RESEARCH-AND-DISCOVERY.md</h3><p class="stage">Pre-programming · the citation-bearing file</p><p>Intake provenance (7 source documents); environment research (NCC data, A4AI “1 for 2”, HTTP Archive, Lighthouse throttling); standards research (WCAG 2.2, Core Web Vitals, NDPA, EU AI Act, Meta); <strong>§4: 20+ dated events</strong> that happen to campaigns; codebase measurement; 9 evidence conflicts kept open; 8 findings that changed the product.</p></div>
+    <div class="dn">03</div><div class="dc"><h3>03-ARCHITECTURE-DECISIONS.md</h3><p class="stage">Programming · engineer, architect</p><p><strong>32 ADRs across eras P1–P6</strong>, each “era · status · decision · why · rejected alternatives”. ADR-001 SSR not SSG · ADR-002 one store two backends · ADR-007 fail-closed secrets · ADR-008 publish gate in mutation routes · ADR-013 ⌘K parses, no model · ADR-017 header probe not sharp · ADR-029 Windows atomic retry · ADR-031 portability · ADR-032 the open deferrals (CSP, TOTP, media off-disk, version DB).</p></div>
+    <div class="dn">04</div><div class="dc"><h3>04-TECHNICAL-MANUAL.md</h3><p class="stage">Programming · Parts 0–10</p><p>Part 0 five-minute system model · 1 prerequisites · 2 install &amp; run · 3 configuration reference (every env var) · 4 operating the content (nine tabs, Live Desk, frames) · 5 troubleshooting by symptom · 6 working on code · 7 builds &amp; artefacts · 8 data operations (“do not hand-edit the store”) · 9 deploying · 10 known issues stated plainly.</p></div>
+    <div class="dn">05</div><div class="dc"><h3>05-OPERATIONS-RUNBOOK.md</h3><p class="stage">Post-programming · ops, on-call</p><p>Roles &amp; credential discipline; daily rhythm (5 minutes, twice a day); weekly; monthly incl. renewal check; election-calendar rhythm; monitoring; <strong>10 incident playbooks</strong> (7.1 rumour response · 7.2 wrong claim · 7.3 page won’t update · 7.4 down/under attack · 7.5 volunteer hang · 7.6 credential leak · 7.7 impersonation · 7.8 headers vanished · 7.9 broken page · 7.10 data-subject request); escalation ladder; handover &amp; the post-election question.</p></div>
+    <div class="dn">06</div><div class="dc"><h3>06-USE-CASES.md</h3><p class="stage">Both · client, journalist, reviewer</p><p>Four classes kept separate on purpose: <strong>22 abstract</strong> capability cases (A1–A22) · <strong>9 fictional</strong> scenarios written to a plausible campaign hour (B1–B9, labelled as fiction) · <strong>28 cited real events</strong> mapped against documented behaviour with the honest limit stated (C1–C28) · <strong>10 refusals</strong> (Part E) · adjacent uses (Part D) · coverage matrix (Part F).</p></div>
+    <div class="dn">07</div><div class="dc"><h3>07-USER-STORIES-AND-JOURNEYS.md</h3><p class="stage">Pre + post · design, QA, training</p><p><strong>8 personas</strong> (voter “Tunde, 38, Festac” → the desk’s comms lead “Ada” → the candidate → the vendor engineer) · <strong>34 stories</strong> with acceptance shape · <strong>7 journeys</strong> (J1 the WhatsApp forward — the highest-volume journey; J3 the 21:40 rebuttal — where the design is actually tested; J7 the new engineer’s takeover) · story-to-requirement index · the 30-minute desk training.</p></div>
+    <div class="dn">08</div><div class="dc"><h3>08-DEVELOPER-WORKFLOW.md</h3><p class="stage">Programming · engineer</p><p>Opens with the true statement: <em>there is no version control yet</em>. Conventions that are load-bearing; <strong>6 recipes</strong> (add an editable field in 2 lines · add a frame · add a page · add an endpoint · change a validation rule · add a stored field); review checklist; the 9-step verification protocol; definition of done; <strong>14 known landmines</strong> (browser cache, timingSafeEqual length, WEBP-as-.jpeg serving, force-dynamic amnesia, revalidate.ts omission, multi-instance lead loss…).</p></div>
+    <div class="dn">09</div><div class="dc"><h3>09-QA-AND-TEST-EVIDENCE.md</h3><p class="stage">Post-programming · QA, auditor</p><p>Records command · date · observed output, never a conclusion: <strong>E1–E8</strong> (type check · gate script verbatim · build &amp; manifest · Live Desk browser protocol · the portrait defect and its verification failure · store state · security probes · mobile/contrast sweep); the 9-step regression set under ten minutes; the honest <strong>11-item not-tested list</strong> with cost-to-close. §10 of this page quotes E1–E3 verbatim.</p></div>
+    <div class="dn">10</div><div class="dc"><h3>10-SECURITY-AND-COMPLIANCE.md</h3><p class="stage">Post-programming · security, legal</p><p>Asset inventory; auth/session analysis with four stated limits; <strong>threat model T1–T15</strong> with likelihood · impact · controls · residual; hardening applied vs edge-required; <strong>NDPA 2023 obligation-by-obligation mapping</strong> (s.25(1) bases → s.30 sensitive opinions → s.34 rights → DPIA s.28); platform political-ad rules; content-integrity-as-security; accessibility posture; <strong>12-item ranked backlog</strong> where the top item is a signed data-processing agreement.</p></div>
+    <div class="dn">11</div><div class="dc"><h3>11-HARDWARE-AND-ENVIRONMENT-SPEC.md</h3><p class="stage">Post-programming · ops, procurement</p><p>Measured inventory; dev &amp; build environments incl. the failure-causing conditions (OneDrive, AV, port clashes); traffic model with every assumption labelled and its arithmetic shown; <strong>Tier 1–3</strong> production sizing; hosting-shape table; storage projection; network/region; runtime pins; 4-environment matrix; procurement list and anti-list. Summarised in §7 of this page.</p></div>
+    <div class="dn">12</div><div class="dc"><h3>12-PRE-POST-PROGRAMMING-CHECKLISTS.md</h3><p class="stage">Both · everyone</p><p>~100 gated items in six phases, each naming the evidence that closes it and the human who can tick it: Phase 0 pre-programming (annotated with the three gates this project ran <em>late</em> — a finding, not a footnote) · 1 per-release dev gate · 2 go-live gate split 2.A engineering / 2.B campaign HQ / 2.C desk readiness · 3 first-72-hours watch · 4 ongoing &amp; closeout incl. data disposition · <strong>5 standing refusals — “a checklist item that only ever gets ticked ‘no’”</strong>.</p></div>
+    <div class="dn">＋</div><div class="dc"><h3>Repo root — README.md · DEPLOYMENT-GUIDE.md</h3><p class="stage">Authoritative internal copies</p><p><code>README.md</code>: named internal overview, Live Desk design, publish gate, guardrails. <code>DEPLOYMENT-GUIDE.md</code>: hosting architecture, the five host-deciding constraints, five deploy paths compared, the Path-A porting work order, §16 launch roadmap with the voter test, §17 cost shapes, §18 sources. Priority 3 on the ladder — above the document set, below the gates.</p></div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>The requirement spine</h3>
+      <p><strong>FR-1…FR-34</strong> in six families — 7.1 public record &amp; truthfulness (FR-1…6) · 7.2 editing at campaign speed (FR-7…14) · 7.3 media (FR-15…20) · 7.4 constituent help desk (FR-21…25) · 7.5 data, serving &amp; integration (FR-26…31) · 7.6 findability &amp; shareability (FR-32…34). Status column: every FR ships <em>delivered</em>, several “delivered against a dev credential / stub webhook”. <strong>NFR-1…NFR-15</strong> carry the mobile-first, touch-target, contrast, motion, performance, availability, recoverability and lawfulness standards — two of them <span class="chip g">[gap]</span> (NFR-7 audit, NFR-11 availability target).</p>
+      <p><strong>Priority tiers (P0–P3), the order the constraints forced:</strong></p>
+      <ul class="dash">
+        <li><span class="sev b">P0 refusal, not polish</span> — FR-1, FR-5, FR-13, FR-18, FR-21, FR-22, FR-26, NFR-1: failure mode is political or legal (unsourced claim published, fake portrait shipped, editor visible to voters, resident phone in public HTML).</li>
+        <li><span class="sev p">P1 speed that justifies the product</span> — FR-7…FR-12, FR-29, FR-2. Without these it is a brochure with a login and the desk goes back to WhatsApp.</li>
+        <li><span class="sev p">P2 quality of the record</span> — FR-15…FR-19, FR-14, FR-3, FR-32: institution or template.</li>
+        <li><span class="sev p">P3 reach &amp; integration</span> — FR-30, FR-31, FR-23…FR-25: valuable once the record is run well.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Precedence ladder — where truth actually lives</h3>
+      <ol class="ladder">
+        <li><strong>The code and the running build</strong> — <code>src/</code>, <code>next.config.mjs</code>, what <code>npm run build</code> produces.</li>
+        <li><strong><code>scripts/check-cms-gates.mjs</code> + <code>/api/admin/health</code></strong> — executable assertions. A claim contradicted by these two is a documentation bug.</li>
+        <li><strong>DEPLOYMENT-GUIDE.md</strong> — hosting &amp; infrastructure analysis, written against a verified build.</li>
+        <li><strong>This document set (00–12)</strong> — interpretation, rationale, the record of decisions.</li>
+        <li><strong>This infographic</strong> — a summary of 1–4. “A communication artefact, not a specification.”</li>
+      </ol>
+      <h3>Reading paths</h3>
+      <div class="paths">
+        <div class="path"><h4>A reviewer · 15 min</h4><ol><li>01-PRD §1–§3</li><li>this infographic</li><li>09-QA §2 results</li></ol></div>
+        <div class="path"><h4>An engineer taking over</h4><ol><li>08-DEVELOPER-WORKFLOW</li><li>04-TECHNICAL-MANUAL</li><li>03-ADR log</li><li>DEPLOYMENT-GUIDE §6</li></ol></div>
+        <div class="path"><h4>The campaign desk</h4><ol><li>04-TECHNICAL-MANUAL §editing</li><li>07 journeys</li><li>05-OPERATIONS-RUNBOOK §playbooks</li></ol></div>
+        <div class="path"><h4>A prospective client</h4><ol><li>06-USE-CASES</li><li>this infographic</li><li>the anonymised case study</li></ol></div>
+      </div>
+    </div>
+  </div>
+  <p class="meta">Maintenance rules enforced on the set: dated at every substantive edit · decisions recorded as new numbered ADRs, never silently overwritten · test evidence records command, date, output · <strong>gaps stay visible; a closed gap gets a date, it is not deleted</strong> · external citations re-checked before outside use. Next review: when a production host is assigned, and 7 days before any public launch.</p>
+</section>
+<!-- ================= §6 DEPLOYMENT ================= -->
+<section class="sec" id="deploy" data-obs aria-labelledby="h-deploy">
+  <p class="kicker"><span class="secno">§6</span> — DEPLOYMENT &amp; HOSTING</p>
+  <h2 id="h-deploy">Three ranked paths, and one deliberately excluded</h2>
+  <p class="deck">From <code>DEPLOYMENT-GUIDE.md</code> (ladder priority 3): the answer to “what can go live this week with everything working and no code changes?” is a persistent server; the answer to “can we go full serverless?” is yes — once the port is done. Four paths were assessed; only three are ranked, because Path D is not a product mode — the row is printed so the count on this page matches the count in the table.</p>
+
+  <div class="tscroll" tabindex="0" role="region" aria-label="Ranked deployment paths, scrollable table" aria-describedby="swipe2">
+    <table>
+      <caption>Architecture options compared — decision matrix condensed from DEPLOYMENT-GUIDE §4 · 11-HARDWARE §4.3</caption>
+      <colgroup><col class="w6"><col class="w24"><col class="w18"><col class="w30"><col class="w22"></colgroup>
+      <thead><tr><th scope="col">Rank</th><th scope="col">Path</th><th scope="col">Shape</th><th scope="col">One-line tradeoff</th><th scope="col">Feature parity as the code stands</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td><strong>B — one container + mounted volume</strong> <span class="meta">Render · Koyeb · Fly.io</span></td><td class="m">next start, one instance, one writer, a volume at DATA_DIR</td><td>Launch this week with zero porting; ops burden = watching disk, backups, restarts; scale is vertical, not horizontal.</td><td><span class="chip v">YES</span> <span class="meta">+ <code>output:'standalone'</code></span></td></tr>
+        <tr><td class="num">2</td><td><strong>C — self-hosted VPS</strong> <span class="meta">London or Lagos region + Docker/systemd + Caddy + Cloudflare in front</span></td><td class="m">the same verified next start on your own disk</td><td>Lowest total cost and most control — the only shape that keeps NDPA-held personal data on a disk you can encrypt and physically reason about — and the highest ops burden: one human who answers at 11pm.</td><td><span class="chip v">YES</span></td></tr>
+        <tr><td class="num">3</td><td><strong>A — serverless Next.js</strong> <span class="meta">Netlify / Vercel + Supabase Postgres + object storage + presigned uploads</span></td><td class="m">functions + ISR + on-demand revalidation</td><td>The scale-over target before the heaviest window (primaries → general election): survives a rumour spike by construction, low ops — but only after the eight-item porting work order.</td><td><span class="chip g">NO — needs the porting order</span></td></tr>
+        <tr class="excluded"><td class="num">—</td><td><strong>D — static export</strong> <span class="meta">Next.js <code>output:'export'</code> on any CDN</span></td><td class="m">pre-built HTML, no Node process, no writable disk</td><td>Not ranked: with no server there is no <code>POST</code>, so the desk cannot publish on election day and the gate has nowhere to run. It survives only as the rehearsed read-only surge snapshot (§7 environment matrix · ADR-030).</td><td><span class="chip r">EXCLUDED</span> <span class="meta">fallback, not a product mode</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="swipe" id="swipe2">↔ swipe / scroll sideways — 5 columns kept whole, never wrapped mid-cell</p>
+
+  <h3>Why full serverless is <em>not</em> sufficient as the code stands</h3>
+  <ul class="dash">
+    <li>The mutating admin routes need a <strong>persistent writable disk</strong>: <code>data/</code> is gitignored, so a deploy-as-is serverless build reseeds from bundle content and <strong>silently deletes every collected volunteer lead</strong>; writes that do land go to an ephemeral lambda filesystem and vanish on the next cold start (11-HARDWARE A19).</li>
+    <li>A desk photograph is up to <strong>10 MB in one POST</strong> — above the function payload ceilings (Vercel ~4.5 MB; Netlify ~6 MB sync), so the desk just sees “upload failed” on a phone. Uploads must become presigned object storage.</li>
+    <li>Serverless scales to many concurrent clones of the same function, each with its own in-process cache — on the file store the <strong>last writer wins and silently overwrites</strong> the other’s rows.</li>
+    <li>Admin auth is the one part that <em>is</em> serverless-proof: the session is a stateless signed cookie — no server session table, no sticky routing — and all 34 handlers are <code>force-dynamic</code> with no build-time data assumptions. The blocker is the disk, not the cookie.</li>
+    <li>Only <code>/api/admin/media/upload</code> declares <code>runtime='nodejs'</code> — it uses <code>fs</code> and cannot run on edge runtimes.</li>
+  </ul>
+
+  <h3>The five host-deciding constraints</h3>
+  <div class="rail">
+    <div class="kv"><span class="k">1 · Persistent writable DB</span><span class="v">store.ts file backend → needs a mounted DATA_DIR or Postgres. ✗ on pure serverless</span></div>
+    <div class="kv"><span class="k">2 · Uploads + public URL</span><span class="v">media/upload writes bytes then reads dimensions back → needs disk + a URL, or object storage</span></div>
+    <div class="kv"><span class="k">3 · Desk edits reach voters</span><span class="v">revalidatePath only — no CDN purge API is wired; on a CDN the edge keeps serving until s-maxage expires</span></div>
+    <div class="kv"><span class="k">4 · 10 MB in one POST</span><span class="v">MAX_BYTES 10 MB vs function payload caps 4.5–6 MB → the presigned-upload porting item</span></div>
+    <div class="kv"><span class="k">5 · Node runtime + Lagos vantage</span><span class="v">fs/crypto need Node (fine on function runtimes, not edge); users are in Lagos → edge CDN in front, origin London/Lagos</span></div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>Mandatory post-deploy checks (§16)</h3>
+      <ul class="dash">
+        <li>The gate script against the <em>production</em> URL: <code>BASE=https://… node scripts/check-cms-gates.mjs</code> → 12/12.</li>
+        <li><strong>The voter test:</strong> log out of the desk, fetch the page as a voter, confirm the new sentence is actually there. “Row 3 is the one teams get wrong” — the desk sees its edit immediately; the CDN may not.</li>
+        <li>Header verification after every deploy: <code>curl -sI</code> and grep <code>strict-transport-security</code> — a proxy can strip them silently, and the static export carries none at all.</li>
+        <li>Both DNS names (apex + www) resolve, redirect, and carry valid certificates.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What has <em>not</em> been decided</h3>
+      <p class="t"><strong>Status line, verbatim from the index:</strong> <span class="mono">Verified locally as SSR. No production host assigned.</span> <span class="chip g">[gap]</span></p>
+      <p class="t">Every number in §10 was produced on <code>127.0.0.1:3100</code>. CDN staleness, header stripping, ephemeral filesystems and TLS are unexercised. The recommendation on the record: ship a persistent server (B or C) for launch; run the Path-A port as scale-over work before the party-primaries-to-general-election window, because CDN-cached pages survive a rumour spike better than one origin. Budget line: choose flat-rate egress with overage tolerance over per-GB billing — a viral week on per-GB pricing is an invoice you discover after the fact.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §7 ENVIRONMENT & HARDWARE ================= -->
+<section class="sec" id="environment" data-obs aria-labelledby="h-env">
+  <p class="kicker"><span class="secno">§7</span> — ENVIRONMENT &amp; HARDWARE</p>
+  <h2 id="h-env">What machine this needs, what to buy, and what not to buy</h2>
+  <p class="deck">Every measured figure came from the built application on 3 November 2026. Every estimate is labelled <em>assumption</em> and carries its arithmetic, so a reader can substitute their own number and redo it. No price here is a quote. (04 manual Parts 1–3 · 11 spec, full text)</p>
+
+  <div class="tscroll" tabindex="0" role="region" aria-label="Production tiers, scrollable table" aria-describedby="swipe3">
+    <table>
+      <caption>Production tiers — 11-HARDWARE §4.2, values verbatim</caption>
+      <colgroup><col class="w12"><col class="w16"><col class="w24"><col class="w24"><col class="w24"></colgroup>
+      <thead><tr><th scope="col">Tier</th><th scope="col">Machine</th><th scope="col">Shape</th><th scope="col">Handles / purpose</th><th scope="col">The catch</th></tr></thead>
+      <tbody>
+        <tr><td><span class="sev p">TIER 1</span> minimum viable</td><td class="m"><span class="nb">1 vCPU</span> · <span class="nb">1 GB RAM</span> · <span class="nb">20 GB SSD</span></td><td class="m">next start under systemd or Docker · Caddy TLS · Cloudflare free in front</td><td>~10 concurrent SSR renders at 80–150 ms; comfortably more once ISR is warm. A desk-run demo for a campaign that cannot pay monthly.</td><td>Never run two instances: two writers on <code>data/db.json</code> lose leads silently. The real cost is your evenings.</td></tr>
+        <tr><td><span class="sev p">TIER 2</span> recommended production</td><td class="m"><span class="nb">2 vCPU</span> · <span class="nb">4 GB RAM</span> · <span class="nb">80 GB SSD</span></td><td class="m">European region close to Nigeria (London default; Lagos/IS1 if offered) · Caddy · Cloudflare (paid tier for WAF + image resize) · Supabase Postgres · object storage for uploads</td><td>The recommended standard. Removes the ephemeral-filesystem risk, keeps the file store as fallback, gives real backups; the 4-dependency app runs anywhere.</td><td>4 GB is headroom for Node’s heap and the TLS proxy breathing during a burst — the whole dataset is 52 KB; Postgres free/entry tier is ample.</td></tr>
+        <tr><td><span class="sev p">TIER 3</span> surge / election window</td><td class="m"><span class="nb">4 vCPU</span> · <span class="nb">8 GB RAM</span> · <span class="nb">160 GB SSD</span></td><td class="m">autoscale only <strong>after</strong> the Postgres port · multiple instances behind a load balancer · CDN purge wired to revalidation · read-replica-style edge caching · media off the app disk</td><td>Polling week, or a national rollout of the same platform. Rate limiting + <code>/admin</code> IP allowlist at the edge, since the app has no middleware to do it in.</td><td>Multi-instance on the file store is “a staleness machine”: revalidation invalidates only the instance that receives the call.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="swipe" id="swipe3">↔ swipe / scroll sideways — 5 columns kept whole, never wrapped mid-cell</p>
+
+  <div class="grid2">
+    <div>
+      <h3>Development machine</h3>
+      <p><strong>Recommended:</strong> 8 cores · <strong>16 GB RAM</strong> · 512 GB NVMe · Windows 11 + Git Bash, macOS or Ubuntu 22.04+ · Node 20 LTS, npm pinned by the lockfile. The verified build was performed on Windows with Git Bash — which produced a real defect (<code>EPERM</code>/−4091 on atomic rename) and therefore ADR-029; the Windows case is a requirement, not an afterthought.</p>
+      <p><strong>Minimum that still works, slowly:</strong> 4 cores · 8 GB · 256 GB SSD · install 2–6 min · build 3–5 min · first compile 10–30 s per route.</p>
+      <div class="rail">
+        <div class="kv"><span class="k">node_modules</span><span class="v">287 MB — install/build time only</span></div>
+        <div class="kv"><span class="k">.next</span><span class="v">100 MB — the artefact that deploys</span></div>
+        <div class="kv"><span class="k">public/</span><span class="v">13 MB — 83 press + 3 generated + 0 uploads</span></div>
+        <div class="kv"><span class="k">db.json</span><span class="v">52 KB — the entire live state</span></div>
+        <div class="kv"><span class="k">disk budget</span><span class="v">~2 GB per checkout; 4 GB with two worktrees</span></div>
+        <div class="kv"><span class="k">desk device rule</span><span class="v">every desk editor needs a phone they actually use; the Live Desk is unusable touch-first below ~400 px — a stated limit, not a bug</span></div>
+      </div>
+      <p class="meta">Build/CI box: 2 vCPU · 4–8 GB · 10–20 GB scratch; cold <code>npm ci</code> + tsc + build ≈ 3–6 min; the gate must run <em>against the built artefact</em>, then again against the live URL.</p>
+    </div>
+    <div>
+      <h3>What not to buy — and why, one line each</h3>
+      <ul class="plain">
+        <li><strong>A bigger server instead of a CDN.</strong> A 1 vCPU origin behind Cloudflare out-performs a big box behind nothing; edge egress and photo disk are the constraints, never CPU.</li>
+        <li><strong>Multiple app instances while still on the file store.</strong> No cross-process lock; silent lead loss plus a per-instance revalidation staleness machine.</li>
+        <li><strong>Managed “WordPress-Next” hosting that cannot run a Node process.</strong> The app is a long-lived Node server with a writable disk; shared PHP/cPanel is architecturally impossible.</li>
+        <li><strong>A serverless-only plan with nowhere persistent to write.</strong> It deletes your leads on redeploy (§6).</li>
+        <li><strong>A separate image-resize service.</strong> The honest fix is object storage or edge optimisation — sharp was deliberately excluded (ADR-017); do not buy its way back in as a vendor.</li>
+        <li><strong>A vendor dashboard that adds a second editing surface.</strong> The whole Live Desk argument is that a second UI is a thing to keep in sync, and it will drift.</li>
+      </ul>
+      <p class="meta">Buy order for a single-constituency 2027 campaign (11 §9): ① domain + DNS behind Cloudflare → ② one Tier-2 VPS with a mounted volume → ③ a Supabase project, both migrations, service-role key → ④ object storage at a couple of hundred uploads → ⑤ synthetic monitoring from ≥2 regions <em>including a West African vantage</em> → ⑥ off-box backups, daily × 14 + weekly × 8, with one timed restore drill before launch.</p>
+    </div>
+  </div>
+
+  <h3>Traffic model — assumptions labelled, arithmetic shown</h3>
+  <div class="grid2">
+    <div>
+      <div class="tscroll" tabindex="0" role="region" aria-label="Traffic model assumptions, scrollable table" aria-describedby="swipe4">
+        <table>
+          <caption>The six inputs — none of these is a measurement; substituting a real number replaces every conclusion below it</caption>
+          <colgroup><col class="w24"><col class="w18"></colgroup>
+          <thead><tr><th scope="col">Assumption</th><th scope="col">Value used</th><th scope="col">Basis</th></tr></thead>
+          <tbody>
+            <tr><td>Addressable audience</td><td class="m">100,000–400,000 residents</td><td><em>assumption</em> — replace with INE registered-voter figures for the LGA when HQ supplies them</td></tr>
+            <tr><td>Share who ever visit</td><td class="m">5–20% over the campaign</td><td><em>assumption</em>; a state race is a fraction of a presidential one</td></tr>
+            <tr><td>Peak day</td><td class="m">polling day, or the day after a rumour</td><td>documented pattern: IReV unreachable 25–28 Feb 2023 filled the vacuum</td></tr>
+            <tr><td>Peak concurrent readers</td><td class="m">50–500</td><td><em>derived:</em> 20,000 unique/peak-day ≈ 1–3 req/s with a 20–50× burst factor</td></tr>
+            <tr><td>Pages per session</td><td class="m">3–6</td><td>mobile browsing pattern</td></tr>
+            <tr><td>Page weight</td><td class="m">300 kB–1.2 MB</td><td>measured JS 87–102 kB + photography</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="swipe" id="swipe4">↔ swipe / scroll sideways — 3 columns kept whole, never wrapped mid-cell</p>
+    </div>
+    <div>
+      <div class="formula">
+        EGRESS · peak day:&nbsp; 20,000 sessions × 5 pages × 0.7 MB ≈ <span class="est">70 GB</span> uncached<br>
+        with CDN (HTML for the ISR window · images indefinitely): origin&nbsp; ≈&nbsp; <span class="est">5–15 GB</span><br>
+        COMPUTE:&nbsp; 8/14 routes ISR → full render a handful of times per minute, not per request<br>
+        WRITES:&nbsp; 1–5 /s at peak, on a 52 KB JSON file → one small Node process, very large margins
+      </div>
+      <p class="t">That is the number to buy against — and why Cloudflare in front of anything is worth more than a bigger box. The genuine limits are (a) one-writer concurrency on the file store and (b) image disk. The burst model is arithmetic, not measurement: <span class="chip g">[gap]</span> no load test has been run (§10).</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div>
+      <h3>Runtime pins</h3>
+      <div class="rail">
+        <div class="kv"><span class="k">OS</span><span class="v">Ubuntu 22.04 LTS / Debian 12 — support window through 2027</span></div>
+        <div class="kv"><span class="k">Node.js</span><span class="v">20 LTS (verified build; ≥18.17 required) · npm 10 via lockfile</span></div>
+        <div class="kv"><span class="k">Next.js</span><span class="v">14.2.15 · TypeScript 5.5 · Tailwind 3.4</span></div>
+        <div class="kv"><span class="k">Process</span><span class="v">systemd or Docker, <code>restart: always</code> — no PM2 needed</span></div>
+        <div class="kv"><span class="k">Proxy / edge</span><span class="v">Caddy (TLS, restates headers) · Cloudflare (West African PoPs, WAF, purge)</span></div>
+        <div class="kv"><span class="k">DB</span><span class="v">none required (file store) → Supabase Postgres for durable writes</span></div>
+        <div class="kv"><span class="k">Log</span><span class="v">JSON to stdout, 30-day retention, shipped off-box</span></div>
+      </div>
+      <p class="meta">Non-negotiable: the dev fallbacks <code>ola-admin-2026</code>, <code>warroom-dev</code> and the ADMIN_SECRET fallback must not exist in a production process. With ADMIN_PASSWORD unset in production the app fails closed and nobody can log in — correct behaviour (ADR-007) that looks like an outage if you did not read this line.</p>
+    </div>
+    <div>
+      <h3>Environment matrix</h3>
+      <div class="tscroll" tabindex="0" role="region" aria-label="Environment matrix, scrollable table" aria-describedby="swipe5">
+        <table>
+          <caption>What runs where — a preview that is indexable or holds real lead data is the most common way a campaign leaks a draft</caption>
+          <colgroup><col class="w18"><col class="w20"><col class="w26"><col class="w14"><col class="w22"></colgroup>
+          <thead><tr><th scope="col">Environment</th><th scope="col">Purpose</th><th scope="col">Store</th><th scope="col">Indexable?</th><th scope="col">Data</th></tr></thead>
+          <tbody>
+            <tr><td class="m">dev</td><td>laptop work</td><td class="m">file store</td><td>no</td><td class="m">none or copy</td></tr>
+            <tr><td class="m">preview (per-PR)</td><td>visual check, Live Desk rehearsal</td><td class="m">throwaway Supabase branch or file store</td><td><strong>noindex mandatory</strong></td><td class="m">fake content only</td></tr>
+            <tr><td class="m">production</td><td>the campaign</td><td class="m">Supabase Postgres recommended; file store acceptable ≤4 editors</td><td>yes</td><td class="m">the only real data</td></tr>
+            <tr><td class="m">surge snapshot (Path D)</td><td>election-day read-only fallback</td><td class="m">static, baked-in</td><td>yes</td><td class="m">frozen copy</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="swipe" id="swipe5">↔ swipe / scroll sideways — 5 columns kept whole, never wrapped mid-cell</p>
+      <p class="meta">Platform scaling note (11 §10): writes-per-second scale with desks, not voters — Postgres at campaign #2, not campaign #5; object storage from day one on multi-campaign; separate store per campaign, because a supporter of candidate A must never appear in candidate B’s export. That is an NDPA question before it is an architecture one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §8 TIMELINE ================= -->
+<section class="sec" id="timeline" data-obs aria-labelledby="h-time">
+  <p class="kicker"><span class="secno">§8</span> — TIMELINE &amp; LIFECYCLE</p>
+  <h2 id="h-time">Six build eras behind; one electoral clock ahead</h2>
+  <p class="deck">Era names and membership from the ADR log header (03-ARCHITECTURE-DECISIONS.md); the operational track and its gates from 12-CHECKLISTS and the deployment roadmap §16.</p>
+
+  <div class="tl" role="list" aria-label="Build eras P1 to P6">
+    <div class="era" role="listitem"><span class="e">Era P1</span><h3>Scaffold</h3><p>ADR-001 server-rendered App Router, not a static generator · ADR-028 CSS animations + inline SVG instead of animation/icon libraries — the four-dependency ceiling set here.</p></div>
+    <div class="era" role="listitem"><span class="e">Era P2</span><h3>Functional completion</h3><p>No stubs. ADR-002 one store/two backends · 004 readable keys · 006 hand-written HMAC cookie · 007 fail-closed secrets · 025 PII stripped in code and DB · 026 prohibited capabilities absent from the codebase · 029 atomic Windows-safe writes.</p></div>
+    <div class="era" role="listitem"><span class="e">Era P3</span><h3>Mobile &amp; readability</h3><p>The client’s brief — “not too bright, ease of reading” — became the calmed palette (NFR-5), the 360×740 sweep, 44 px targets, and the Fogg/Selejan credibility research cited back to the client in plain language.</p></div>
+    <div class="era" role="listitem"><span class="e">Era P4</span><h3>Press media &amp; CMS</h3><p>ADR-016 named frames · 017 dependency-free header probe (WEBP walked as RIFF because Nigerian press serves WEBP under .jpeg names) · 018 one crop-gate number · 020 local originals vs plain img · 021 click-to-play facade · 024 headers restated at the proxy.</p></div>
+    <div class="era" role="listitem"><span class="e">Era P5</span><h3>Live Desk</h3><p>ADR-008 publish gate in mutation routes · 009 one attribute + one delegated listener · 010 edit = same request · 011 no optimistic UI · 012 a frame is not a field · 013 ⌘K parses, no model · 014 saturating integrity score · 015 overlay invisible at the DOM level.</p></div>
+    <div class="era" role="listitem"><span class="e">Era P6</span><h3>Deployment &amp; documentation</h3><p>ADR-019 defect-driven portrait fit · 023 force-dynamic + ISR · 030 export = preview, not product · 031 portability designed in · 032 the open deferrals. The twelve-document dossier and this infographic belong to this era.</p></div>
+  </div>
+
+  <h3>The electoral clock</h3>
+  <div class="track">
+    <div>
+      <h4>T-6 months → T-1 week &nbsp;<span class="meta">now: ≈ T-2.4 months</span></h4>
+      <ul class="dash">
+        <li>Assign a production host (the ladder’s first open decision) <span class="chip g">[gap]</span></li>
+        <li>Rotate all three dev secrets in the hosting environment <span class="sev b">BLOCK</span></li>
+        <li>First real production build + gate run against the live URL</li>
+        <li>HQ resolves the 4 <code>block</code> lines: supply the report or withdraw the claim (2.B.1)</li>
+        <li>Lawyer reads <code>/privacy</code>; data-processing agreement signed</li>
+        <li>Desk training: 30-minute pass per holder + one timed rumour rehearsal end-to-end</li>
+        <li>Backup/restore drill executed and <em>timed</em>; Path-D snapshot rehearsed with a named cutover owner</li>
+        <li>Deploy freeze from T-1: security fixes and CMS edits only</li>
+      </ul>
+    </div>
+    <div>
+      <h4>T-0 · polling day</h4>
+      <ul class="dash">
+        <li>Presidential/NASS poll <strong>16 Jan 2027</strong>; gubernatorial <strong>6 Feb 2027</strong> (INEC timetable; variants circulate — <span class="chip u">[unverified variants]</span>)</li>
+        <li><strong>≈ 74 days to the first ballot at compilation</strong> — computed from the cited date, 3 Nov 2026 → 16 Jan 2027</li>
+        <li>Public campaigns opened 19 Aug 2026 (presidential/NASS) and 9 Sept 2026 (gubernatorial)</li>
+        <li>The expected incident is a rumour, not a breach: the 72 hours before a poll are when an authoritative site earns its keep (NFR-11 has no formal target yet <span class="chip g">[gap]</span>)</li>
+        <li>72-hour watch pattern: gates against the live URL, lookalike-domain sweep, real-volunteer test within 2 h — the no-timeout defect lives in exactly this path</li>
+      </ul>
+    </div>
+    <div>
+      <h4>T+30 · post-election closeout</h4>
+      <ul class="dash">
+        <li>Data disposition executed with a date: hand over, archive, or delete volunteers / inquiries / help-desk reports — NDPA purpose has ended; every retained phone number is a live obligation</li>
+        <li>Signed handover of store, media, credentials and hosting to the named owner</li>
+        <li>Credential revocation: every desk account closed, secrets rotated one final time</li>
+        <li>Domain &amp; certificate decision — renew, park deliberately, or transfer</li>
+        <li>Final integrity report exported: score, findings, every block line and how each closed — the campaign’s compliance artefact</li>
+        <li>If the office is won: re-base the lawful basis for volunteer data; the publish gate stays</li>
+      </ul>
+    </div>
+  </div>
+  <p class="meta">A full WCAG 2.2 audit (keyboard + assistive tech) is deferred by agreement to the week after launch unless HQ moves it up — deferred, not forgotten: it is item 11 on the compliance backlog and a go/no-go “required before first broadcast mention” adjacent item. WCAG 2.2 SC 2.2.2 pause/stop controls are the cheapest named gap in the set.</p>
+</section>
+<!-- ================= §9 COMPLIANCE ================= -->
+<section class="sec" id="compliance" data-obs aria-labelledby="h-comp">
+  <p class="kicker"><span class="secno">§9</span> — COMPLIANCE &amp; PLATFORM POSTURE</p>
+  <h2 id="h-comp">A statute with a live enforcement record, a voluntary accessibility benchmark, and a deepfake rule with no campaign carve-out</h2>
+  <p class="deck">Mapped in full in 10-SECURITY-AND-COMPLIANCE §5–§8; cited from 02-RESEARCH §3. Status tags are the point: what is applied, what is only drafted, what no human has read yet.</p>
+
+  <div class="strip3">
+    <div>
+      <h3>NDPA 2023 <span class="meta cap">Nigeria</span></h3>
+      <p class="t"><strong>The sentence that changes everything for this site: s.30 lists political opinions as sensitive personal data.</strong> Every form on this product collects information whose submission <em>is</em> a political expression.</p>
+      <div class="rail">
+        <div class="kv"><span class="k">Lawful basis</span><span class="v">s.25(1) — consent only is claimed (volunteers, help-desk)</span></div>
+        <div class="kv"><span class="k">Consent</span><span class="v">s.26 — unticked checkbox, purpose statement, timestamp stored (consent_at); silence is not consent</span></div>
+        <div class="kv"><span class="k">Notice</span><span class="v">s.27 — NDPA disclosure on every form + /privacy</span></div>
+        <div class="kv"><span class="k">DPIA</span><span class="v">s.28 — not performed; the paradigm case for one <span class="chip g">[gap]</span></span></div>
+        <div class="kv"><span class="k">Rights</span><span class="v">s.34 confirmation · access · copy · rectification · erasure · restriction — manual path documented (runbook 7.10); no self-service endpoint</span></div>
+        <div class="kv"><span class="k">Regulator</span><span class="v">NDPC, established s.4 · GAID instrument issued 20 Mar 2025</span></div>
+      </div>
+      <h4>Status</h4>
+      <p><code>/privacy</code> present <span class="chip v">APPLIED</span> · not lawyer-reviewed <span class="chip g">[gap]</span> — release-blocking · <strong>no signed data-processing agreement between vendor and campaign</strong> — ranked the top legal gap, above the CSP · retention/disposition undecided · self-service withdrawal absent (acceptable v1, must be written into the notice) · no automated decision-making exists to object to (s.37 — “the comfortable answer”).</p>
+      <h4>Enforcement precedent, dated</h4>
+      <ul class="dash">
+        <li>Fidelity Bank <strong>₦555.8m</strong> — 22 Aug 2024</li>
+        <li>MultiChoice Nigeria <strong>₦766m</strong> — 7 Jul 2025</li>
+        <li>Compliance notices + <strong>1,368-organisation defaulter list</strong> — Aug 2025</li>
+        <li>Meta ₦32.8m-equivalent action over unlawful processing — settled/annulled by <strong>Oct 2025</strong>, making the scraping-based complaint a live template</li>
+      </ul>
+      <p class="meta">Design consequences follow the statute, not taste: reporter PII stripped server-side and mirrored in RLS; name/number optional on help-desk reports; no voter data, no payment data — “the largest single reduction of attack surface in this project”. European exposure recorded: GDPR Art. 9(1) + Recital 56 contemplate parties compiling such data with suitable safeguards; the product claims GDPR compliance nowhere.</p>
+    </div>
+    <div>
+      <h3>Accessibility <span class="meta cap">WCAG 2.2</span></h3>
+      <p class="t">WCAG 2.2: W3C <strong>Recommendation 5 Oct 2023</strong>, Updated Recommendation 12 Dec 2024 (errata). Adopted here as a <em>voluntary normative benchmark</em> — there is no binding Nigerian web-accessibility statute reaching a campaign site (nearest instruments: DPO Act 2018 + NCPWD Regulations 2023, implementation nascent; NITDA gov-website guidelines pre-date 2.2).</p>
+      <ul class="plain">
+        <li><strong>SC 2.5.8 Target Size (AA), 24×24 px floor</strong> — product works to 44–48 px “because the floor is not the point on a phone in sunlight”. <span class="chip v">EXCEEDED</span></li>
+        <li><strong>SC 2.2.2 Pause, Stop, Hide (A)</strong> — the auto-advancing carousel and animated stat strip need an <em>explicit</em> pause control. Partially met; the clearest finding of the standards research, and it was unknown when the carousel was built. <span class="chip g">[gap]</span> — an A-level criterion, a morning of work.</li>
+        <li><strong>SC 3.3.8 Accessible Authentication (AA)</strong> — auth is a password, no cognitive test. <span class="chip v">MET</span></li>
+        <li><strong>SC 2.4.11 Focus Not Obscured</strong> — untested under the sticky header and thumb bar. <span class="chip u">[unverified]</span></li>
+        <li><strong>Reduced motion</strong> — <code>prefers-reduced-motion</code> honoured in carousel and stat animation. <span class="chip v">VERIFIED</span> in code (E8)</li>
+        <li><strong>Contrast</strong> — scripted pass: no remaining AA failures for body text, gradient/pattern backgrounds excluded — the exclusion travels with the claim. <span class="chip v">VERIFIED (scoped)</span></li>
+        <li><strong>Keyboard-only + screen-reader audit</strong> — not performed. <span class="chip g">[gap]</span></li>
+        <li>Colour is never the only signal: every status chip carries its word.</li>
+      </ul>
+      <p class="meta">“Claiming ‘fully accessible’ would itself be an unsourced published claim — the one thing this product is designed to refuse.” The posture stated in the docs: built to WCAG 2.2 as far as audited; here is what is not yet audited.</p>
+    </div>
+    <div>
+      <h3>AI &amp; platform rules</h3>
+      <p class="t"><strong>EU AI Act — Regulation (EU) 2024/1689.</strong> Art. 50 transparency obligations <strong>applicable 2 Aug 2026</strong>: 50(2) machine-readable marking of synthetic content; 50(4) disclosure of deepfakes — AI-generated or manipulated image/audio/video resembling real persons — with an artistic exception and <strong>no campaign-specific carve-out</strong>. Nigeria is not bound; the relevance is that Art. 50 is the clearest existing articulation of the professional standard this site already enforces.</p>
+      <ul class="plain">
+        <li><strong>No synthetic media of the candidate</strong> — anywhere, any form, including “restored”/“enhanced”. Enforced as architecture: <code>exact</code> frames refuse the orientation fallback and the library. <span class="chip v">APPLIED</span></li>
+        <li><strong>No astroturfing</strong> — no bot, bulk-messaging or automated-posting route exists; the absence is architectural, which makes it a promise rather than a posture. Meta’s Coordinated/Inauthentic Behaviour standard has been an enforcement category since 6 Dec 2018. <span class="chip v">APPLIED</span></li>
+        <li><strong>Human-in-the-loop for every publication</strong> — no route publishes on a timer or an inbound webhook alone; War Room drafts land for desk review behind a bearer secret. <span class="chip v">APPLIED</span></li>
+        <li><strong>Meta political/social-issue advertising</strong> — identity verification + “paid for by” disclaimer; AI-altered ad media must be disclosed (announced 28 Nov 2023, in force Jan 2024; organic labelling May 2024; automated AI-detection labelling from 1 Jun 2026 <span class="chip u">[unverified]</span> — re-read it in a browser before quoting). If HQ buys ads, those are HQ’s obligations — recorded as “consequence not satisfied, add to go-live briefing”.</li>
+        <li><strong>FTC reviews rule</strong> in effect 21 Oct 2024 bans fake testimonials — the site invents none; captions state only what the report states. <span class="chip v">APPLIED</span></li>
+      </ul>
+      <p class="meta">Method citations behind the policy: Gillespie &amp; Pomerantz (2020) — automation is a compromise for scale, not a solution to context; a five-person desk has no scale problem, so it buys no automation compromise. NIST AI RMF + ISO/IEC 42001 cited as method, not compliance targets.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §10 EVIDENCE PANEL ================= -->
+<section class="sec" id="evidence" data-obs aria-labelledby="h-ev">
+  <p class="kicker"><span class="secno">§10</span> — EVIDENCE PANEL</p>
+  <h2 id="h-ev">Command · date · observed output — not a conclusion</h2>
+  <p class="deck">Quoted verbatim from <code>09-QA-AND-TEST-EVIDENCE.md</code>, last evidence run 3 Nov 2026, 13:48–13:49 UTC, against the production build served by <code>next start</code> on <code>127.0.0.1:3100</code>. <span class="chip m">MEASURED 3 Nov 2026</span></p>
+
+  <div class="cmd"><span class="c">$ npx tsc --noEmit                            # E1 · 13:48 UTC</span>
+<span class="o">(no output; exit 0)</span>
+
+<span class="c">$ node scripts/check-cms-gates.mjs              # E2 · 13:49 UTC</span>
+<span class="o">Checking http://127.0.0.1:3100</span>
+
+<span class="o">PASS  integrity audit refuses an anonymous request — HTTP 401</span>
+<span class="o">PASS  wrong password is refused — HTTP 401</span>
+<span class="o">PASS  campaign session opens — signed cookie issued</span>
+<span class="o">PASS  integrity audit returns a score — score 40 · not yet defensible · 6 finding(s)</span>
+<span class="b">      block: Service claims with no published report linked (3) → /impact [data-ow="record.a12.verification_source_url"]</span>
+<span class="b">      block: Truth Room rulings with no document attached (1) → /truth-room [data-ow="fact.fc-accessible.official_document_url"]</span>
+<span class="o">PASS  record entry without a report is refused — HTTP 400 · A public claim about a real person needs its evidence: paste the link to the published report or document that proves it.</span>
+<span class="o">PASS  non-http evidence is refused — HTTP 400</span>
+<span class="o">PASS  record entry with a report is published — HTTP 200 · 0ee31a6e-8447-49b1-b53c-3227bcf89ced</span>
+<span class="o">PASS  evidence link cannot be emptied — HTTP 400 · The evidence link cannot be emptied. Replace it with another report, or take the entry down from the ledger.</span>
+<span class="o">PASS  a published entry stays correctable — HTTP 200</span>
+<span class="o">PASS  the throwaway entry is removed again — HTTP 200</span>
+<span class="o">PASS  Truth Room ruling without a document is refused — HTTP 400</span>
+<span class="o">PASS  no test rows left behind — 0 leftover</span>
+
+<span class="o">12/12 checks passed.</span>
+
+<span class="c">$ npm run build                                 # E3 · 3 Nov 2026</span>
+<span class="o">→ success, route table emitted · npx next start -p 3100</span>
+<span class="o">  shared first-load JS 87.2 kB · per-page 87–102 kB</span>
+<span class="o">  14 prerender entries — 8 timed ISR (/, /gallery, /impact, /about, /contact 3600s;</span>
+<span class="o">    /truth-room, /news 900s; /help-desk 300s) · 6 immutable (/blueprint, /privacy,</span>
+<span class="o">    /join, /robots.txt, /sitemap.xml, /icon.svg)</span>
+<span class="o">  34 route handlers, all force-dynamic · 1 declares runtime='nodejs' (media/upload)</span></div>
+
+  <div class="grid2">
+    <div>
+      <h3 class="mh">What the three gates prove</h3>
+      <p class="t">Session auth accepts and refuses; the audit is not anonymously readable; <strong>the score is real and computed from the live store</strong>; unsourced and non-<code>http</code> evidence are refused at creation; the link cannot be emptied; pre-gate rows stay correctable; cleanup leaves zero rows. The refusal strings are the route’s own — the Live Desk shows the identical sentence (ADR-010). This is the third recorded 12/12 pass on 3 Nov, one before and one after the carousel fix, so that change did not disturb the gate.</p>
+      <h3 class="mh">Also on the record</h3>
+      <ul class="dash">
+        <li><strong>E4</strong> Live Desk browser protocol, 11 steps incl. private-window re-run: anonymous <code>/</code> carries no dock, no rings, no listeners; console clean.</li>
+        <li><strong>E5</strong> the portrait defect fixed in three layers — and the verification <em>failure</em> kept as a finding: the first measurement read a cached document reporting the old classes. “A cached document had nearly been shipped as a fix.”</li>
+        <li><strong>E6</strong> store state table (27 photos / 4 empty exact frames / 7 clips / 21 refs / 52 KB) — one evidence link attached, four refused.</li>
+        <li><strong>E7</strong> five negative probes incl. <code>javascript:</code> URL refused; <code>/admin</code> excluded from sitemap + robots, noindex.</li>
+        <li><strong>E8</strong> 360×740 sweep on every route: no horizontal overflow; 44–48 px targets; scoped contrast pass.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="mh">What was <em>not</em> tested — and could not be</h3>
+      <p class="t">Two specific claims are disclosed rather than glossed: <strong>scroll-following of the Live Desk rings</strong> (the test surface could not scroll — verified by reading, not observation) and <strong>screenshot-level visual parity</strong> (the capture path failed on hidden visibility; every visual claim in the set is a measurement, never an image).</p>
+      <details open data-collapse-mobile>
+        <summary>The not-tested list, 11 items (09-QA §4) — cost to close included</summary>
+        <div class="inner">
+          <ul class="plain">
+            <li>No production-host testing at all — every result is 127.0.0.1; CDN staleness, header stripping, ephemeral disks, TLS unexercised <em>(one deploy + the regression set)</em></li>
+            <li>No Supabase-backed run in this pass — the dual backend is the product’s core bet; the file store was the live path <em>(a project, both migrations, a service-role key, nine-tab saves)</em></li>
+            <li>No load test — the burst model in §7 is arithmetic, not measurement <em>(k6/Artillery, 500 concurrent readers)</em></li>
+            <li>No real-network measurement — TTFB/LCP/INP have never been sampled from a Nigerian mobile connection <em>(one afternoon, throttling + a Lagos vantage)</em></li>
+            <li>No penetration or abuse-path review — 27 admin handlers followed the same pattern, reviewed not asserted <em>(guard-per-route sweep + 20 assertions)</em></li>
+            <li>No WCAG 2.2 audit — keyboard-only, screen reader, focus order; plus the known SC 2.2.2 miss <em>(a device, an AT, a week)</em></li>
+            <li>No WhatsApp-preview check on a Nigerian device — the site’s main acquisition channel is a forwarded link <em>(15 minutes and one phone)</em></li>
+            <li>Scroll-follow of the rings — verified by reading only <em>(a surface that can scroll)</em></li>
+            <li>Screenshots of any state — no visual record exists <em>(fix the capture path or accept measurements)</em></li>
+            <li><code>/api/volunteer</code> under a hanging third party — unexercised <em>(a stub endpoint that never answers; twenty minutes)</em></li>
+            <li>Concurrent writers on the file store — the documented scaling limit, unquantified <em>(two processes, a loop, a diff)</em></li>
+          </ul>
+          <p class="meta">Priced recommendation: the next testing investment is not unit coverage — it is (1) auth assertions for the 27 handlers, (2) the hanging-third-party test, (3) one production deploy + the regression set. All three are hours, not weeks.</p>
+        </div>
+      </details>
+      <div class="refuse">
+        <h3>Open defect found in this pass</h3>
+        <p class="t"><code>/api/volunteer</code> awaits <code>Promise.allSettled([pushLeadToWarRoom, sendWhatsAppWelcome])</code> with <strong>no timeout</strong> — despite the “fire-and-forget” comment above it. A volunteer’s phone number is the slowest possible moment to wait on two third-party services with no deadline: if Meta or the War Room hangs, <em>the request hangs</em>, the page never confirms, and the user presses back and submits again. The YouTube oEmbed call right next to it <em>does</em> use <code>AbortSignal.timeout(6000)</code> — the pattern is known in the codebase and was not applied here. Fix is small (wrap both, return success on the store write alone), sits at the campaign’s most valuable moment, is checklist item 2.A.16 and backlog item 7 — and is honestly listed as <strong>not yet done</strong>. <span class="chip g">[gap]</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §11 REPORTED EVENTS ================= -->
+<section class="sec" id="events" data-obs aria-labelledby="h-events">
+  <p class="kicker"><span class="secno">§11</span> — REPORTED EVENTS THIS DESIGN ANSWERS TO</p>
+  <h2 id="h-events">The information environment is contested; the posture is enforced in code</h2>
+  <p class="deck">Sources: <code>02-RESEARCH-AND-DISCOVERY.md</code> §4 and <code>06-USE-CASES.md</code> Part C — every event cited there with dated URLs. Each row: what happened, and what this platform actually does about it, including where it does not help. Full 28-event mapping lives in 06 Part C.</p>
+
+  <div class="ev">
+    <div class="row"><span class="d">25–28 Feb 2023</span><span class="e"><strong>INEC IReV portal collapse on polling day</strong> — the results portal unreachable for hours (Rivers among worst-affected states); old videos and “INEC was hacked / results declared” claims filled the vacuum; post-poll violence documented 27 Feb by Amnesty.</span><span class="r"><b>Answers with:</b> availability posture + pre-decided Path-D read-only snapshot (forms stop, the record stays citable); the Truth Room gives a rumour somewhere to be answered. Honest limit: no formal availability target yet <span class="chip g">[gap]</span>.</span></div>
+    <div class="row"><span class="d">12 Jan 2019</span><span class="e"><strong>APC’s own website (apc.com.ng) hacked</strong> — carried a plagiarised document the party then disowned.</span><span class="r"><b>Answers with:</b> every write behind a signed session; no anonymous write path exists by design; fail-closed production auth; rotate-to-revoke; the publish gate refuses an unsourced claim <em>even from a legitimate session</em>. Limit: a stolen 12-hour cookie is a session; no immutable audit trail yet.</span></div>
+    <div class="row"><span class="d">3 Oct 2026</span><span class="e"><strong>Fake INEC “online voter registration” site</strong> — INEC disowned it and urged Nigerians not to submit personal data; debunk republished 13 Oct.</span><span class="r"><b>Answers with:</b> canonical <code>NEXT_PUBLIC_SITE_URL</code>, CMS-managed official-channel list, noindex admin. <span class="chip g">NOT YET BUILT</span> the published “what we will never ask for” statement — money, BVN, voter-card details <span class="chip g">[gap]</span>. The campaign cannot prove which site is real; this is the cheapest control available.</span></div>
+    <div class="row"><span class="d">27–28 Oct 2026</span><span class="e"><strong>US FEC eFiling taken offline by attack</strong> ~41 hours before midterms, blocking mandatory 24/48-hour ad-spend disclosures.</span><span class="r"><b>Answers with:</b> the incumbent authority’s system failing in the needed window is why the snapshot fallback is <em>pre-decided</em> with a named cutover owner. State that must survive is one file and one folder — restore is minutes, and the cadence is not yet automated.</span></div>
+    <div class="row"><span class="d">15–19 Aug 2026</span><span class="e"><strong>Osun governorship poll</strong> — fake “town-hall result” graphics and duplicated result sheets uploaded to IReV, fact-checked during the poll.</span><span class="r"><b>Answers with:</b> every image carries an outlet credit and source link; <code>exact</code> frames refuse stand-ins; the reference library is public and filterable. A fabricated graphic is a <em>design</em> problem and the defence is a citable record. Limit: no C2PA/watermark — a better-made fake beats this.</span></div>
+    <div class="row"><span class="d">7 Jan 2025</span><span class="e"><strong>Meta ended third-party fact-checking</strong> for an X-style notes model and dropped AI labels.</span><span class="r"><b>Answers with:</b> the external debunking layer a campaign could enlist was largely removed — a campaign’s <em>own</em> citable record moved from “nice” to “primary defence”. This is the strongest external justification the research produced for the Truth Room and <code>/impact#sources</code>.</span></div>
+    <div class="row"><span class="d">5 Jun 2026</span><span class="e"><strong>Arrest confirmed over an AI-cloned Tinubu “State of the Nation” audio</strong> — the Nigerian Presidency threatened action over a circulated variant.</span><span class="r"><b>Answers with:</b> a fact that reframes the constraint: “no AI imagery of the candidate” aligns with a <em>prosecutable local norm</em> — five months old — and with EU AI Act Art. 50 (2 Aug 2026, no campaign carve-out). Detection is out of scope and says so.</span></div>
+    <div class="row"><span class="d">22–30 Jul 2026</span><span class="e"><strong>~270 fake Georgia campaign/merch sites</strong> among 62,000+ US-2026-election domains, impersonating campaigns to harvest donor data (WhoisXML).</span><span class="r"><b>Answers with:</b> the clearest case where the <em>missing</em> feature is the correct response — no payment path exists in the codebase. It is an architectural absence, not a disabled flag. Donations would have put this project in that category.</span></div>
+    <div class="row"><span class="d">Aug 2024 – Oct 2025</span><span class="e"><strong>NDPA enforcement wave</strong> — Fidelity Bank ₦555.8m (22 Aug 2024); MultiChoice ₦766m (7 Jul 2025); 1,368-organisation defaulter list (Aug 2025); Meta action settled (Oct 2025).</span><span class="r"><b>Answers with:</b> consent captured with a stored timestamp and exported with it; reporter PII stripped server-side and in RLS; minimisation by design; no voter files. Named gaps carried visibly: lawyer-read privacy wording, signed DPA, DPIA before reuse.</span></div>
+  </div>
+
+  <p class="t">The argument, stated once: when the surrounding infrastructure has been hacked, impersonated and shut down within the last eight years — and the neutral debunking layer has been dismantled — <strong>“verifiable-with-evidence” is a defensible posture, not a style choice</strong>. It is worth more because it is enforced in code rather than policy: the gate refuses at <code>POST</code>, the rail grades at <code>GET</code>, and the refusals in §13 are properties of the request graph, not lines in a handbook. The asymmetry the record admits: this site cannot stop a deepfake being made of its candidate. It can make its own record so well-sourced that a correction has somewhere credible to live.</p>
+</section>
+<!-- ================= §12 TOP RISKS ================= -->
+<section class="sec" id="risks" data-obs aria-labelledby="h-risks">
+  <p class="kicker"><span class="secno">§12</span> — TOP RISKS</p>
+  <h2 id="h-risks">Where the bodies are, with owners and states</h2>
+  <p class="deck">Merged from 10-SECURITY (threat model T1–T15, residual column), 12-CHECKLISTS Phase 2 and 08-WORKFLOW §1. Severity uses the rail’s own weights — <code class="m">block 18 · warn 7 · info 2</code>. Owners are roles, never people.</p>
+  <details open data-collapse-mobile>
+    <summary>Risk register — 11 entries · severity · owner · state</summary>
+    <div class="inner">
+      <div class="tscroll" tabindex="0" role="region" aria-label="Risk register, scrollable table" aria-describedby="swipe6">
+        <table>
+          <caption>Ranked top risks as at 3 Nov 2026 — nothing here is softened</caption>
+          <colgroup><col class="w34"><col class="w12"><col class="w14"><col></colgroup>
+          <thead><tr><th scope="col">Risk</th><th scope="col">Severity</th><th scope="col">Owner</th><th scope="col">State / what closes it</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Unrotated dev secrets</strong> — <code class="m">ola-admin-2026</code>, <code class="m">warroom-dev</code>, the <code class="m">ola-western-cms-dev-secret</code> ADMIN_SECRET fallback are live locally and are known strings</td><td><span class="sev b">BLOCK</span></td><td>engineering</td><td>Must be rotated before <em>any</em> public deployment (2.A.1–2). Minutes of work; release-blocking; ADR-007 “accepted, currently unmet in operation”.</td></tr>
+            <tr><td><strong>No version control</strong> — <code class="m">.git</code> is absent; the folder is not a repository, so rollback-by-revert is impossible and a deploy-from-artefact diff is meaningless</td><td><span class="sev b">BLOCK</span></td><td>engineering</td><td>Gate 0.11 / 2.A.17 open; the new engineer’s first task is <code class="m">git init</code> + baseline commit. .gitignore itself is already correct (/data, .env*.local).</td></tr>
+            <tr><td><strong>Four <code class="m">block</code> content lines</strong> published without evidence (a6 · a11 · a12 · fc-accessible) — the score of 40 is these four lines</td><td><span class="sev b">BLOCK</span></td><td>campaign HQ</td><td>No engineer can close this: HQ supplies a report that <em>states</em> each claim or withdraws the line (2.B.1). Engineering has <span class="chip r">REFUSED</span> to fabricate links — §4, §13.</td></tr>
+            <tr><td><strong><code class="m">/api/volunteer</code> can hang</strong> — two awaited third-party calls, no timeout (§10)</td><td><span class="sev w">WARN</span></td><td>engineering</td><td>Open defect, fix ≈ one hour (backlog item 7, gate 2.A.16). Interim mitigation available: do not set War-Room/WhatsApp credentials until the fix lands.</td></tr>
+            <tr><td><strong>Archived CI action</strong> — the existing GitHub Action uses <code class="m">amondnet/vercel-action@v25</code> (archived) and passes only the two public Supabase vars: it cannot currently produce a working production site</td><td><span class="sev w">WARN</span></td><td>engineering</td><td>Replace with the pipeline shape in DEPLOYMENT-GUIDE §15 (build → start → gate → deploy → gate) before any pipeline is trusted.</td></tr>
+            <tr><td><strong>No CSP</strong> — an escaping bug would have no second layer; six hard headers are in, Content-Security-Policy is not</td><td><span class="sev w">WARN</span></td><td>engineering</td><td>Deferred by ADR-032, <em>due before the site is publicly named</em>; ship reporting-only first (next/image + iframe injection are the likely breakers). Must be edge-added if any proxy strips headers.</td></tr>
+            <tr><td><strong>No login rate limit; no per-cookie revocation</strong> — the password is brute-forceable in principle; a stolen session is legitimate for up to 12 h and revocation = rotating ADMIN_SECRET, which ends every desk session</td><td><span class="sev w">WARN</span></td><td>engineering + edge host</td><td>No app middleware ⇒ throttle + <code class="m">/admin</code> allowlist must be configured at the edge (Cloudflare/Caddy) once a host exists — config, not code. Shared-secret discipline (one account per person, leaver rotation) is the realistic control; TOTP is a build candidate, not present protection.</td></tr>
+            <tr><td><strong>Impersonation of the campaign site</strong> (T12 — “medium-high and rising”)</td><td><span class="sev w">WARN</span></td><td>campaign HQ</td><td>Canonical URL + channel list built; the “what we will never ask for” statement recommended and <em>not yet built</em> (2.B.12).</td></tr>
+            <tr><td><strong>Vendor holds controller data without written terms</strong> — no signed data-processing agreement between vendor and campaign</td><td><span class="sev w">WARN</span></td><td>HQ + vendor</td><td>Ranked <strong>the top compliance gap, above the CSP</strong>: sensitive-category data by a regulator that is actively fining. Days of paperwork, not code (backlog item 1).</td></tr>
+            <tr><td><strong>WCAG 2.2 full audit outstanding</strong> — keyboard-only, screen reader, focus order unmeasured; SC 2.2.2 pause/stop known miss; SC 2.4.11 untested</td><td><span class="sev gap">GAP</span></td><td>engineering + hired audit</td><td>NFR-7 <span class="chip g">[gap]</span>; deferred by agreement to post-launch week unless HQ moves it up; a week or a consultant.</td></tr>
+            <tr><td><strong>NDPA wording not lawyer-reviewed</strong> — /privacy drafted; lawful-basis wording, withdrawal path, retention decision outstanding; DPIA not performed</td><td><span class="sev gap">GAP</span></td><td>campaign HQ + counsel</td><td>Release-blocking (2.B.2); DPIA before any national reuse (backlog item 10); retention disposition forced by runbook §9 with a date.</td></tr>
+            <tr><td><strong>No CSRF token</strong> — accepted posture</td><td><span class="sev i">INFO</span></td><td>engineering</td><td>Mitigated by design: <code class="m">sameSite=lax</code> + zero GET-mutation handlers — “that pairing is what makes it safe rather than lucky.” Re-verify the pairing before adding any handler.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="swipe" id="swipe6">↔ swipe / scroll sideways — 4 columns kept whole, never wrapped mid-cell</p>
+      <p class="meta">Also recorded at info level: single shared credential (no per-user identity or attribution — by design, and a weakness) · silent write loss if scaled wrongly on the file store (T10) · third-party press-host images: their bandwidth is your page weight, their outage is your broken image (ADR-020) · domain/DNS expiry is “permanent, and self-inflicted” until someone owns the monthly check.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ================= §13 STANDING REFUSALS ================= -->
+<section class="sec" id="refusals" data-obs aria-labelledby="h-ref">
+  <p class="kicker"><span class="secno">§13</span> — STANDING REFUSALS</p>
+  <h2 id="h-ref">The refusals are a feature of the work</h2>
+  <p class="deck">A checklist phase that “only ever gets ticked ‘no’” (12-CHECKLISTS Phase 5 · 06 Part E · PRD §12). Each was requested routinely by the category; each is excluded, most by architecture. Presenting them proudly is the point: this is what an honest system’s output looks like — including four empty frames on a live campaign site.</p>
+  <div class="grid2">
+    <div class="refuse">
+      <h3>Refused in this build pass</h3>
+      <ul class="plain">
+        <li><strong>Four evidence attachments were <span class="chip r">REFUSED</span> rather than filled with plausible links</strong> — a6 indigent healthcare relief · a11 youth tournament sponsorship · a12 community vigilante/estate security · fc-accessible Truth Room ruling. None of the 21 references states them; the bar is the flagbearer precedent (the report names the party, office and constituency). They remain published, graded <code class="m">block</code>, and the score stays 40.</li>
+        <li><strong>Four photo frames are <span class="chip r">DELIBERATELY EMPTY</span></strong> rather than padded with stand-ins — <code class="m">family-portrait</code> · <code class="m">hq-office</code> · <code class="m">23-road-inspection</code> · <code class="m">community-security</code>. All <code class="m">exact</code>: a photograph of a different room cannot stand in for “the campaign’s office” — that is a factual claim wearing an image. The picker refuses to browse; the frame renders the branded panel until HQ supplies the actual photograph. The go-live checklist carries it as a task for a person with a camera.</li>
+        <li><strong>No AI-generated portrait of the real candidate</strong> — anywhere, any form, including “upscales” and “restored” versions; the only generated graphics are explicitly non-portrait (mandate card, pillars, slogan) and labelled.</li>
+        <li><strong>No invented rumour or fabricated verdict in the Truth Room</strong> — the ledger states only what a dated report states; harvesters refuse to caption a photo as showing the candidate unless the article puts him in it.</li>
+        <li><strong>No publishing a claim the dossier does not attest with a source</strong> — the gate, in the mutation routes.</li>
+        <li><strong>No deletion of the campaign’s existing data directories</strong> — “real leads die”; cleanup scripts may only remove records they created themselves; <code class="m">data/db.json</code> is state, never configuration to reset.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Refused permanently (the full Phase-5 list)</h3>
+      <ul class="dash">
+        <li>Donation or payment page — C11’s ~270 fake donor-harvesting sites, plus unresolved Nigerian law on contributions for this office</li>
+        <li>Voter-roll import, name-matching, psychographic scoring — NDPA s.30; C22/C23 are what that ends in</li>
+        <li>Automated or scheduled posting to any platform; bulk WhatsApp initiated by the campaign — the WhatsApp link is clicked by the supporter, never sent unasked</li>
+        <li>Astroturfing, fake testimonials, incentivised reviews — Meta/CIB category since 2018, FTC rule since 2024, and 3.7 m accounts swept in this region in Oct 2026</li>
+        <li>AI-generated or AI-“restored” imagery of the candidate — constraint 1 + Art. 50 + a Nigerian prosecution</li>
+        <li>Generative drafting of captions, claims or verdicts — ADR-013; “⌘K parses; it does not draft”</li>
+        <li>Auto-publish from the War Room without a human pressing Save — human-in-the-loop as a property of the request graph</li>
+        <li>Scraping a rival’s site into “opposition research” — “the sort of thing that becomes the story about you”</li>
+        <li>A shared “god mode” login named per session; hand-editing the live store</li>
+        <li>A generic drag-and-drop page builder — “the layout is code because the layout is the argument”</li>
+        <li>Wholesale deletion of a user data directory</li>
+      </ul>
+      <p class="meta">Discomfort named before someone else names it (06 Part D): the gate can be a <em>weapon of delay</em> — whoever holds the CMS can decide nothing is evidence. That is a governance problem: publish authority sits with a named person, findings are inspectable by a second one, and the rail’s output stays visible. And four empty frames plus a 40 score on a live site is the correct output of an honest system — worth more than a plausible wrong photograph.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= §14 GLOSSARY ================= -->
+<section class="sec" id="glossary" data-obs aria-labelledby="h-gloss">
+  <p class="kicker"><span class="secno">§14</span> — GLOSSARY</p>
+  <h2 id="h-gloss">Fourteen-plus terms, in the register this dossier uses them</h2>
+  <details open data-collapse-mobile>
+    <summary>Open/close the glossary</summary>
+    <div class="inner">
+      <dl class="gloss">
+        <div><dt>ISR · Incremental Static Regeneration</dt><dd>Prerendered pages that rebuild themselves on a timer: <code class="m">revalidate: 300/900/3600</code> per content page. Here it is an <em>editorial staleness budget</em> — the worst-case age of a public sentence.</dd></div>
+        <div><dt>Live Desk</dt><dd>The in-place editing overlay: the public page is the CMS when a valid session cookie is present. ⌘E reveal · tap-to-edit · ⌘K · ⌘Z. Zero DOM for anonymous visitors.</dd></div>
+        <div><dt>Publish gate</dt><dd>Server-side refusal, in the mutation routes, of any record/fact-check row created without an evidence link — and of any edit that empties one. <code class="m">EVIDENCE_RULE</code>.</dd></div>
+        <div><dt>Integrity rail</dt><dd>The site’s self-audit: live-store scan → weighted, capped, grouped score + findings wired to the exact page and element. 40/100 at compilation.</dd></div>
+        <div><dt>Frame</dt><dd>A named media position (<code class="m">MEDIA_POSITIONS</code>, 20 declared) with a fixed aspect ratio. <code class="m">exact</code> frames accept only a real upload for that subject — never a library stand-in.</dd></div>
+        <div><dt>Attested</dt><dd>A claim a dated report in the 21-link reference library actually states. Attestation, not plausibility, is the publication bar.</dd></div>
+        <div><dt>Tombstone</dt><dd>An entry in <code class="m">db.removed</code> recording a deliberate withdrawal, so a future content bundle or re-sync cannot resurrect the row. Deletions are remembered.</dd></div>
+        <div><dt>Resync</dt><dd><code class="m">resyncSeeds()</code> on a changed <code class="m">SEED_VERSION</code>: refresh bundle-owned rows, keep every desk-created row, never touch volunteers or inquiries. A redeploy is not a data-loss event.</dd></div>
+        <div><dt><code class="m">revalidatePath</code></dt><dd>Next.js invalidation of the server-side cache for one route after a write. Behind a CDN it does not touch the edge copy — that needs a vendor purge, which is not wired. <code class="m">src/lib/revalidate.ts</code> is the registry every new page must enter.</dd></div>
+        <div><dt>oEmbed</dt><dd>The provider lookup (YouTube here) that confirms a video id exists and permits embedding, returning title and author server-side, with a 6-second abort. What makes “7 clips” mean <em>verified</em> clips.</dd></div>
+        <div><dt>Service-role key</dt><dd><code class="m">SUPABASE_SERVICE_ROLE_KEY</code> — the write credential, bypassing row-level security. Never a <code class="m">NEXT_PUBLIC_*</code> value, never a build-time secret on a shared runner; a runtime secret to be rotated.</dd></div>
+        <div><dt>RLS · Row-Level Security</dt><dd>Database policies that mirror the app’s <code class="m">toPublic()</code> stripping — reporter name/phone/consent absent from any anon-key read even if a handler forgets. The guarantee does not depend on the handler.</dd></div>
+        <div><dt>DSR · Data-subject request</dt><dd>Confirmation, access, copy, rectification, erasure, restriction (NDPA s.34). Fulfilment here is manual through the CMS — locate, act, purge the orphaned upload, record the date — via runbook 7.10.</dd></div>
+        <div><dt>HITL · Human-in-the-loop</dt><dd>No route publishes on a timer, webhook or model judgement alone. A War Room draft needs a person to press Save. Structural, not procedural.</dd></div>
+        <div><dt>Core Web Vitals</dt><dd>LCP ≤ 2.5 s · INP ≤ 200 ms · CLS ≤ 0.1 at p75 of field data (web.dev). NFR-8 adopts them plus an internal TTFB budget (&lt; 600 ms cached / &lt; 1.2 s uncached p75) labelled as internal — with zero field measurement taken over a real Nigerian mobile connection <span class="chip g">[gap]</span>.</dd></div>
+        <div><dt><code class="m">data-ow</code></dt><dd>The single annotation attribute that makes a rendered value editable — <code class="m">"settings.hero_title"</code>, <code class="m">"record.a12.verification_source_url"</code>, <code class="m">"slot.hq-office"</code>. A field becomes editable the moment it carries one; 38 sites today.</dd></div>
+      </dl>
+    </div>
+  </details>
+</section>
+
+<!-- ================= §15 SOURCES & COLOPHON ================= -->
+<section class="sec" id="sources" data-obs aria-labelledby="h-src">
+  <p class="kicker"><span class="secno">§15</span> — SOURCES &amp; COLOPHON</p>
+  <h2 id="h-src">Every external claim carries a date and a URL</h2>
+  <details open data-collapse-mobile>
+    <summary>Reference list — standards, statutes, platform rules, reported events</summary>
+    <div class="inner">
+      <ol class="srcs">
+        <li><strong>W3C, “Web Content Accessibility Guidelines WCAG 2.2”</strong> — Recommendation 5 Oct 2023; Updated Recommendation 12 Dec 2024 (errata). <span class="u mono"><a href="https://www.w3.org/TR/WCAG22/">w3.org/TR/WCAG22</a> · <a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/">new-in-22</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html">pause-stop-hide (upd. 10 Aug 2026)</a></span></li>
+        <li><strong>web.dev, “Core Web Vitals”</strong> — thresholds at p75; INP replaced FID 12 Mar 2024. <span class="u mono"><a href="https://web.dev/articles/vitals">web.dev/articles/vitals</a> · <a href="https://web.dev/articles/defining-core-web-vitals-thresholds">thresholds</a> · <a href="https://web.dev/blog/inp-cwv-march-12">INP date</a></span></li>
+        <li><strong>IETF, “HTTP Caching” — RFC 9111 (STD 98), June 2022</strong>, obsoleting RFC 7234 — defines freshness and s-maxage; defines no invalidation API. <span class="u mono"><a href="https://www.rfc-editor.org/rfc/rfc9111">rfc-editor.org/rfc/rfc9111</a></span></li>
+        <li><strong>Next.js documentation</strong> — ISR semantics (updated 15 Oct 2026); CDN caching (“the CDN will continue serving its cached copy until the s-maxage TTL expires”, updated 25 Aug 2026); self-hosting (per-instance file cache). <span class="u mono"><a href="https://nextjs.org/docs/app/guides/incremental-static-regeneration">ISR</a> · <a href="https://nextjs.org/docs/app/guides/cdn-caching">cdn-caching</a> · <a href="https://nextjs.org/docs/app/guides/self-hosting">self-hosting</a></span></li>
+        <li><strong>Nigeria Data Protection Act 2023</strong> — assent June 2023 (12/14 June variants conflict in 02 §7); NDPC established s.4; s.30 political opinions = sensitive personal data. <span class="u mono"><a href="https://placng.org/i/wp-content/uploads/2023/06/Nigeria-Data-Protection-Act-2023.pdf">placng.org (scanned copy — verify against the Gazette)</a></span></li>
+        <li><strong>NDPC, General Application and Implementation Directive (GAID)</strong> — issued 20 Mar 2025. <span class="u mono"><a href="https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf">ndpc.gov.ng · NDP-ACT-GAID-2025</a></span></li>
+        <li><strong>NDPC enforcement, dated:</strong> Fidelity Bank ₦555.8m, 22 Aug 2024 · MultiChoice ₦766m, 7 Jul 2025 · 1,368-organisation defaulter list, Aug 2025 · Meta ₦32.8m-equivalent settled/annulled, Oct 2025. <span class="u mono"><a href="https://www.reuters.com/business/finance/nigerian-data-agency-fines-fidelity-bank-breaches-2024-08-22/">Reuters 1</a> · <a href="https://www.reuters.com/sustainability/boards-policy-regulation/nigerian-agency-fines-multichoice-766-million-naira-data-privacy-breaches-2025-07-07/">Reuters 2</a> · <a href="https://www.africanews.com/2025-10-07/meta-agrees-to-328-million-data-privacy-settlement-with-nigeria/">Africanews</a></span></li>
+        <li><strong>EU, Regulation 2024/1689 (AI Act)</strong> — adopted 13 Jun 2024, in force 1 Aug 2024; Art. 50 transparency applicable 2 Aug 2026; Code of Practice on AI-content transparency adopted 10 Jun 2026. <span class="u mono"><a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng">eur-lex</a> · <a href="https://artificialintelligenceact.eu/article/50/">Art. 50</a></span></li>
+        <li><strong>Gillespie, T. &amp; Pomerantz, M. (2020)</strong>, “Content moderation, AI, and the question of scale”, <em>Social Media + Society</em> 6(2), DOI 10.1177/2053951720943234 — the citation behind ADR-013. <span class="u mono"><a href="https://journals.sagepub.com/doi/full/10.1177/2053951720943234">journals.sagepub.com</a></span></li>
+        <li><strong>INEC 2027 timetable</strong> — Presidential/NASS 16 Jan 2027; gubernatorial 6 Feb 2027; campaign windows opened 19 Aug / 9 Sept 2026; date variants flagged <span class="chip u">[unverified variants]</span>. <span class="u mono"><a href="https://www.inecnigeria.org/elections/calendar">inecnigeria.org/elections/calendar</a></span></li>
+        <li><strong>Reported events</strong> — IReV outage (BBC, 2023) · Amnesty NG post-poll violence (27 Feb 2023) · APC site hack (TheBoss, 12 Jan 2019) · fake INEC site (Vanguard/Africa Check, Oct 2026) · FEC takedown (Reuters/Nextgov, Oct 2026) · Osun poll fact-checks (Guardian/Premium Times, Aug 2026) · Meta fact-checking end (Reuters, 7 Jan 2025) · Tinubu-audio arrest (BBC Pidgin, 5 Jun 2026) · Georgia fakes (AJC/Quartz, Jul 2026) · Meta West-Africa takedown (13 Oct 2026). Full dated URLs inline in 02 §4 / 06 Part C.</li>
+        <li><strong>Meta policy record</strong> — political-ad verification &amp; AI disclosure (announced 28 Nov 2023; in force Jan 2024; organic labelling May 2024; automated ad labelling 1 Jun 2026 <span class="chip u">[unverified]</span>) · Coordinated/Inauthentic Behaviour standard (6 Dec 2018). <span class="u mono"><a href="https://transparency.meta.com/policies/ad-standards/SIEP-advertising/SIEP/">ad standards</a> · <a href="https://transparency.meta.com/policies/community-standards/inauthentic-behavior/">CIB</a></span></li>
+        <li><strong>Environment baselines</strong> — NCC industry statistics (mobile/network mix) · A4AI “1 for 2” affordability target · HTTP Archive Web Almanac 2024/2025 page-weight medians (global-only caveat) · Lighthouse throttling docs (~85th-percentile: 150 ms RTT / 1.6 Mbps) · UK GDPR-side note: Regulation 2016/679 Art. 9(1) + <a href="https://gdpr-info.eu/recitals/no-56/">Recital 56</a>.</li>
+        <li><strong>Defensive precedents</strong> — Nigerian fact-checkers’ situation rooms (24 Feb 2023; Edo/Ondo 2024) · “The Long Fuse”, Election Integrity Partnership (2 Mar 2021) · “Manufactured Doubt”, Brain Builders + FactCheckHub (Aug 2026) — the most on-point document in the record, not in the input set when requirements froze · MyNeta India, since 2003.</li>
+      </ol>
+      <p class="t"><strong>Verification statement.</strong> Every external claim was re-checked on 3 November 2026; items that could not be confirmed are marked <span class="chip u">[unverified]</span>. Two hosts returned HTTP 403 to automated fetching and are recorded as live-for-browser, not read-in-full. A 2026 citation may be stale by the time this is read — re-check before external use (maintenance rule 5).</p>
+    </div>
+  </details>
+
+  <div class="grid2">
+    <div>
+      <h3 class="mh">Anonymisation note</h3>
+      <p class="t">This artefact is anonymised for outside readership: the candidate, party and constituency are referred to by role; no imagery of any real person appears; the party is not named. Internal code identifiers (<code class="m">ola-western</code>, <code class="m">OlaWestern.ng</code>, <code class="m">data-ow</code>, route names, <code class="m">db.json</code>) are left as-is — they are the artefacts an auditor or inheriting engineer would look at. A named version of the same record exists in the repo’s own <code class="m">README.md</code> and <code class="m">DEPLOYMENT-GUIDE.md</code>. (Convention per 00-DOCUMENT-INDEX; the constituency is small enough that a screenshot identifies the client.)</p>
+      <h3 class="mh">Maintenance rule</h3>
+      <p class="t">A document in this set is dated at every substantive edit; an undated edit is treated as unverified. Gaps stay visible: a closed gap gets a date and its evidence, it is never deleted. This infographic is ladder position 5 and is superseded by the files it summarises.</p>
+    </div>
+    <div>
+      <h3 class="mh">Status line</h3>
+      <div class="statline">STATE AT COMPILATION · 3 NOV 2026 —<br>
+        Build verified (SSR, local) · gates 12/12 · integrity <strong>40 / not ready to share</strong> ·<br>
+        4 block lines awaiting evidence from the campaign · no production host assigned ·<br>
+        dev secrets unrotated · no .git · WCAG 2.2 audit &amp; lawyer review outstanding.<br>
+        Next review: on host assignment; 7 days before any public launch.</div>
+      <p class="t">This page is a documentation artefact: a broadsheet-style synthesis of the twelve-document engineering dossier plus its index. It makes no persuasive claim about any person; it reports measured state, dated evidence, open gaps and standing refusals of a software system.</p>
+      <p class="credit">Developed by <a href="https://linktr.ee/i2sltd.tech" target="_blank" rel="noopener">@i2sltd.tech</a></p>
+      <p class="meta">Set in Georgia / system-ui / Cascadia Mono · one self-contained HTML file · zero network requests · zero images · prints to A4 · <span class="chip m">MEASURED 3 Nov 2026</span></p>
+    </div>
+  </div>
+</section>
+</div>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <hr class="hair">
+    <p class="meta">Ola Western Campaign Platform — System Dossier &amp; Documentation Map · compiled 3 November 2026 · document set v1.0 (00–12) + README.md + DEPLOYMENT-GUIDE.md · this file: docs/infographic.html, ladder position 5. Colour contract: green = verified/applied · petrol = architecture/information · brick = risk/block/gap/refusal · gold = measured/evidence. Every tag on this page carries its own word, never colour alone.</p>
+  </div>
+</footer>
+
+<script>
+/* Dependency-free, progressively enhanced. With JS off the page remains
+   fully readable: nav is inert but links work; all details blocks are open;
+   smooth scroll still applies via CSS. Everything below is optional polish. */
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* 1 — Skip link must move focus, not merely scroll. #main has tabindex="-1",
+         so an explicit focus() puts the caret in the right place for a keyboard user. */
+  var skip = document.querySelector(".skip a");
+  var main = document.getElementById("main");
+  if (skip && main) {
+    skip.addEventListener("click", function () {
+      setTimeout(function () { main.focus(); }, 0);
+    });
+  }
+
+  /* 2 — The sticky strip wraps to 1–3 ruled rows depending on width, so its real
+         height is measured, not guessed: scroll-padding must clear every row. */
+  var nav = document.querySelector("nav.brok");
+  function measureNav() {
+    if (!nav) { return; }
+    var h = Math.round(nav.getBoundingClientRect().height);
+    if (h > 0) { document.documentElement.style.setProperty("--nav-off", h + "px"); }
+  }
+  measureNav();
+  if (window.addEventListener) { window.addEventListener("resize", measureNav); }
+
+  /* 3 — Print / save-as-PDF button */
+  var pb = document.getElementById("printbtn");
+  if (pb) {
+    pb.addEventListener("click", function () { window.print(); });
+  }
+
+  /* 4 — Before printing, force every disclosure open. Three independent locks:
+         this hook, the matchMedia("print") change event, and the CSS
+         @media print rule on ::details-content (which does not need JS at all). */
+  var userClosedBeforePrint = null;
+  function disclosureState() {
+    return [].slice.call(document.getElementsByTagName("details")).map(function (d) { return d.open; });
+  }
+  function openAll() {
+    var ds = document.getElementsByTagName("details");
+    for (var i = 0; i < ds.length; i++) { ds[i].open = true; }
+  }
+  function restoreAfterPrint() {
+    if (!userClosedBeforePrint) { return; }
+    var ds = document.getElementsByTagName("details");
+    for (var i = 0; i < ds.length && i < userClosedBeforePrint.length; i++) { ds[i].open = userClosedBeforePrint[i]; }
+    userClosedBeforePrint = null;
+    applyCollapse(narrow);
+  }
+  function preparePrint() {
+    userClosedBeforePrint = disclosureState();
+    openAll();
+  }
+  if (window.addEventListener) {
+    window.addEventListener("beforeprint", preparePrint);
+    window.addEventListener("afterprint", restoreAfterPrint);
+  }
+  if (window.matchMedia) {
+    var printing = window.matchMedia("print");
+    if (printing.addEventListener) {
+      printing.addEventListener("change", function (e) { if (e.matches) { preparePrint(); } });
+    }
+  }
+
+  /* 5 — Collapse the long tables on narrow screens only, and put them back open
+         when the viewport widens again (the handler is symmetric). */
+  var narrow = window.matchMedia ? window.matchMedia("(max-width: 760px)") : null;
+  function blocks() { return document.querySelectorAll("details[data-collapse-mobile]"); }
+  function applyCollapse(mq) {
+    var sel = blocks();
+    var i;
+    if (!mq) { for (i = 0; i < sel.length; i++) { sel[i].open = true; } return; }
+    for (i = 0; i < sel.length; i++) { sel[i].open = !mq.matches; }
+  }
+  applyCollapse(narrow);
+  if (narrow && narrow.addEventListener) {
+    narrow.addEventListener("change", applyCollapse);
+  }
+
+  /* 4 — Active-section highlighting in the sticky nav (IntersectionObserver) */
+  if (!("IntersectionObserver" in window)) { return; }
+  var links = {};
+  var anchors = document.querySelectorAll("nav.brok a[href^='#']");
+  for (var j = 0; j < anchors.length; j++) {
+    links[anchors[j].getAttribute("href").slice(1)] = anchors[j];
+  }
+  var current = null;
+  function setActive(id) {
+    if (current === id) { return; }
+    current = id;
+    for (var k in links) {
+      if (Object.prototype.hasOwnProperty.call(links, k)) {
+        if (k === id) { links[k].setAttribute("aria-current", "true"); }
+        else { links[k].removeAttribute("aria-current"); }
+      }
+    }
+  }
+  var visible = {};
+  var io = new IntersectionObserver(function (entries) {
+    for (var m = 0; m < entries.length; m++) {
+      visible[entries[m].target.id] = entries[m].isIntersecting ? entries[m].intersectionRatio : 0;
+    }
+    var best = null, bestRatio = 0;
+    for (var id in visible) {
+      if (Object.prototype.hasOwnProperty.call(visible, id) && visible[id] > bestRatio) {
+        bestRatio = visible[id]; best = id;
+      }
+    }
+    if (best && links[best]) { setActive(best); }
+  }, { rootMargin: "-44px 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] });
+  var obs = document.querySelectorAll("section.sec[data-obs]");
+  for (var n = 0; n < obs.length; n++) {
+    if (links[obs[n].id]) { io.observe(obs[n]); }
+  }
+
+  /* 5 — Honour reduced motion: drop CSS smooth scrolling too */
+  if (reduceMotion) {
+    document.documentElement.style.scrollBehavior = "auto";
+  }
+})();
+</script>
+</body>
+</html>
