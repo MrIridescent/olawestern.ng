@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-green: #00794a;
+  --brand-blue: #17607f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-brand-dark antialiased;
+  /* Phone-first reading comfort */
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Keep sticky-header anchors from hiding under the nav bar */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  /* 44px+ tap targets everywhere (Nigerian mobile first) */
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-brand-green text-white hover:bg-brand-green-dark focus:ring-brand-green;
+  }
+  .btn-secondary {
+    @apply btn border-2 border-brand-green text-brand-green hover:bg-brand-green hover:text-white focus:ring-brand-green;
+  }
+  .btn-blue {
+    @apply btn bg-brand-blue text-white hover:bg-brand-blue-dark focus:ring-brand-blue;
+  }
+  .section-title {
+    @apply font-display text-2xl font-bold tracking-tight text-brand-dark sm:text-4xl;
+  }
+  /* Page hero headline — mobile first */
+  .hero-title {
+    @apply font-display text-[1.75rem] font-bold leading-tight text-white sm:text-5xl;
+  }
+  .section-kicker {
+    @apply mb-2 inline-block rounded-full bg-brand-green-light px-4 py-1 text-xs font-bold uppercase tracking-widest text-brand-green;
+  }
+  .card {
+    @apply rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6;
+  }
+  .field-label {
+    @apply mb-1 block text-sm font-semibold text-brand-dark;
+  }
+  .field-input {
+    @apply min-h-[48px] w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base focus:border-brand-green focus:outline-none focus:ring-1 focus:ring-brand-green sm:text-sm;
+  }
+}
+
+/* Decorative hero gradient — deep, low-glare wash for calm PR tone */
+.hero-gradient {
+  background:
+    radial-gradient(1100px 480px at 85% 10%, rgba(23, 96, 127, 0.18), transparent 60%),
+    radial-gradient(900px 600px at 10% 90%, rgba(0, 121, 74, 0.28), transparent 65%),
+    linear-gradient(150deg, #05201a 0%, #0a3327 55%, #10303b 100%);
+}
+
+/* Verdict badges — muted, AA-contrast */
+.verdict-verified { @apply bg-brand-green text-white; }
+.verdict-false { @apply bg-brand-red text-white; }
+.verdict-misleading { @apply bg-brand-gold text-white; }
+
+/* Sticky mobile action bar sits above content, below the tab bar mentally */
+.mobile-cta-spacer {
+  @apply h-20 xl:hidden;
+}
+
+/* ── Live Desk ───────────────────────────────────────────────────────────────
+   Two rules, both keyed off the class the overlay sets on <html> while it is
+   armed. A voter's page never carries that class, so:
+   · [data-ow-missing] is display:none — an unlinked source, an unconfirmed fact
+     or an empty frame's "fix me" affordance is the desk's worklist, never
+     something the public reads.
+   · once armed, the same element appears as a red chip, ready to tap.
+   Nothing here restyles the site itself. */
+[data-ow-missing] {
+  display: none;
+}
+html.ow-armed [data-ow-missing] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border-radius: 8px;
+  background: #b72329;
+  color: #fff;
+  font-weight: 800;
+  font-size: 11px;
+  padding: 0 10px;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+/* No pointer-events tricks: the overlay's capture-phase handler preventDefaults
+   the tap before a link can navigate, so a tappable source chip stays tappable. */
