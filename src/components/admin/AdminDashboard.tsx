@@ -622,7 +622,7 @@ function LeadsTab() {
                   </td>
                 </tr>
               ))}
-              {!inquiries.length && <tr><td className={`${td} italic text-gray-600`} colSpan={8}>No inquiries yet — Ask Ola submissions land here instantly.</td></tr>}
+              {!inquiries.length && <tr><td className={`${td} italic text-gray-600`} colSpan={8}>No inquiries yet.</td></tr>}
             </tbody>
           </table>
         </div>

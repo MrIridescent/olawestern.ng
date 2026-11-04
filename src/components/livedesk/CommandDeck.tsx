@@ -130,7 +130,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
       : []),
 
     { id: 'arm', group: 'desk', label: armed ? 'See the page as a voter' : 'Reveal everything I can edit', hint: '⌘E', run: onToggleArm },
-    { id: 'integrity', group: 'desk', label: 'Run the integrity report', hint: 'is this defensible?', run: onIntegrity },
+    { id: 'integrity', group: 'desk', label: 'Run the integrity report', run: onIntegrity },
     ...(canUndo ? [{ id: 'undo', group: 'desk' as const, label: 'Undo my last change', run: onUndo }] : []),
     { id: 'refresh', group: 'desk', label: 'Reload this page from the server', run: () => { router.refresh(); onClose(); } },
 
@@ -180,7 +180,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
           if (e.key === 'Enter' && shown?.[0]) void shown[0].run();
           if (e.key === 'Enter' && yt) void publishClip();
         }}
-        placeholder="hero · undo · publish this clip · cite https://… "
+        placeholder="Search for a command or paste a link..."
         className="w-full rounded-lg border border-gray-300 px-3 py-3 text-base focus:border-brand-green focus:outline-none focus:ring-1 focus:ring-brand-green"
       />
       {err ? <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700">{err}</p> : null}
@@ -201,8 +201,8 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
       ) : cite ? (
         <div className="mt-4 space-y-3 rounded-xl border border-brand-blue bg-white p-3">
           <p className="break-all text-[11px] font-bold uppercase tracking-wide text-brand-blue-dark">{cite.url}</p>
-          <input value={cite.outlet} onChange={(e) => setCite({ ...cite, outlet: e.target.value })} placeholder="Outlet — e.g. Vanguard" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
-          <input value={cite.headline} onChange={(e) => setCite({ ...cite, headline: e.target.value })} placeholder="Headline exactly as it published" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+          <input value={cite.outlet} onChange={(e) => setCite({ ...cite, outlet: e.target.value })} placeholder="e.g. Vanguard" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
+          <input value={cite.headline} onChange={(e) => setCite({ ...cite, headline: e.target.value })} placeholder="Enter the headline exactly as it was published" className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm" />
           <div className="flex gap-2">
             <button type="button" onClick={saveCite} disabled={busy !== null || !cite.headline.trim() || !cite.outlet.trim()} className="flex-1 rounded-lg bg-brand-green px-3 py-2 text-xs font-black text-white disabled:opacity-40">
               {busy === 'cite' ? 'Citing…' : 'Add to the reference library'}
