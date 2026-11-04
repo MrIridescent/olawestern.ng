@@ -4,4 +4,9 @@
   base = "ola-western-web"
 
 [build.environment]
-  NPM_FLAGS="--prefix=/dev/null"
+  NEXT_OUTPUT = "export"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
