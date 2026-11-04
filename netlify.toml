@@ -1,18 +1,16 @@
+# Netlify config — see DEPLOY-netlify.md
+# Option A (default): native Next.js runtime — SSR + /api routes + full form capture.
+
 [build]
-  command = "npm run build"
+  command = "npm run export:sites"
   publish = "out"
-  base = "ola-western-web"
 
 [build.environment]
-  NEXT_OUTPUT = "export"
+  NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "20"
 
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-DNS-Prefetch-Control = "on"
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-    X-Frame-Options = "SAMEORIGIN"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(self)"
-    Content-Security-Policy = "script-src 'self' 'unsafe-eval' 'unsafe-inline' https:;"
+# Option B — static-only preview instead of SSR:
+# comment the [build] block above and use:
+# [build]
+#   command = "npm run export:sites"
+#   publish = "out"
