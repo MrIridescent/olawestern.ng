@@ -68,12 +68,22 @@ export const PROFILE_FACTS: ProfileFactRow[] = [
 ];
 
 export const REFERENCE_LINKS: ReferenceRow[] = [
-  ...NEW_REFERENCE_LINKS.map((link, i) => ({ id: `ref-link-${i}`, year: new Date(link.url).getFullYear() || new Date().getFullYear(), date: new Date().toDateString(), outlet: new URL(link.url).hostname.replace('www.',''), headline: link.title, url: link.url })),
+  ...NEW_REFERENCE_LINKS.map((link, i) => ({ ...link, id: `ref-link-${i}`})),
   { id: 'ref-1', year: 2018, date: 'March 2018', outlet: 'FestacOnline', headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin', url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/' },
   { id: 'ref-2', year: 2018, date: 'March 2018', outlet: 'The Nation', headline: 'Council partners investor on CSR projects in Amuwo-Odofin', url: 'https://thenationonlineng.net/council-partners-investor-csr/' },
 ];
 
-export const MEDIA_POSITIONS = [] as const;
+export type { ReferenceRow as ReferenceLink };
+
+export const MEDIA_POSITIONS = [
+  { slot: 'candidate-portrait', label: 'Candidate portrait', ratio: '4:5' },
+  { slot: 'hq-office', label: 'Campaign office', ratio: '16:9' },
+  { slot: 'primary-victory', label: 'Primary victory speech', ratio: '16:9' },
+  { slot: 'consensus', label: 'Consensus candidate announcement', ratio: '16:9' },
+  { slot: 'primary-night', label: 'Primary night celebration', ratio: '16:9' },
+  { slot: 'graphic', label: 'Blueprint graphic', ratio: '1:1' },
+  { slot: 'rally-address', label: 'Rally address', ratio: '16:9' },
+] as const;
 
 
 export const SEED_ACCOMPLISHMENTS: Accomplishment[] = [...NEW_ACCOMPLISHMENTS];
