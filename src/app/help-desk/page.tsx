@@ -4,7 +4,7 @@ import IssueBoard from '@/components/helpdesk/IssueBoard';
 import IssueReportForm from '@/components/helpdesk/IssueReportForm';
 import MeetingRequestForm from '@/components/helpdesk/MeetingRequestForm';
 import { listPublicIssues } from '@/lib/store';
-import { SITE, WARD_IMPACT } from '@/lib/content';
+import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Constituent Help Desk — Report an Issue, Book Open-Door Hours',
@@ -88,25 +88,7 @@ export default async function HelpDeskPage() {
         </div>
       </section>
 
-      {/* ── WHERE THE DESK WORKS ──────────────────────────────── */}
-      <section className="container-site py-14">
-        <p className="section-kicker">Coverage</p>
-        <h2 className="section-title">Four wards, one desk</h2>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {WARD_IMPACT.map((w) => {
-            const n = issues.filter((i) => i.ward === w.ward).length;
-            return (
-              <div key={w.ward} className="card">
-                <h3 className="font-display text-base font-bold">{w.ward}</h3>
-                <p className="mt-1 text-xs font-bold uppercase tracking-wide text-brand-green">
-                  {n} published {n === 1 ? 'report' : 'reports'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-brand-gray">{w.focus}</p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+
 
       {/* ── CTA ──────────────────────────────────────────────── */}
       <section className="bg-brand-green">

@@ -14,11 +14,10 @@ const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '700'
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
   title: {
-    default: `${SITE.brandName} — ${SITE.slogan}`,
-    template: `%s | ${SITE.brandName}`,
+    default: 'Hon. Engr. Folorunsho Olaitan Segun (Ola Western) | Official Portfolio',
+    template: '%s | Hon. Engr. Folorunsho Olaitan Segun (Ola Western)',
   },
-  description:
-    'Official campaign website of Hon. Folorunsho Olaitan Segun (Ola Western), APC candidate for the Lagos State House of Assembly, Amuwo-Odofin Constituency I — FESTAC Town and Mile 2.',
+  description: 'Official website of Hon. Engr. Folorunsho Olaitan Segun (Ola Western) — CEO of Western Concrete, APC Flagbearer for Lagos State House of Assembly (Amuwo-Odofin Constituency I).',
   keywords: [
     'Ola Western',
     'Folorunsho Olaitan Segun',
@@ -33,10 +32,10 @@ export const metadata: Metadata = {
     'Ola Western FESTAC Town',
   ],
   openGraph: {
-    title: `${SITE.brandName} — ${SITE.slogan}`,
-    description: 'The accessible grassroots champion and tested unifier for Amuwo-Odofin Constituency I.',
+    title: 'Hon. Engr. Folorunsho Olaitan Segun (Ola Western) | Official Portfolio',
+    description: 'Official website of Hon. Engr. Folorunsho Olaitan Segun (Ola Western) — CEO of Western Concrete, APC Flagbearer for Lagos State House of Assembly (Amuwo-Odofin Constituency I).',
     url: SITE.siteUrl,
-    siteName: SITE.brandName,
+    siteName: 'Hon. Engr. Folorunsho Olaitan Segun (Ola Western)',
     type: 'website',
     locale: 'en_NG',
     images: [
@@ -50,8 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE.brandName} — ${SITE.slogan}`,
-    description: 'The accessible grassroots champion and tested unifier for Amuwo-Odofin Constituency I.',
+    title: 'Hon. Engr. Folorunsho Olaitan Segun (Ola Western) | Official Portfolio',
+    description: 'Official website of Hon. Engr. Folorunsho Olaitan Segun (Ola Western) — CEO of Western Concrete, APC Flagbearer for Lagos State House of Assembly (Amuwo-Odofin Constituency I).',
     images: ['/og.png'],
   },
   // Favicon: src/app/icon.svg is auto-detected by the App Router.
@@ -60,15 +59,24 @@ export const metadata: Metadata = {
 
 const personSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Person',
+  '@type': ['Person', 'Politician'],
   name: SITE.candidateName,
   alternateName: SITE.brandName,
   jobTitle: 'Candidate, Lagos State House of Assembly',
+  worksFor: { '@type': 'Organization', name: 'Western Concrete' },
+  sameAs: [
+    'https://x.com/olawestern23',
+    'https://www.instagram.com/olawestern23',
+    'https://pmexpressng.com/ola-western-sweeps-apc-amuwo-odofin-constituency-i-house-of-assembly-primaries/',
+    'https://thenationonlineng.net/council-partners-investor-csr/',
+    'https://www.vanguardngr.com/2017/09/lawmaker-flags-off-free-school-bus-shuttle-constituents/',
+    'https://festaconline.com.ng/ola-folorunsho-emerges-apc-flagbearer-for-amuwo-constituency-i-with-3k-votes/',
+    'https://arbr.com.ng/news/people/ola-western-folorunsho-olaitan/'
+  ],
   description:
     'Certified civil engineer and Chief Executive Officer of Western Concrete. APC candidate for Amuwo-Odofin Constituency I (FESTAC Town & Mile 2), Lagos State, Nigeria — living and working inside the constituency he seeks to represent.',
   url: SITE.siteUrl,
   email: SITE.email,
-  worksFor: { '@type': 'Organization', name: 'Western Concrete', address: SITE.hq },
   address: { '@type': 'PostalAddress', streetAddress: SITE.hq, addressLocality: 'Amuwo-Odofin', addressRegion: 'Lagos', addressCountry: 'NG' },
   knowsLanguage: ['en', 'pcm', 'yo'],
   campaign: {

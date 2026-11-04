@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 
 export default function AnimatedText({ children }: { children: React.ReactNode }) {

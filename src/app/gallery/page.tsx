@@ -4,7 +4,7 @@ import GalleryCarousel from '@/components/ui/GalleryCarousel';
 import PhotoSlot from '@/components/ui/PhotoSlot';
 import SocialLinksRow from '@/components/ui/SocialLinks';
 import VideoShelf from '@/components/ui/VideoShelf';
-import { MEDIA_SLOTS, SITE } from '@/lib/content';
+import { SITE } from '@/lib/content';
 import { listSocials } from '@/lib/store';
 import { ratioFor, slots } from '@/lib/slots';
 
@@ -79,35 +79,7 @@ export default async function GalleryPage() {
         sub="Television coverage of the campaign, played from the channel that filmed it. Nothing loads from Google until you press play."
       />
 
-      {/* ── MEDIA / PRESS KIT ────────────────────────────────── */}
-      <section className="py-14">
-        <div className="container-site">
-          <p className="section-kicker">For Journalists</p>
-          <h2 className="section-title text-2xl">Press & media desk</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {MEDIA_SLOTS.map((m) => (
-              <div key={m.title} className="card flex flex-col">
-                <h3 className="font-display text-base font-bold text-brand-green">{m.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-brand-gray">{m.body}</p>
-                <a href={m.href} className="mt-4 inline-block min-h-[44px] text-sm font-bold text-brand-blue underline">
-                  {m.cta} →
-                </a>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-white px-6 py-5 ring-1 ring-gray-100">
-            <div>
-              <p className="font-display text-base font-bold">Follow the campaign daily</p>
-              <p className="text-sm text-brand-gray">The campaign’s official channels, straight from 32 Road HQ.</p>
-            </div>
-            <SocialLinksRow socials={socials} />
-          </div>
-          <p className="mt-6 text-center text-sm text-brand-gray">
-            Press enquiries: <a className="font-semibold text-brand-green underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
-            {' '}· <Link href="/truth-room" className="font-semibold text-brand-green">Ask Ola / verify a rumor</Link>
-          </p>
-        </div>
-      </section>
+
     </>
   );
 }

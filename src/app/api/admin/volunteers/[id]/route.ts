@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
  * ward team's inbox stays workable. The CSV export is the way to keep a copy
  * before deleting.
  */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const ok = await deleteVolunteer(params.id);

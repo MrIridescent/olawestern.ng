@@ -19,7 +19,7 @@ async function purgeIfUnused(src: string) {
  * Only known fields are copied, and each is validated, so a stray key in the
  * request body cannot reach the store.
  */
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -57,8 +57,8 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     if (b.published !== undefined) patch.published = !!b.published;
     if (b.featured !== undefined) patch.featured = !!b.featured;
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const previous = patch.src ? (await listMedia()).find((m) => m.id === params.id) : null;
-    const ok = await updateMedia(params.id, patch);
+    const previous = patch.src ? (await listMedia()).find((m) => m.id === context.params.id) : null;
+    const ok = await updateMedia(context.params.id, patch);
     if (!ok) return notFound('Media');
     if (previous && patch.src && previous.src !== patch.src) await purgeIfUnused(previous.src);
     revalidateMedia();
@@ -73,11 +73,11 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
  * The file a desk upload pointed at is cleaned up too, so repeated
  * upload-and-discard does not leave the repository full of orphan photos.
  */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const target = (await listMedia()).find((m) => m.id === params.id);
-    const ok = await deleteMedia(params.id);
+    const ok = await deleteMedia(context.params.id);
     if (!ok) return notFound('Media');
     if (target?.src) await purgeIfUnused(target.src);
     revalidateMedia();

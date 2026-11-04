@@ -14,7 +14,9 @@ const SOURCES: PressItem['source'][] = ['campaign_hq', 'festaconline', 'partner_
  * `publish: false` takes it off the public newsfeed but keeps the text, so a
  * typo found after publishing is a fix rather than a delete-and-retype.
  */
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+type RouteContext = { params: { id: string } };
+
+export async function PATCH(request: NextRequest, context: RouteContext): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -44,14 +46,14 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
     if (b.publish !== undefined) {
       if (b.publish) {
-        const current = (await listPress()).find((p) => p.id === params.id);
+        const current = (await listPress()).find((p) => p.id === context.params.id);
         patch.published_at = current?.published_at ?? new Date().toISOString();
       } else {
         patch.published_at = null;
       }
     }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updatePress(params.id, patch);
+    const ok = await updatePress(context.params.id, patch);
     if (!ok) return notFound('Press release');
     revalidatePath('/news');
     revalidatePath('/');
@@ -62,7 +64,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 }
 
 /** DELETE /api/admin/press/[id] — remove a newsroom release. */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const ok = await deletePress(params.id);

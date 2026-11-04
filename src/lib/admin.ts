@@ -6,7 +6,7 @@
  * dashboard is immediately usable on a pitch laptop.
  */
 import crypto from 'node:crypto';
-import type { NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const ADMIN_COOKIE = 'ow_admin_session';
 const TTL_MS = 1000 * 60 * 60 * 12; // 12 hours
@@ -53,9 +53,6 @@ export function isAdminRequest(req: NextRequest): boolean {
   return verifySessionToken(req.cookies.get(ADMIN_COOKIE)?.value);
 }
 
-export function unauthorized(): Response {
-  return new Response(JSON.stringify({ success: false, error: 'Admin session required.' }), {
-    status: 401,
-    headers: { 'Content-Type': 'application/json' },
-  });
+export function unauthorized(): NextResponse {
+  return NextResponse.json({ success: false, error: 'Admin session required.' }, { status: 401 });
 }

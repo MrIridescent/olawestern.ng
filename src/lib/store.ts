@@ -14,10 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { getSupabase, getSupabaseAdmin, getWriteClient } from './supabase';
-import {
-  SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_ISSUES, SEED_MEDIA, SEED_NEWS,
-  SEED_PROFILE_FACTS, SEED_REFERENCES, SEED_SETTINGS, SEED_SOCIALS, SEED_VIDEOS, SEED_VERSION,
-} from './content';
+import { SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_PRESS_ITEMS, SEED_VERSION } from './content';
 import type {
   Accomplishment, CommunityIssue, FactCheck, MediaAsset, PressItem, ProfileFactRow,
   PublicIssue, ReferenceRow, SiteSettings, SocialRow, VideoItem,
@@ -88,14 +85,14 @@ function freshDb(): Db {
     inquiries: [],
     fact_checks: SEED_FACT_CHECKS.map((f) => ({ ...f })),
     accomplishments: SEED_ACCOMPLISHMENTS.map((a) => ({ ...a })),
-    press_releases: SEED_NEWS.map((p) => ({ ...p })),
-    issues: SEED_ISSUES.map((i) => ({ ...i })),
-    media: SEED_MEDIA.map((m) => ({ ...m })),
-    videos: SEED_VIDEOS.map((v) => ({ ...v })),
-    profile_facts: SEED_PROFILE_FACTS.map((p) => ({ ...p })),
-    socials: SEED_SOCIALS.map((s) => ({ ...s })),
-    references: SEED_REFERENCES.map((r) => ({ ...r })),
-    settings: { ...SEED_SETTINGS, stats: SEED_SETTINGS.stats.map((s) => ({ ...s })) },
+    press_releases: SEED_PRESS_ITEMS.map((p) => ({ ...p })),
+    issues: [],
+    media: [],
+    videos: [],
+    profile_facts: [],
+    socials: [],
+    references: [],
+    settings: { hero_title: '', stats: [] },
     removed: [],
   };
 }
@@ -132,13 +129,6 @@ function resyncSeeds(db: Db): boolean {
   db.fact_checks = merge(base.fact_checks, db.fact_checks);
   db.accomplishments = merge(base.accomplishments, db.accomplishments);
   db.press_releases = merge(base.press_releases, db.press_releases);
-  db.issues = merge(base.issues, db.issues);
-  db.media = merge(base.media, db.media);
-  db.videos = merge(base.videos, db.videos);
-  db.profile_facts = merge(base.profile_facts, db.profile_facts);
-  db.socials = merge(base.socials, db.socials);
-  db.references = merge(base.references, db.references);
-  if (!db.settings || typeof db.settings !== 'object' || !db.settings.hero_title) db.settings = base.settings;
 
   // A row the desk deleted stays deleted, even when a later content drop bundles it again.
   const gone = new Set(db.removed ?? []);
@@ -147,12 +137,6 @@ function resyncSeeds(db: Db): boolean {
     db.fact_checks = keep(db.fact_checks);
     db.accomplishments = keep(db.accomplishments);
     db.press_releases = keep(db.press_releases);
-    db.issues = keep(db.issues);
-    db.media = keep(db.media);
-    db.videos = keep(db.videos);
-    db.profile_facts = keep(db.profile_facts);
-    db.socials = keep(db.socials);
-    db.references = keep(db.references);
   }
 
   db.seed_version = SEED_VERSION;

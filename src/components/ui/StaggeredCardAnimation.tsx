@@ -13,7 +13,7 @@ export default function StaggeredCardAnimation({ children }: { children: React.R
     const container = containerRef.current;
     if (!container) return;
 
-    const cards = gsap.utils.toArray('.card');
+    const cards = gsap.utils.toArray('.card', container);
 
     gsap.fromTo(
       cards,

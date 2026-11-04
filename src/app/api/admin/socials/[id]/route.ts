@@ -7,7 +7,10 @@ import { revalidateCopy } from '@/lib/revalidate';
 export const dynamic = 'force-dynamic';
 
 /** DELETE /api/admin/socials/[id] — take a channel off the site. */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  context: { params: { id: string } },
+) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const ok = await deleteSocial(params.id);

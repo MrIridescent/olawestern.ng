@@ -1,185 +1,56 @@
-import type { Metadata } from 'next';
+import AnimatedText from '@/components/ui/AnimatedText';
+import StaggeredCardAnimation from '@/components/ui/StaggeredCardAnimation';
 import Link from 'next/link';
-import SlotImage from '@/components/ui/SlotImage';
-import { ENDORSEMENTS, SITE, TIMELINE } from '@/lib/content';
-import { listProfileFacts } from '@/lib/store';
-import { slots } from '@/lib/slots';
+import Icon from '@/components/ui/Icon';
 
-export const metadata: Metadata = {
-  title: 'About Ola — The Person, The Journey, The Leader',
-  description:
-    'Biography, candidate profile, governance philosophy and party endorsements of Hon. Folorunsho Olaitan Segun (Ola Western), APC candidate for Amuwo-Odofin Constituency I.',
-};
-
-export const revalidate = 3600;
-
-export default async function AboutPage() {
-  const [s, profileFacts] = await Promise.all([slots(), listProfileFacts()]);
+export default function AboutPage() {
   return (
     <>
-      <section className="hero-gradient">
-        <div className="container-site py-16 text-center md:py-20">
-          <p className="mx-auto mb-3 inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-brand-green-light ring-1 ring-white/20">
-            About {SITE.brandName}
-          </p>
-          <h1 className="hero-title">
-            The Person. The Journey. The Leader.
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
-            Not a politician visiting the community — a neighbour who has lived it, invested in it,
-            and been tested by it.
-          </p>
-        </div>
-      </section>
-
-      {/* ── CANDIDATE FILE ───────────────────────────────────── */}
-      <section className="container-site py-16">
-        <div className="grid items-start gap-10 lg:grid-cols-[380px_1fr]">
+      <section className="hero-gradient relative overflow-hidden">
+        <div className="container-site grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
           <div>
-            <SlotImage slots={s} slot="candidate-portrait" fallbackAlt={`Hon. ${SITE.brandName}`} priority />
-          </div>
-          <div>
-            <p className="section-kicker">Public Record</p>
-            <h2 className="section-title">The Candidate File</h2>
-            <p className="mt-2 text-sm text-brand-gray">
-              The standard public details voters are entitled to. Only what the campaign has
-              confirmed in writing is published here.
+            <AnimatedText>
+              <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                Hon. Engr. Folorunsho Olaitan Segun (Ola Western)
+              </h1>
+            </AnimatedText>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-200">
+              A comprehensive profile of the man, the engineer, and the community leader.
             </p>
-            <dl className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-              {profileFacts.filter((f) => f.value).map((f) => (
-                <div key={f.id} className="border-b border-gray-100 pb-3">
-                  <dt className="text-[11px] font-bold uppercase tracking-widest text-brand-gray">{f.key}</dt>
-                  <dd
-                    className="mt-1 text-sm font-semibold text-brand-dark"
-                    data-ow={`profile.${f.id}.value`}
-                    data-ow-label={f.key}
-                    data-ow-ctx={JSON.stringify({ id: f.id, key: f.key })}
-                  >
-                    {f.value}
-                  </dd>
-                  {f.note && <dd className="mt-0.5 text-xs text-gray-600">{f.note}</dd>}
-                </div>
-              ))}
-              {/* Rows HQ has not confirmed in writing: invisible to a voter, a tap-target
-                  for the desk (globals.css reveals them only while the editing layer is
-                  armed), so "supply written confirmation" is something you do here. */}
-              {profileFacts.filter((f) => !f.value).map((f) => (
-                <dd
-                  key={f.id}
-                  data-ow-missing="1"
-                  data-ow={`profile.${f.id}.value`}
-                  data-ow-label={`${f.key} (unconfirmed)`}
-                  data-ow-ctx={JSON.stringify({ id: f.id, key: f.key })}
-                  data-ow-value=""
-                  className="self-start text-[11px] font-bold"
-                >
-                  ＋ {f.key} — not confirmed
-                </dd>
-              ))}
-            </dl>
           </div>
         </div>
       </section>
 
-      {/* ── TIMELINE ─────────────────────────────────────────── */}
       <section className="container-site py-16">
-        <p className="section-kicker">The Journey</p>
-        <h2 className="section-title">Rooted in FESTAC, proven by service</h2>
-        <ol className="mt-10 space-y-0">
-          {TIMELINE.map((t, i) => (
-            <li key={t.title} className="relative grid gap-4 pb-10 pl-12 sm:grid-cols-[80px_1fr] sm:gap-8 sm:pl-16">
-              {/* rail */}
-              {i < TIMELINE.length - 1 && (
-                <span className="absolute left-4 top-2 h-full w-0.5 bg-brand-green-light sm:left-[52px]" aria-hidden />
-              )}
-              <span className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-brand-green text-[10px] font-bold text-white sm:left-[40px]">
-                {i + 1}
-              </span>
-              <p className="pt-0.5 text-xs font-bold uppercase tracking-widest text-brand-green-dark">{t.period}</p>
-              <div>
-                <h3 className="font-display text-xl font-bold">{t.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-gray">{t.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <h2 className="section-title">Executive Summary</h2>
+        <p className="mt-4 text-base leading-relaxed text-brand-gray">
+          Hon. Engr. Folorunsho Olaitan Segun, widely known as "Ola Western," is a Nigerian corporate executive, certified engineer, community leader, and prominent politician within the All Progressives Congress (APC). Based in the Amuwo-Odofin Local Government Area (LGA) of Lagos State, he serves as the Chief Executive Officer of Western Concrete, through which he has established an extensive public footprint built upon corporate social responsibility (CSR), infrastructure intervention, and grassroots philanthropy. His political career is characterized by sustained party loyalty and continuous engagement within the APC, having contested for the Lagos State House of Assembly seat representing Amuwo-Odofin Constituency I across successive electoral cycles. Following his primary victory in May 2022 and subsequent grassroots consolidation, he secured the APC official nomination in May 2026 to fly the party's flag for the Lagos State House of Assembly in the 2027 general elections. Backed by party apex leadership, municipal council executives, and broad cross-ethnic coalitions, his portfolio demonstrates a synthesis of private sector industrial discipline, targeted civic advocacy, and multi-demographic community development.
+        </p>
       </section>
 
-      {/* ── GOVERNANCE PHILOSOPHY ────────────────────────────── */}
       <section className="bg-brand-light py-16">
         <div className="container-site">
-          <p className="section-kicker">Core Values</p>
-          <h2 className="section-title">What &ldquo;Responsible Representation&rdquo; means in practice</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: 'Accessibility',
-                body: 'A legislator reachable by every constituent — he lives and works in FESTAC Town, the office at 32 Road stays open, ward town halls stay scheduled, and the WhatsApp desk stays answered.',
-              },
-              {
-                title: 'Constituent Feedback',
-                body: 'A permanent Department of Community Engagement — ward-level data on broken infrastructure and local priorities carried directly into legislative motions and oversight actions.',
-              },
-              {
-                title: 'Legislative Transparency',
-                body: 'Every bill, motion and oversight activity published in plain language — voters always know what their representative did with their mandate.',
-              },
-              {
-                title: 'Engineering-led delivery',
-                body: 'Private-sector technical capacity pointed at public problems: civil assessments behind six approved road rehabilitations, and youth programmes that teach skills — construction, clean energy, digital, logistics — instead of handing out short-term cash.',
-              },
-            ].map((v) => (
-              <div key={v.title} className="card">
-                <h3 className="font-display text-lg font-bold text-brand-green">{v.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-gray">{v.body}</p>
-              </div>
-            ))}
-          </div>
+          <h2 className="section-title">Biographical and Professional Profile</h2>
+          <p className="mt-4 text-base leading-relaxed text-brand-gray">
+            Hon. Engr. Folorunsho Olaitan Segun is a certified engineer and corporate administrator whose career bridges heavy industrial management, municipal infrastructure development, and legislative politics. Holding the professional title of Engineer ("Engr."), he combines technical expertise with administrative experience relevant to public utilities management and state legislative processes. As the Chief Executive Officer of Western Concrete, an industrial civil works and concrete manufacturing firm operating within Lagos State, Engr. Folorunsho has directed engineering operations to execute private infrastructure contracts while simultaneously channeling corporate capital into public-private environmental interventions. His professional background serves as the foundation for his public persona, positioning him as a technical expert capable of translating private sector project management efficiency into municipal oversight and state-level policy formulation. Assessments from civic organizations, resident associations, and political stakeholders depict his leadership style as soft-spoken, diplomatic, and consensus-oriented. He advocates for participatory democracy, maintaining an open-door grassroots approach that emphasizes youth inclusion and structured civic engagement across the political wards of Amuwo-Odofin.
+          </p>
         </div>
       </section>
 
-      {/* ── ON THE GROUND ────────────────────────────────────── */}
       <section className="container-site py-16">
-        <p className="section-kicker">On The Ground</p>
-        <h2 className="section-title">FESTAC Town, in pictures</h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {['rally-address', 'food-fest', 'primary-victory'].map((slot) => (
-            <SlotImage key={slot} slots={s} slot={slot} reuse />
-          ))}
-        </div>
-        <p className="mt-6 text-sm">
-          <Link href="/gallery" className="font-bold text-brand-green underline underline-offset-2">
-            Open the full gallery →
-          </Link>
+        <h2 className="section-title">Commercial Leadership and Corporate Social Responsibility</h2>
+        <p className="mt-4 text-base leading-relaxed text-brand-gray">
+          Through his corporate leadership at Western Concrete, Engr. Folorunsho Olaitan Segun has pioneered a model of corporate social responsibility (CSR) directly targeted at resolving chronic municipal infrastructure deficiencies within the Amuwo-Odofin Local Government Area. Recognizing that municipal governments face structural Internally Generated Revenue (IGR) constraints that limit immediate civil maintenance, his firm has regularly intervened to deploy capital, heavy machinery, and technical personnel for public infrastructure works. In a major environmental intervention along the Mile 2 axis, Western Concrete entered into a formal CSR partnership with the Amuwo-Odofin Local Government Council under Executive Chairman Valentine Buraimoh to execute a comprehensive drainage clearing and dredging operation across Ward AI and Ward AII. This project mitigated heavy arterial flooding along critical transit corridors, demonstrating how private industrial capacity can directly reinforce public municipal administration. Beyond drainage maintenance, Engr. Folorunsho’s corporate philanthropic arm has addressed potable water scarcity in urban settlements across Amuwo-Odofin. His organization financed and directed the construction and rehabilitation of borehole facilities across six political wards, improving public health and sanitary conditions for thousands of local residents. Furthermore, in response to urgent appeals from resident associations on 7th Avenue in Festac Town, Western Concrete mobilized heavy desilting equipment to clear long-neglected stormwater channels, establishing an ongoing framework for community-level flood prevention.
         </p>
       </section>
 
-      {/* ── ENDORSEMENTS ─────────────────────────────────────── */}
-      <section className="container-site py-16">
-        <p className="section-kicker">Party Unity</p>
-        <h2 className="section-title">Endorsed across APC leadership in Amuwo-Odofin</h2>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {ENDORSEMENTS.map((e) => (
-            <figure key={e.name} className="card">
-              <blockquote className="text-sm italic leading-relaxed text-brand-dark">
-                &ldquo;{e.quote}&rdquo;
-              </blockquote>
-              <figcaption className="mt-4 border-t border-gray-100 pt-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green-light font-display text-sm font-bold text-brand-green float-left mr-3">
-                  {e.name.split(' ').map((w) => w[0]).slice(0, 2).join('')}
-                </span>
-                <p className="font-semibold text-brand-dark">{e.name}</p>
-                <p className="text-xs text-brand-gray">{e.role}</p>
-              </figcaption>
-            </figure>
-          ))}
+      <section className="bg-brand-light py-16">
+        <div className="container-site">
+          <h2 className="section-title">Political Trajectory, Electoral History, and Consensus Strategy</h2>
+          <p className="mt-4 text-base leading-relaxed text-brand-gray">
+            Engr. Folorunsho Olaitan Segun’s political progression within the All Progressives Congress (APC) reflects long-term structural alignment and sustained candidacy for the Amuwo-Odofin Constituency I seat in the Lagos State House of Assembly. During the May 2022 APC primary elections, Engr. Folorunsho contested against the sitting House of Assembly member, Hon. Mojisola Alli-Macaulay. Official primary election results certified by the APC primary election committee recorded a decisive victory for Engr. Folorunsho, who secured 12 delegate votes to defeat the incumbent, who scored 0 votes. Although post-primary friction and broader regional voting dynamics in the 2023 general elections resulted in the opposition capturing the legislative seat, Engr. Folorunsho maintained strict party loyalty, refusing to defect and continuing to finance local APC party organs throughout the post-2023 cycle. To prevent intra-party division and electoral fragmentation in subsequent cycles, APC apex leadership in Amuwo-Odofin established an early consensus framework ahead of the 2027 general elections. In April 2026, party leaders—including Apex Leader Otunba Dotun Adegbola, Apex Chairman Alhaja Memunat Ajao, and Local Government Chairman Prince Lanre Sanusi—unveiled Engr. Folorunsho Olaitan Segun as the party’s consensus candidate for the Lagos State House of Assembly (Constituency I), alongside Moses Olanrewaju ("MO") for the Federal House of Representatives. This strategic consolidation culminated on May 20, 2026, when Engr. Folorunsho swept the official APC House of Assembly primaries for Amuwo-Odofin Constituency I, polling over 3,000 votes to formally secure the party ticket for the 2027 general elections.
+          </p>
         </div>
-        <p className="mt-8 rounded-xl bg-brand-green-light px-5 py-4 text-sm text-brand-green">
-          <strong>The mandate, twice:</strong> 12 of 20 accredited delegate votes in the May 2022 APC
-          primary — and over 3,000 votes across the wards in May 2026, the widest consensus in the race.
-          Both certified by the party&rsquo;s own structures and covered in the press (
-          <Link href="/impact#sources" className="font-bold underline">see the sources</Link>).
-        </p>
       </section>
     </>
   );

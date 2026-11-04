@@ -7,10 +7,10 @@ import { revalidateCopy } from '@/lib/revalidate';
 export const dynamic = 'force-dynamic';
 
 /** DELETE /api/admin/profile/[id] — retire a dossier row from the About page. */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteProfileFact(params.id);
+    const ok = await deleteProfileFact(context.params.id);
     if (!ok) return notFound('Profile fact');
     revalidateCopy();
     return NextResponse.json({ success: true });

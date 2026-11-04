@@ -7,8 +7,10 @@ import { revalidateReferences } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 
+type RouteContext = { params: { id: string } };
+
 /** PATCH /api/admin/references/[id] — correct a citation (same rules as POST). */
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: RouteContext): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -34,7 +36,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     }
     if (b.year !== undefined) { const y = year(b.year); if (y) patch.year = y; }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updateReference(params.id, patch);
+    const ok = await updateReference(context.params.id, patch);
     if (!ok) return notFound('Reference');
     revalidateReferences();
     return NextResponse.json({ success: true });
@@ -44,7 +46,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 }
 
 /** DELETE /api/admin/references/[id] — withdraw a citation. */
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const ok = await deleteReference(params.id);

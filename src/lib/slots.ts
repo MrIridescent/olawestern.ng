@@ -8,7 +8,7 @@
  * picture yet. Captions and outlet credits travel with the photo.
  */
 import { listMedia } from './store';
-import { GALLERY, MEDIA_POSITIONS } from './content';
+
 import type { GallerySlide, MediaAsset } from '@/types';
 import type { SlotRatio } from '@/components/ui/PhotoSlot';
 
@@ -20,18 +20,11 @@ const RATIO_TEXT: Record<string, SlotRatio> = {
   '3:4': 'tall',
 };
 
-export const SLOT_RATIOS: Record<string, SlotRatio> = Object.fromEntries(
-  MEDIA_POSITIONS.map((p) => [p.slot, RATIO_TEXT[p.ratio] ?? 'wide']),
-);
+export const SLOT_RATIOS: Record<string, SlotRatio> = {};
 
-export const SLOT_LABELS: Record<string, string> = Object.fromEntries(
-  MEDIA_POSITIONS.map((p) => [p.slot, p.label]),
-);
+export const SLOT_LABELS: Record<string, string> = {};
 
-/** The declared ratio as written in MEDIA_POSITIONS — what the Live Desk crops against. */
-const SLOT_RATIO_TEXT: Record<string, string> = Object.fromEntries(
-  MEDIA_POSITIONS.map((p) => [p.slot, p.ratio]),
-);
+const SLOT_RATIO_TEXT: Record<string, string> = {};
 
 export function ratioFor(slot: string): SlotRatio {
   return SLOT_RATIOS[slot] ?? 'wide';
@@ -90,18 +83,17 @@ export class SlotMap {
     const ratio = ratioFor(slot);
     const ratioText = SLOT_RATIO_TEXT[slot] ?? '16:9';
     if (!asset) {
-      const legacy = GALLERY.find((g) => g.slot === slot);
       return {
         slot,
-        src: legacy?.src ?? null,
-        alt: legacy?.alt ?? fallbackAlt ?? SLOT_LABELS[slot] ?? slot,
-        caption: legacy?.caption ?? null,
-        credit: legacy?.credit ?? null,
+        src: null,
+        alt: fallbackAlt ?? SLOT_LABELS[slot] ?? slot,
+        caption: null,
+        credit: null,
         source_url: null,
         ratio,
         ratio_text: ratioText,
         media_id: null,
-        empty: !legacy?.src,
+        empty: true,
       };
     }
     return {
@@ -137,14 +129,7 @@ export class SlotMap {
 
   /** Positions the campaign still wants a picture for, as branded frames. */
   openSlots(): GallerySlide[] {
-    const taken = new Set(this.all.map((m) => m.slot));
-    return MEDIA_POSITIONS.filter((p) => !taken.has(p.slot)).map((p) => ({
-      id: `open-${p.slot}`,
-      slot: p.slot,
-      src: null,
-      alt: p.label,
-      caption: `${p.label} — awaiting campaign photography`,
-    }));
+    return [];
   }
 }
 

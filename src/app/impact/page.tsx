@@ -6,7 +6,7 @@ import ReferenceLibrary from '@/components/impact/ReferenceLibrary';
 import SlotImage from '@/components/ui/SlotImage';
 import { listAccomplishments, listReferences } from '@/lib/store';
 import { slots } from '@/lib/slots';
-import { WARD_IMPACT } from '@/lib/content';
+
 
 export const metadata: Metadata = {
   title: 'Track Record & Community Impact',
@@ -32,30 +32,7 @@ export default async function ImpactPage() {
         </div>
       </section>
 
-      {/* ── WARD SELECTOR (interactive map fallback) ─────────── */}
-      <section className="container-site py-14">
-        <p className="section-kicker">Impact Map</p>
-        <h2 className="section-title">FESTAC &amp; Mile 2, ward by ward</h2>
-        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {WARD_IMPACT.map((w) => (
-            <div key={w.ward} className="card flex flex-col">
-              <span className="mb-3 inline-flex w-fit rounded-xl bg-brand-green-light p-2.5 text-brand-green">
-                <Icon name="map" className="h-6 w-6" />
-              </span>
-              <h3 className="font-display text-lg font-bold">{w.ward}</h3>
-              <p className="mt-2 text-sm text-brand-gray">{w.focus}</p>
-              <ul className="mt-4 space-y-2 border-t border-gray-100 pt-4">
-                {w.initiatives.map((it) => (
-                  <li key={it} className="flex items-start gap-2 text-sm text-brand-dark">
-                    <span className="mt-0.5 text-brand-green"><Icon name="check" className="h-4 w-4" /></span>
-                    {it}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </section>
+
 
       {/* ── THE WORK, IN PICTURES ────────────────────────────── */}
       <section className="container-site pb-14">

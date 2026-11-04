@@ -9,7 +9,7 @@ import SocialLinksRow from '@/components/ui/SocialLinks';
 import VideoShelf from '@/components/ui/VideoShelf';
 import { getSettings, listFactChecks, listPress, listSocials } from '@/lib/store';
 import { slots } from '@/lib/slots';
-import { MEDIA_OUTLETS, PILLARS, SITE } from '@/lib/content';
+import { SITE } from '@/lib/content';
 import type { FactCheck, PressItem } from '@/types';
 
 export const revalidate = 3600;
@@ -114,40 +114,10 @@ export default async function HomePage() {
           </div>
         </StaggeredCardAnimation>
 
-        {/* As seen in — press credibility strip */}
-        <div className="mt-10 rounded-2xl border border-gray-100 bg-white px-5 py-6 shadow-sm">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-brand-gray">The record, as covered by</p>
-          <ul className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-            {MEDIA_OUTLETS.map((o) => (
-              <li key={o} className="font-display text-sm font-bold text-brand-dark/70 sm:text-base">{o}</li>
-            ))}
-          </ul>
-          <p className="mt-4 text-center text-sm">
-            <Link href="/impact#sources" className="font-bold text-brand-green underline underline-offset-2">
-              Open the full library of 21 published sources →
-            </Link>
-          </p>
-        </div>
+
       </section>
 
-      {/* ── PILLARS ──────────────────────────────────────────── */}
-      <section className="bg-brand-light py-16">
-        <div className="container-site">
-          <p className="section-kicker">Key Pillars</p>
-          <h2 className="section-title">What responsible representation delivers</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PILLARS.map((p) => (
-              <div key={p.title} className="card">
-                <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
-                  <Icon name={p.icon as 'road'} />
-                </span>
-                <h3 className="font-display text-lg font-bold">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-brand-gray">{p.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* ── THE DESK IS OPEN ───────────────────────────────────── */}
       <section className="container-site py-16">
