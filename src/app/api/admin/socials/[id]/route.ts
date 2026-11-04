@@ -13,7 +13,7 @@ export async function DELETE(
 ) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteSocial(params.id);
+    const ok = await deleteSocial(context.params.id);
     if (!ok) return notFound('Social channel');
     revalidateCopy();
     return NextResponse.json({ success: true });

@@ -44,7 +44,7 @@ export function cleanHref(raw: unknown): string | null {
   return cleanUrl(s);
 }
 
-export const SLOTS: readonly string[] = MEDIA_POSITIONS.map((p) => p.slot);
+export const SLOTS: readonly string[] = MEDIA_POSITIONS.map((p: any) => p.slot);
 
 /** Slot must be a position the site actually renders. */
 export function cleanSlot(raw: unknown): string | null {

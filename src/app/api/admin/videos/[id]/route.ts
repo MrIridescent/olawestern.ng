@@ -44,7 +44,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteVideo(params.id);
+    const ok = await deleteVideo(context.params.id);
     if (!ok) return notFound('Video');
     revalidateMedia();
     return NextResponse.json({ success: true });

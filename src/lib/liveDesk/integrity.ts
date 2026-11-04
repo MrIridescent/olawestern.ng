@@ -161,7 +161,7 @@ export function assess(rows: Rows): HealthReport {
 
   /* ── Photography: present, but honest about what is missing ────────────── */
   const bound = new Set(rows.media.filter((m) => m.published && m.slot).map((m) => m.slot));
-  const open = MEDIA_POSITIONS.filter((p) => !bound.has(p.slot));
+  const open = MEDIA_POSITIONS.filter((p: any) => !bound.has(p.slot));
   findings.push({
     id: 'frames-open',
     label: 'Frames still showing the branded panel',

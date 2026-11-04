@@ -49,7 +49,7 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
 export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteReference(params.id);
+    const ok = await deleteReference(context.params.id);
     if (!ok) return notFound('Reference');
     revalidateReferences();
     return NextResponse.json({ success: true });

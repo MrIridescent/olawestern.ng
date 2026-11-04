@@ -76,7 +76,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const target = (await listMedia()).find((m) => m.id === params.id);
+    const target = (await listMedia()).find((m) => m.id === context.params.id);
     const ok = await deleteMedia(context.params.id);
     if (!ok) return notFound('Media');
     if (target?.src) await purgeIfUnused(target.src);

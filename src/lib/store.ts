@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { getSupabase, getSupabaseAdmin, getWriteClient } from './supabase';
-import { SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_PRESS_ITEMS, SEED_VERSION } from './content';
+import { SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_PRESS_ITEMS, SEED_SETTINGS, SEED_VERSION } from './content';
 import type {
   Accomplishment, CommunityIssue, FactCheck, MediaAsset, PressItem, ProfileFactRow,
   PublicIssue, ReferenceRow, SiteSettings, SocialRow, VideoItem,
@@ -92,7 +92,7 @@ function freshDb(): Db {
     profile_facts: [],
     socials: [],
     references: [],
-    settings: { hero_title: '', stats: [] },
+    settings: SEED_SETTINGS,
     removed: [],
   };
 }

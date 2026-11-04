@@ -67,7 +67,7 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
 export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deletePress(params.id);
+    const ok = await deletePress(context.params.id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/news');
     revalidatePath('/');

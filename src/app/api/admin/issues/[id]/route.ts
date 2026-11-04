@@ -48,7 +48,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 /** DELETE /api/admin/issues/[id] — remove a row (spam / duplicate reports). */
 export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
-  const ok = await deleteIssue(params.id);
+  const ok = await deleteIssue(context.params.id);
   if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
   revalidated();
   return NextResponse.json({ success: true });

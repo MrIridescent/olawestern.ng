@@ -55,7 +55,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteFactCheck(params.id);
+    const ok = await deleteFactCheck(context.params.id);
     if (!ok) return notFound('Truth Room entry');
     revalidatePath('/truth-room');
     revalidatePath('/');

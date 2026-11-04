@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteVolunteer(params.id);
+    const ok = await deleteVolunteer(context.params.id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/admin');
     return NextResponse.json({ success: true });

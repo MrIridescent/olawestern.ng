@@ -1,5 +1,5 @@
 import type {
-  Accomplishment, FactCheck, PressItem, SocialProfile
+  Accomplishment, FactCheck, PressItem, ProfileFactRow, ReferenceRow, SiteSettings, SocialProfile
 } from '@/types';
 import {
   NEW_ACCOMPLISHMENTS,
@@ -10,7 +10,7 @@ import {
 } from './new-content';
 
 
-export const SEED_VERSION = '2026-11-04-merged';
+export const SEED_VERSION = '2026-11-04-fixed';
 
 export const SITE = {
   candidateName: 'Hon. Engr. Folorunsho Olaitan Segun',
@@ -27,6 +27,21 @@ export const SITE = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.olawestern.ng',
 } as const;
 
+export const SEED_SETTINGS: SiteSettings = {
+  hero_kicker: 'Responsible Representation for Amuwo-Odofin I',
+  hero_title: 'Hon. Engr. Folorunsho Olaitan Segun',
+  hero_slogan: 'A Track Record of Service, A Vision for the Future.',
+  hero_body: 'From infrastructure to empowerment, Ola Western has consistently delivered for the people of Amuwo-Odofin. Now, he's ready to bring that same dedication to the Lagos State House of Assembly.',
+  cta_title: 'Get Involved',
+  cta_body: 'Join the movement to bring effective and responsible representation to our constituency. Volunteer, donate, or simply spread the word.',
+  stats: [
+    { value: '6+', label: 'Boreholes Drilled' },
+    { value: '2', label: 'Transformers Donated' },
+    { value: '200+', label: 'Widows Supported' },
+    { value: '1000s', label: 'Lives Impacted' },
+  ],
+};
+
 export const SOCIALS: SocialProfile[] = [
   { platform: 'whatsapp', label: 'WhatsApp', handle: '+234 904 125 8180', url: 'https://wa.me/2349041258180?text=SupportOlaWestern' },
   { platform: 'x', label: 'X (Twitter)', handle: '@olawestern23', url: 'https://x.com/olawestern23' },
@@ -36,42 +51,30 @@ export const SOCIALS: SocialProfile[] = [
   { platform: 'youtube', label: 'YouTube', handle: 'Ola Western Campaign [CONFIRM]', url: null },
 ];
 
-export interface ProfileFact {
-  label: string;
-  value: string | null;
-  confirmed: boolean;
-  note?: string;
-}
-
-export const PROFILE_FACTS: ProfileFact[] = [
-  { label: 'Full Name', value: 'Hon. Engr. Folorunsho Olaitan Segun', confirmed: true, note: 'Popularly known as Ola Western' },
-  { label: 'Office Sought', value: 'Member, Lagos State House of Assembly', confirmed: true, note: 'Amuwo-Odofin Constituency I (Festac I–III & Mile 2)' },
-  { label: 'Party', value: 'All Progressives Congress (APC)', confirmed: true, note: 'Flagbearer after winning the party primary' },
+export const PROFILE_FACTS: ProfileFactRow[] = [
+  { id: 'fact-full-name', key: 'Full Name', value: 'Hon. Engr. Folorunsho Olaitan Segun', note: 'Popularly known as Ola Western', sort: 1 },
+  { id: 'fact-office-sought', key: 'Office Sought', value: 'Member, Lagos State House of Assembly', note: 'Amuwo-Odofin Constituency I (Festac I–III & Mile 2)', sort: 2 },
+  { id: 'fact-party', key: 'Party', value: 'All Progressives Congress (APC)', note: 'Flagbearer after winning the party primary', sort: 3 },
   ...NEW_PROFILE_FACTS,
-  { label: 'Profession', value: 'Certified Civil Engineer · Chief Executive Officer, Western Group of Companies', confirmed: true, note: 'Civil engineering and construction firm headquartered in FESTAC Town' },
-  { label: 'Residence', value: 'Lives and works in FESTAC Town, Amuwo-Odofin', confirmed: true, note: 'Business and campaign HQ both on the constituency ground he represents' },
-  { label: 'Constituency Base', value: 'FESTAC Town, Amuwo-Odofin', confirmed: true },
-  { label: 'Campaign HQ', value: '32 Road by 3rd Avenue, FESTAC Town', confirmed: true },
-  { label: 'Languages', value: 'English · Nigerian Pidgin · Yoruba', confirmed: true },
-  { label: 'Date of Birth', value: null, confirmed: false, note: 'Awaiting campaign confirmation' },
-  { label: 'State of Origin', value: null, confirmed: false, note: 'Awaiting campaign confirmation' },
-  { label: 'Marital Status / Family', value: null, confirmed: false, note: 'Known as a family man — details awaiting confirmation' },
-  { label: 'Faith', value: null, confirmed: false, note: 'Awaiting campaign confirmation' },
+  { id: 'fact-profession', key: 'Profession', value: 'Certified Civil Engineer · Chief Executive Officer, Western Group of Companies', note: 'Civil engineering and construction firm headquartered in FESTAC Town', sort: 10 },
+  { id: 'fact-residence', key: 'Residence', value: 'Lives and works in FESTAC Town, Amuwo-Odofin', note: 'Business and campaign HQ both on the constituency ground he represents', sort: 11 },
+  { id: 'fact-constituency-base', key: 'Constituency Base', value: 'FESTAC Town, Amuwo-Odofin', note: null, sort: 12 },
+  { id: 'fact-campaign-hq', key: 'Campaign HQ', value: '32 Road by 3rd Avenue, FESTAC Town', note: null, sort: 13 },
+  { id: 'fact-languages', key: 'Languages', value: 'English · Nigerian Pidgin · Yoruba', note: null, sort: 14 },
+  { id: 'fact-dob', key: 'Date of Birth', value: null, note: 'Awaiting campaign confirmation', sort: 15 },
+  { id: 'fact-state-of-origin', key: 'State of Origin', value: null, note: 'Awaiting campaign confirmation', sort: 16 },
+  { id: 'fact-marital-status', key: 'Marital Status / Family', value: null, note: 'Known as a family man — details awaiting confirmation', sort: 17 },
+  { id: 'fact-faith', key: 'Faith', value: null, note: 'Awaiting campaign confirmation', sort: 18 },
 ];
 
-export interface ReferenceLink {
-  year: number;
-  date: string;
-  outlet: string;
-  headline: string;
-  url: string;
-}
-
-export const REFERENCE_LINKS: ReferenceLink[] = [
-  ...NEW_REFERENCE_LINKS.map(link => ({ year: new Date().getFullYear(), date: new Date().toDateString(), outlet: new URL(link.url).hostname, headline: link.title, url: link.url })),
-  { year: 2018, date: 'March 2018', outlet: 'FestacOnline', headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin', url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/' },
-  { year: 2018, date: 'March 2018', outlet: 'The Nation', headline: 'Council partners investor on CSR projects in Amuwo-Odofin', url: 'https://thenationonlineng.net/council-partners-investor-csr/' },
+export const REFERENCE_LINKS: ReferenceRow[] = [
+  ...NEW_REFERENCE_LINKS.map((link, i) => ({ id: `ref-link-${i}`, year: new Date(link.url).getFullYear() || new Date().getFullYear(), date: new Date().toDateString(), outlet: new URL(link.url).hostname.replace('www.',''), headline: link.title, url: link.url })),
+  { id: 'ref-1', year: 2018, date: 'March 2018', outlet: 'FestacOnline', headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin', url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/' },
+  { id: 'ref-2', year: 2018, date: 'March 2018', outlet: 'The Nation', headline: 'Council partners investor on CSR projects in Amuwo-Odofin', url: 'https://thenationonlineng.net/council-partners-investor-csr/' },
 ];
+
+export const MEDIA_POSITIONS = [] as const;
+
 
 export const SEED_ACCOMPLISHMENTS: Accomplishment[] = [...NEW_ACCOMPLISHMENTS];
 export const SEED_PRESS_ITEMS: PressItem[] = [...NEW_PRESS_ITEMS];

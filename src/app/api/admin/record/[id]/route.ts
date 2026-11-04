@@ -59,7 +59,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
       patch.verification_source_url = keep.url;
     }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-        const ok = await updateAccomplishment(params.id, patch);
+        const ok = await updateAccomplishment(context.params.id, patch);
     if (!ok) return notFound('Track record entry');
     revalidatePath('/impact');
     revalidatePath('/');

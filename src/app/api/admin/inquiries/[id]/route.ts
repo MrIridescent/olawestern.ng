@@ -38,7 +38,7 @@ export async function DELETE(
 ) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteInquiry(params.id);
+    const ok = await deleteInquiry(context.params.id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/admin');
     return NextResponse.json({ success: true });
