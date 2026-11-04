@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "ola-western-web/out"
+  publish = "out"
   base = "ola-western-web"
 
 [build.environment]
