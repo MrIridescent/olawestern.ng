@@ -49,25 +49,7 @@ export default function AskOlaForm() {
     }
   }
 
-  if (status === 'demo') {
-    return (
-      <div className="card border-amber-300 bg-amber-50">
-        <p className="font-display text-lg font-bold text-amber-800">Preview build — nothing was recorded</p>
-        <p className="mt-2 text-sm text-amber-900">
-          On the production site this goes to the campaign media desk and the Truth Room review queue.
-          On this frozen pitch preview, submissions are intentionally disabled. Send your question straight to the desk:
-        </p>
-        <a
-          href="https://wa.me/2349041258180?text=SupportOlaWestern"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary mt-4"
-        >
-          Ask on WhatsApp
-        </a>
-      </div>
-    );
-  }
+  
 
   if (status === 'success') {
     return <p className="rounded-lg bg-brand-green-light px-4 py-3 text-sm font-semibold text-brand-green">{message}</p>;
