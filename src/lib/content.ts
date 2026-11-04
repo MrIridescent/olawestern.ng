@@ -31,7 +31,7 @@ export const SEED_SETTINGS: SiteSettings = {
   hero_kicker: 'Responsible Representation for Amuwo-Odofin I',
   hero_title: 'Hon. Engr. Folorunsho Olaitan Segun',
   hero_slogan: 'A Track Record of Service, A Vision for the Future.',
-  hero_body: 'From infrastructure to empowerment, Ola Western has consistently delivered for the people of Amuwo-Odofin. Now, he's ready to bring that same dedication to the Lagos State House of Assembly.',
+  hero_body: "From infrastructure to empowerment, Ola Western has consistently delivered for the people of Amuwo-Odofin. Now, he's ready to bring that same dedication to the Lagos State House of Assembly.",
   cta_title: 'Get Involved',
   cta_body: 'Join the movement to bring effective and responsible representation to our constituency. Volunteer, donate, or simply spread the word.',
   stats: [
