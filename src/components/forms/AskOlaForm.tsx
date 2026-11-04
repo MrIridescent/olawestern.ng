@@ -2,20 +2,28 @@
 
 import { useState } from 'react';
 import { WARDS } from '@/types';
-import { IS_STATIC_DEMO } from '@/lib/siteMode';
 
-type Status = 'idle' | 'submitting' | 'success' | 'error' | 'demo';
+// Define the possible statuses of the form submission.
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
+// Define the allowed message types for inquiries.
 const TYPES = ['Policy Inquiry', 'Rumor Verification', 'General Support'] as const;
 
 /**
- * "Ask Ola" — Truth Room submission channel. Questions and rumor reports go
- * to constituent_inquiries for review by the campaign media team.
+ * @summary "Ask Ola" form component.
+ * @description This component renders a form that allows users to submit inquiries to the campaign media team.
+ * It handles form submission, validation, and displays success or error messages to the user.
  */
 export default function AskOlaForm() {
+  // State for the form submission status.
   const [status, setStatus] = useState<Status>('idle');
+  // State for the message to be displayed to the user.
   const [message, setMessage] = useState('');
 
+  /**
+   * @summary Handles the form submission.
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   */
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -27,11 +35,6 @@ export default function AskOlaForm() {
       messageBody: String(form.get('messageBody') ?? '').trim(),
     };
 
-    if (IS_STATIC_DEMO) {
-      setStatus('demo');
-      return;
-    }
-
     setStatus('submitting');
     try {
       const res = await fetch('/api/inquiry', {
@@ -40,28 +43,23 @@ export default function AskOlaForm() {
         body: JSON.stringify(payload),
       });
       const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error ?? 'Submission failed');
+      if (!res.ok || !json.success) throw new Error(json.error ?? 'An unknown error occurred.');
       setStatus('success');
-      setMessage('Sent. The campaign media team reviews every submission — follow up on WhatsApp for a faster answer.');
+      setMessage('Your message has been sent successfully. The campaign media team reviews every submission.');
     } catch (err) {
       setStatus('error');
-      setMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setMessage(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
     }
   }
 
-  
-
+  // If the form was submitted successfully, display a success message.
   if (status === 'success') {
     return <p className="rounded-lg bg-brand-green-light px-4 py-3 text-sm font-semibold text-brand-green">{message}</p>;
   }
 
+  // Render the form.
   return (
     <form onSubmit={onSubmit} className="card space-y-4" aria-label="Ask Ola submission form">
-      {IS_STATIC_DEMO && (
-        <p className="rounded-lg bg-amber-100 px-4 py-2 text-xs font-semibold text-amber-800">
-          DEMO PREVIEW — submissions are disabled on this preview host; production routes them to the media team.
-        </p>
-      )}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="field-label" htmlFor="askName">Your Name *</label>

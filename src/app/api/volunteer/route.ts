@@ -60,7 +60,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: 'Volunteer registered successfully!' });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error';
-    return NextResponse.json({ success: false, error: message }, { status: 500 });
+    console.error('Error in /api/volunteer:', err);
+    // For production, we return a generic error message to avoid leaking implementation details.
+    return NextResponse.json({ success: false, error: 'An unexpected error occurred.' }, { status: 500 });
   }
 }

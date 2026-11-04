@@ -2,19 +2,25 @@
 
 import { useState } from 'react';
 import { ISSUE_CATEGORIES, WARDS } from '@/types';
-import { IS_STATIC_DEMO } from '@/lib/siteMode';
 
-type Status = 'idle' | 'submitting' | 'success' | 'error' | 'demo';
+// Define the possible statuses of the form submission.
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 /**
- * IssueReportForm — the public front door of the Constituent Help Desk.
- * Reports are stored campaign-side and appear on the public dashboard only
- * after the ward team verifies and publishes them.
+ * @summary Issue Report Form component.
+ * @description This component renders a form that allows users to report neighborhood issues.
+ * It handles form submission, validation, and displays success or error messages to the user.
  */
 export default function IssueReportForm() {
+  // State for the form submission status.
   const [status, setStatus] = useState<Status>('idle');
+  // State for the message to be displayed to the user.
   const [message, setMessage] = useState('');
 
+  /**
+   * @summary Handles the form submission.
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   */
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -34,11 +40,6 @@ export default function IssueReportForm() {
       return;
     }
 
-    if (IS_STATIC_DEMO) {
-      setStatus('demo');
-      return;
-    }
-
     setStatus('submitting');
     try {
       const res = await fetch('/api/issues', {
@@ -47,52 +48,34 @@ export default function IssueReportForm() {
         body: JSON.stringify(payload),
       });
       const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error ?? 'Submission failed');
+      if (!res.ok || !json.success) throw new Error(json.error ?? 'An unknown error occurred.');
       setStatus('success');
-      setMessage(json.message ?? 'Report received — your ward team will verify it and publish the status.');
+      setMessage(json.message ?? 'Your report has been received. The ward team will verify it and publish the status.');
     } catch (err) {
       setStatus('error');
-      setMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setMessage(err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.');
     }
   }
 
-  if (status === 'demo') {
-    return (
-      <div className="card border-amber-300 bg-amber-50 text-center">
-        <p className="font-display text-lg font-bold text-amber-800">Preview build — nothing was recorded</p>
-        <p className="mt-2 text-sm text-amber-900">
-          This frozen preview validates exactly like the live desk, but issue capture runs only on the
-          production site. To report a neighbourhood issue right now, message the campaign on WhatsApp.
-        </p>
-        <a href="https://wa.me/2349041258180?text=Issue%20Report" target="_blank" rel="noopener noreferrer" className="btn-primary mt-4">
-          Report via WhatsApp instead
-        </a>
-      </div>
-    );
-  }
-
+  // If the form was submitted successfully, display a success message.
   if (status === 'success') {
     return (
       <div className="card border-brand-green bg-brand-green-light text-center">
-        <p className="font-display text-xl font-bold text-brand-green">Report logged</p>
+        <p className="font-display text-xl font-bold text-brand-green">Report Logged</p>
         <p className="mt-2 text-sm text-brand-dark">{message}</p>
         <p className="mt-3 text-xs text-brand-gray">
-          Keep the reference below if you follow up by phone — the ward desk works by list, not by memory.
+          You can follow up on your report by phone. Please keep the reference number handy.
         </p>
         <button type="button" onClick={() => setStatus('idle')} className="btn-secondary mt-4">
-          Report another issue
+          Report Another Issue
         </button>
       </div>
     );
   }
 
+  // Render the form.
   return (
     <form onSubmit={onSubmit} className="card space-y-4" aria-label="Report a neighbourhood issue">
-      {IS_STATIC_DEMO && (
-        <p className="rounded-lg bg-amber-100 px-4 py-2 text-xs font-semibold text-amber-800">
-          DEMO PREVIEW — this form validates exactly like production, but submissions are not stored on this preview host.
-        </p>
-      )}
       <div>
         <label className="field-label" htmlFor="issueTitle">What is the problem? *</label>
         <input

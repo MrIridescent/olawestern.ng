@@ -1,3 +1,5 @@
+import AnimatedText from '@/components/ui/AnimatedText';
+import StaggeredCardAnimation from '@/components/ui/StaggeredCardAnimation';
 import Link from 'next/link';
 import Icon from '@/components/ui/Icon';
 import StatTicker from '@/components/ui/StatTicker';
@@ -34,22 +36,19 @@ export default async function HomePage() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="hero-gradient relative overflow-hidden">
         <div className="container-site grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
-          import AnimatedText from '@/components/ui/AnimatedText';
-
-// ... (rest of the file)
-
-<AnimatedText>
-  <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-    <span data-ow="settings.hero_title" data-ow-label="Headline">{settings.hero_title}</span>
-    <span
-      className="mt-3 block text-xl font-semibold italic text-brand-green-light sm:text-3xl"
-      data-ow="settings.hero_slogan"
-      data-ow-label="Slogan"
-    >
-      {settings.hero_slogan}
-    </span>
-  </h1>
-</AnimatedText>
+          <div>
+            <AnimatedText>
+              <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                <span data-ow="settings.hero_title" data-ow-label="Headline">{settings.hero_title}</span>
+                <span
+                  className="mt-3 block text-xl font-semibold italic text-brand-green-light sm:text-3xl"
+                  data-ow="settings.hero_slogan"
+                  data-ow-label="Slogan"
+                >
+                  {settings.hero_slogan}
+                </span>
+              </h1>
+            </AnimatedText>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-200" data-ow="settings.hero_body" data-ow-label="Hero paragraph">
               {settings.hero_body}
             </p>
@@ -77,47 +76,43 @@ export default async function HomePage() {
       <section className="container-site py-16">
         <p className="section-kicker">Why FESTAC chose him</p>
         <h2 className="section-title">Three things this constituency can attest to</h2>
-        import StaggeredCardAnimation from '@/components/ui/StaggeredCardAnimation';
-
-// ... (rest of the file)
-
-<StaggeredCardAnimation>
-  <div className="mt-8 grid gap-6 md:grid-cols-3">
-    <div className="card">
-      <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
-        <Icon name="shield" />
-      </span>
-      <h3 className="font-display text-lg font-bold">Always here, always accessible</h3>
-      <p className="mt-2 text-sm leading-relaxed text-brand-gray">
-        His home, his company (Western Concrete) and his campaign office at 32 Road all stand inside
-        FESTAC Town. The door residents knock on for a blocked drain or a hospital bill is the same
-        door that opens onto the Assembly.
-      </p>
-    </div>
-    <div className="card">
-      <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
-        <Icon name="road" />
-      </span>
-      <h3 className="font-display text-lg font-bold">Delivering before office</h3>
-      <p className="mt-2 text-sm leading-relaxed text-brand-gray">
-        Six-ward borehole drive and the 7th Avenue drainage desilting (2018). State approval for six
-        FESTAC roads — 1st Avenue rebuilt (2023). 1,000+ households fed at the Food Fest (2024) —
-        each entry linked to its press report.
-      </p>
-    </div>
-    <div className="card">
-      <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
-        <Icon name="youth" />
-      </span>
-      <h3 className="font-display text-lg font-bold">Representing our shared reality</h3>
-      <p className="mt-2 text-sm leading-relaxed text-brand-gray">
-        A civil engineer who rides the same potholed roads, breathes the same flood season and pays
-        the same generator bill as every voter in Festac I–III and Mile 2 — then went to the Governor
-        with the engineering assessments to fix them.
-      </p>
-    </div>
-  </div>
-</StaggeredCardAnimation>
+        <StaggeredCardAnimation>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="card">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+                <Icon name="shield" />
+              </span>
+              <h3 className="font-display text-lg font-bold">Always here, always accessible</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-gray">
+                His home, his company (Western Concrete) and his campaign office at 32 Road all stand inside
+                FESTAC Town. The door residents knock on for a blocked drain or a hospital bill is the same
+                door that opens onto the Assembly.
+              </p>
+            </div>
+            <div className="card">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+                <Icon name="road" />
+              </span>
+              <h3 className="font-display text-lg font-bold">Delivering before office</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-gray">
+                Six-ward borehole drive and the 7th Avenue drainage desilting (2018). State approval for six
+                FESTAC roads — 1st Avenue rebuilt (2023). 1,000+ households fed at the Food Fest (2024) —
+                each entry linked to its press report.
+              </p>
+            </div>
+            <div className="card">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+                <Icon name="youth" />
+              </span>
+              <h3 className="font-display text-lg font-bold">Representing our shared reality</h3>
+              <p className="mt-2 text-sm leading-relaxed text-brand-gray">
+                A civil engineer who rides the same potholed roads, breathes the same flood season and pays
+                the same generator bill as every voter in Festac I–III and Mile 2 — then went to the Governor
+                with the engineering assessments to fix them.
+              </p>
+            </div>
+          </div>
+        </StaggeredCardAnimation>
 
         {/* As seen in — press credibility strip */}
         <div className="mt-10 rounded-2xl border border-gray-100 bg-white px-5 py-6 shadow-sm">

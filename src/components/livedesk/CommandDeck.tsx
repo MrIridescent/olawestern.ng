@@ -11,7 +11,7 @@
  * avoid, while a keystroke that gets a verified clip onto the page is exactly the
  * thing the desk needs at 11pm.
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sheet } from './chrome';
 import { api } from '../admin/cms';
@@ -68,7 +68,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
     } catch { return null; }
   }, [q]);
 
-  async function resolveClip() {
+  const resolveClip = useCallback(async () => {
     if (!maybeYoutube || busy) return;
     setBusy('yt');
     setErr(null);
@@ -80,7 +80,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
     } finally {
       setBusy(null);
     }
-  }
+  }, [maybeYoutube, busy]);
 
   async function publishClip() {
     if (!yt || busy) return;
@@ -119,7 +119,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
     }
   }
 
-  const go = (href: string) => () => { router.push(href); onClose(); };
+  const go = useCallback((href: string) => () => { router.push(href); onClose(); }, [router, onClose]);
 
   const commands: Command[] = useMemo(() => ([
     ...(maybeYoutube
@@ -152,7 +152,7 @@ export default function CommandDeck({ onClose, onToggleArm, armed, onUndo, canUn
     { id: 'tab-copy', group: 'page', label: 'Open the tab CMS · Site Copy and channels', run: go('/admin?tab=site') },
     { id: 'tab-desk', group: 'page', label: 'Open the tab CMS · Help Desk queue', run: go('/admin?tab=helpdesk') },
     { id: 'tab-leads', group: 'page', label: 'Open the tab CMS · Leads inbox', run: go('/admin?tab=leads') },
-  ]), [armed, busy, canUndo, maybeArticle, maybeYoutube, onIntegrity, onToggleArm, onUndo, router]);
+  ]), [armed, busy, canUndo, maybeArticle, maybeYoutube, onIntegrity, onToggleArm, onUndo, router, go, onClose, resolveClip]);
 
   const ranked = useMemo(() => {
     if (!q.trim()) return commands;

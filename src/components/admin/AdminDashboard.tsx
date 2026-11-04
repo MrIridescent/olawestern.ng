@@ -95,6 +95,18 @@ function TruthRoomTab() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [st, setSt] = useState<Status>({ kind: 'idle' });
 
+  async function fetchUrlContent() {
+    if (!form.official_document_url) return;
+    setSt({ kind: 'busy' });
+    try {
+      const res = await api(`/api/admin/scrape?url=${encodeURIComponent(form.official_document_url)}`);
+      setForm({ ...form, claim_summary: res.content.title, detailed_explanation: res.content.markdown });
+      setSt({ kind: 'ok', msg: 'Content fetched successfully.' });
+    } catch (err) {
+      setSt({ kind: 'err', msg: err instanceof Error ? err.message : 'Failed to fetch content.' });
+    }
+  }
+
   const refresh = useCallback(async () => {
     const j = await api('/api/admin/fact-checks');
     setRows(j.data);
@@ -167,9 +179,14 @@ function TruthRoomTab() {
             <textarea required rows={4} value={form.detailed_explanation} onChange={(e) => setForm({ ...form, detailed_explanation: e.target.value })} className={inputCls} placeholder="What the documents and receipts actually show…" />
           </div>
           <div>
+            <div>
             <label className={labelCls}>Evidence document URL (required to publish)</label>
-            <input value={form.official_document_url} onChange={(e) => setForm({ ...form, official_document_url: e.target.value })} className={inputCls} placeholder="https://… the notice, receipt or report this ruling rests on" />
+            <div className="flex gap-2">
+              <input value={form.official_document_url} onChange={(e) => setForm({ ...form, official_document_url: e.target.value })} className={inputCls} placeholder="https://… the notice, receipt or report this ruling rests on" />
+              <button type="button" onClick={fetchUrlContent} className={btnCls} disabled={st.kind === 'busy'}>Fetch</button>
+            </div>
             <p className="mt-1 text-xs text-gray-600">A ruling with no source is just another claim. Nothing reaches the Truth Room until this link is filled.</p>
+          </div>
           </div>
           <label className="flex items-center gap-2 text-sm text-gray-700">
             <input type="checkbox" checked={form.is_featured} onChange={(e) => setForm({ ...form, is_featured: e.target.checked })} className="h-4 w-4 accent-brand-green" />

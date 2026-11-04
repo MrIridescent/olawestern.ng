@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { WARDS } from '@/types';
-import { IS_STATIC_DEMO } from '@/lib/siteMode';
 
 const CONCERNS = [
   'Road Infrastructure',
@@ -13,12 +12,31 @@ const CONCERNS = [
   'Street Lighting',
 ];
 
-type Status = 'idle' | 'submitting' | 'success' | 'error' | 'demo';
+/**
+ * @typedef {'idle' | 'submitting' | 'success' | 'error'} Status
+ * Represents the current status of the form submission.
+ */
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
+/**
+ * A form for users to sign up as volunteers for the campaign.
+ * It collects contact information, location details, and primary concerns.
+ * Submissions are sent to the /api/volunteer endpoint.
+ * This component manages its own submission state and provides user feedback.
+ * @returns {JSX.Element} The rendered volunteer sign-up form.
+ */
 export default function VolunteerForm() {
+  // State for the form submission status.
   const [status, setStatus] = useState<Status>('idle');
+  // State for the feedback message shown to the user.
   const [message, setMessage] = useState('');
 
+  /**
+   * Handles the form submission event.
+   * It validates the form data, checks for consent, and sends the data to the /api/volunteer endpoint.
+   * Updates the status and message states based on the API response.
+   * @param {React.FormEvent<HTMLFormElement>} e The form submission event.
+   */
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -35,13 +53,7 @@ export default function VolunteerForm() {
 
     if (!payload.consent) {
       setStatus('error');
-      setMessage('Please accept the data-protection consent to continue.');
-      return;
-    }
-
-    if (IS_STATIC_DEMO) {
-      // Frozen preview build: no server exists, so nothing is recorded.
-      setStatus('demo');
+      setMessage('To proceed, you must agree to the data protection consent.');
       return;
     }
 
@@ -53,40 +65,21 @@ export default function VolunteerForm() {
         body: JSON.stringify(payload),
       });
       const json = await res.json();
-      if (!res.ok || !json.success) throw new Error(json.error ?? 'Submission failed');
+      if (!res.ok || !json.success) {
+        throw new Error(json.error || 'An unexpected error occurred during submission.');
+      }
       setStatus('success');
-      setMessage('Welcome to the movement! Our team (and the AI Campaign Assistant on WhatsApp) will reach out shortly.');
+      setMessage('Welcome to the movement! Our team will reach out to you shortly via WhatsApp.');
     } catch (err) {
       setStatus('error');
-      setMessage(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setMessage(err instanceof Error ? err.message : 'An unknown error occurred. Please try again later.');
     }
-  }
-
-  if (status === 'demo') {
-    return (
-      <div className="card border-amber-300 bg-amber-50 text-center">
-        <p className="font-display text-lg font-bold text-amber-800">Preview build — nothing was recorded</p>
-        <p className="mt-2 text-sm text-amber-900">
-          This is the frozen pitch preview of the volunteer flow: validation works, but lead capture
-          (Supabase CRM + WhatsApp welcome + War Room sync) runs only on the production site.
-          To register for real right now, use the campaign WhatsApp line.
-        </p>
-        <a
-          href="https://wa.me/2349041258180?text=SupportOlaWestern"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary mt-4"
-        >
-          Join via WhatsApp instead
-        </a>
-      </div>
-    );
   }
 
   if (status === 'success') {
     return (
       <div className="card border-brand-green bg-brand-green-light text-center">
-        <p className="font-display text-xl font-bold text-brand-green">You&rsquo;re in! 🇳🇬</p>
+        <p className="font-display text-xl font-bold text-brand-green">You&rsquo;re In! 🇳🇬</p>
         <p className="mt-2 text-sm text-brand-dark">{message}</p>
         <a
           href="https://wa.me/2349041258180?text=SupportOlaWestern"
@@ -102,11 +95,6 @@ export default function VolunteerForm() {
 
   return (
     <form onSubmit={onSubmit} className="card space-y-4" aria-label="Volunteer registration form">
-      {IS_STATIC_DEMO && (
-        <p className="rounded-lg bg-amber-100 px-4 py-2 text-xs font-semibold text-amber-800">
-          DEMO PREVIEW — this form validates exactly like production, but submissions are not stored on this preview host.
-        </p>
-      )}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="field-label" htmlFor="fullName">Full Name *</label>
@@ -154,9 +142,9 @@ export default function VolunteerForm() {
       <label className="flex items-start gap-3 text-xs text-brand-gray">
         <input type="checkbox" name="consent" required className="mt-0.5 h-5 w-5 shrink-0 accent-brand-green" />
         <span>
-          I consent to the Ola Western Campaign Organization storing my contact details for volunteer
-          coordination, in line with the Nigeria Data Protection Act (NDPA) 2023. My data may be routed to
-          the campaign CRM and WhatsApp assistant.
+          I consent to the Ola Western Campaign Organization storing and processing my contact details for
+          volunteer coordination, in accordance with the Nigeria Data Protection Act (NDPA) 2023. My data may be
+          used by the campaign CRM and automated WhatsApp assistant for communication purposes.
         </span>
       </label>
 

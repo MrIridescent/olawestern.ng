@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { IS_STATIC_DEMO } from '@/lib/siteMode';
 
 const NAV = [
   { href: '/', label: 'Home' },
@@ -26,11 +25,6 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
-      {IS_STATIC_DEMO && (
-        <div className="bg-brand-light px-4 py-1.5 text-center text-[11px] font-bold uppercase tracking-widest text-brand-green-dark">
-          Static preview · full live capture runs at olawestern.ng
-        </div>
-      )}
       <div className="container-site flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <svg
