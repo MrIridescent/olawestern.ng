@@ -34,24 +34,22 @@ export default async function HomePage() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="hero-gradient relative overflow-hidden">
         <div className="container-site grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
-          <div className="animate-fade-up">
-            <p
-              className="mb-3 inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-brand-green-light ring-1 ring-white/20"
-              data-ow="settings.hero_kicker"
-              data-ow-label="Hero kicker"
-            >
-              {settings.hero_kicker}
-            </p>
-            <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-              <span data-ow="settings.hero_title" data-ow-label="Headline">{settings.hero_title}</span>
-              <span
-                className="mt-3 block text-xl font-semibold italic text-brand-green-light sm:text-3xl"
-                data-ow="settings.hero_slogan"
-                data-ow-label="Slogan"
-              >
-                {settings.hero_slogan}
-              </span>
-            </h1>
+          import AnimatedText from '@/components/ui/AnimatedText';
+
+// ... (rest of the file)
+
+<AnimatedText>
+  <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+    <span data-ow="settings.hero_title" data-ow-label="Headline">{settings.hero_title}</span>
+    <span
+      className="mt-3 block text-xl font-semibold italic text-brand-green-light sm:text-3xl"
+      data-ow="settings.hero_slogan"
+      data-ow-label="Slogan"
+    >
+      {settings.hero_slogan}
+    </span>
+  </h1>
+</AnimatedText>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-200" data-ow="settings.hero_body" data-ow-label="Hero paragraph">
               {settings.hero_body}
             </p>
