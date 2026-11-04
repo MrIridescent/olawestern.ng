@@ -33,9 +33,22 @@ export default function Header() {
       )}
       <div className="container-site flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-green font-display text-lg font-bold text-white">
-            OW
-          </span>
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16 0C7.163 0 0 7.163 0 16s7.163 16 16 16 16-7.163 16-16S24.837 0 16 0zm0 4.5c6.351 0 11.5 5.149 11.5 11.5S22.351 27.5 16 27.5 4.5 22.351 4.5 16 9.649 4.5 16 4.5z"
+              fill="#fff"
+            />
+            <path
+              d="M16 6.5c-5.24 0-9.5 4.26-9.5 9.5s4.26 9.5 9.5 9.5 9.5-4.26 9.5-9.5-4.26-9.5-9.5-9.5zm0 2c4.148 0 7.5 3.352 7.5 7.5s-3.352 7.5-7.5 7.5-7.5-3.352-7.5-7.5 3.352-7.5 7.5-7.5z"
+              fill="#fff"
+            />
+          </svg>
           <span className="leading-tight">
             <span className="block font-display text-base font-bold text-brand-dark">Ola Western</span>
             <span className="block text-[10px] font-semibold uppercase tracking-widest text-brand-gray">

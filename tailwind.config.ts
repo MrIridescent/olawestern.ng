@@ -23,7 +23,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ['Inter', 'Segoe UI', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Georgia', '"Times New Roman"', 'serif'],
+        display: ['Inter', 'Georgia', '"Times New Roman"', 'serif'],
+        glamour: ['"Cormorant Garamond"', 'serif'],
       },
       animation: {
         'fade-up': 'fadeUp 0.7s ease-out both',

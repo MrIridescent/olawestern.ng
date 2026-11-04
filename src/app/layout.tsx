@@ -6,6 +6,11 @@ import LiveDesk from '@/components/livedesk/LiveDesk';
 import { SITE } from '@/lib/content';
 import './globals.css';
 
+import { Inter, Cormorant_Garamond } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
+const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '700'] });
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
   title: {
@@ -76,7 +81,7 @@ const personSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <body>
         <script
           type="application/ld+json"
