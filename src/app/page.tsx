@@ -12,6 +12,8 @@ import { slots } from '@/lib/slots';
 import { SITE } from '@/lib/content';
 import type { FactCheck, PressItem } from '@/types';
 
+import VisitorCounter from '@/components/ui/VisitorCounter';
+
 export const revalidate = 3600;
 
 async function getFeaturedFacts(): Promise<FactCheck[]> {
@@ -236,6 +238,9 @@ export default async function HomePage() {
             <a href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer" className="btn w-full bg-white text-brand-green hover:bg-brand-green-light sm:w-auto">
               Chat on WhatsApp
             </a>
+          </div>
+          <div className="mt-4">
+            <VisitorCounter />
           </div>
           <div className="mt-2">
             <SocialLinksRow socials={socials} dark />

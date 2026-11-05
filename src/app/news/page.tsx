@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { listPress } from '@/lib/store';
 import VideoShelf from '@/components/ui/VideoShelf';
+import SocialShare from '@/components/ui/SocialShare';
 import { SITE } from '@/lib/content';
 import type { PressItem, PressSource } from '@/types';
 
@@ -62,6 +63,9 @@ export default async function NewsPage() {
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-brand-gray" data-ow={`press.${item.id}.summary`} data-ow-label="Standfirst">{item.summary}</p>
                     <p className="mt-3 line-clamp-2 text-sm text-gray-500" data-ow={`press.${item.id}.body`} data-ow-label="Release body">{item.body}</p>
+                    <div className="mt-4">
+                      <SocialShare title={item.title} />
+                    </div>
                   </div>
                   <a
                     href={item.pdf_url ?? undefined}

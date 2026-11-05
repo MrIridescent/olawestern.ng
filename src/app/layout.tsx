@@ -55,6 +55,9 @@ export const metadata: Metadata = {
   },
   // Favicon: src/app/icon.svg is auto-detected by the App Router.
   robots: { index: true, follow: true },
+  other: {
+    'ai-robots': 'noai, noimageai',
+  },
 };
 
 const personSchema = {

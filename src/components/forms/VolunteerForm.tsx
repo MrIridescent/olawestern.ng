@@ -1,160 +1,198 @@
 'use client';
 
 import { useState } from 'react';
-import { WARDS } from '@/types';
 
-const CONCERNS = [
-  'Road Infrastructure',
-  'Drainage & Flooding',
-  'Market & SME Support',
-  'Community Security',
-  'Youth & Sports',
-  'Street Lighting',
-];
-
-/**
- * @typedef {'idle' | 'submitting' | 'success' | 'error'} Status
- * Represents the current status of the form submission.
- */
-type Status = 'idle' | 'submitting' | 'success' | 'error';
-
-/**
- * A form for users to sign up as volunteers for the campaign.
- * It collects contact information, location details, and primary concerns.
- * Submissions are sent to the /api/volunteer endpoint.
- * This component manages its own submission state and provides user feedback.
- * @returns {JSX.Element} The rendered volunteer sign-up form.
- */
 export default function VolunteerForm() {
-  // State for the form submission status.
-  const [status, setStatus] = useState<Status>('idle');
-  // State for the feedback message shown to the user.
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [ward, setWard] = useState('');
   const [message, setMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
-  /**
-   * Handles the form submission event.
-   * It validates the form data, checks for consent, and sends the data to the /api/volunteer endpoint.
-   * Updates the status and message states based on the API response.
-   * @param {React.FormEvent<HTMLFormElement>} e The form submission event.
-   */
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const payload = {
-      fullName: String(form.get('fullName') ?? '').trim(),
-      phoneNumber: String(form.get('phoneNumber') ?? '').trim(),
-      email: String(form.get('email') ?? '').trim() || undefined,
-      wardLocation: String(form.get('wardLocation') ?? ''),
-      addressStreet: String(form.get('addressStreet') ?? '').trim() || undefined,
-      pollingUnitCode: String(form.get('pollingUnitCode') ?? '').trim() || undefined,
-      primaryConcern: String(form.get('primaryConcern') ?? ''),
-      consent: form.get('consent') === 'on',
-    };
+    setSubmitting(true);
+    setError('');
+    setSuccess(false);
 
-    if (!payload.consent) {
-      setStatus('error');
-      setMessage('To proceed, you must agree to the data protection consent.');
-      return;
-    }
-
-    setStatus('submitting');
     try {
       const res = await fetch('/api/volunteer', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, phone, address, ward, message }),
       });
-      const json = await res.json();
-      if (!res.ok || !json.success) {
-        throw new Error(json.error || 'An unexpected error occurred during submission.');
-      }
-      setStatus('success');
-      setMessage('Welcome to the movement! Our team will reach out to you shortly via WhatsApp.');
-    } catch (err) {
-      setStatus('error');
-      setMessage(err instanceof Error ? err.message : 'An unknown error occurred. Please try again later.');
-    }
-  }
 
-  if (status === 'success') {
-    return (
-      <div className="card border-brand-green bg-brand-green-light text-center">
-        <p className="font-display text-xl font-bold text-brand-green">You&rsquo;re In! 🇳🇬</p>
-        <p className="mt-2 text-sm text-brand-dark">{message}</p>
-        <a
-          href="https://wa.me/2349041258180?text=SupportOlaWestern"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary mt-4"
-        >
-          Continue on WhatsApp
-        </a>
-      </div>
-    );
-  }
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setSuccess(true);
+      setName('');
+      setEmail('');
+      setPhone('');
+      setAddress('');
+      setWard('');
+      setMessage('');
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
-    <form onSubmit={onSubmit} className="card space-y-4" aria-label="Volunteer registration form">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="field-label" htmlFor="fullName">Full Name *</label>
-          <input id="fullName" name="fullName" required autoComplete="name" className="field-input" placeholder="e.g. Emeka Okonkwo" />
-        </div>
-        <div>
-          <label className="field-label" htmlFor="phoneNumber">Phone Number * (WhatsApp)</label>
-          <input id="phoneNumber" name="phoneNumber" required type="tel" inputMode="tel" autoComplete="tel" className="field-input" placeholder="+234 80..." />
-        </div>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="field-label" htmlFor="email">Email (optional)</label>
-          <input id="email" name="email" type="email" autoComplete="email" className="field-input" placeholder="you@example.com" />
-        </div>
-        <div>
-          <label className="field-label" htmlFor="wardLocation">Ward *</label>
-          <select id="wardLocation" name="wardLocation" required className="field-input" defaultValue="">
-            <option value="" disabled>Select your ward…</option>
-            {WARDS.map((w) => <option key={w} value={w}>{w}</option>)}
-          </select>
-        </div>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="field-label" htmlFor="addressStreet">Street / Estate</label>
-          <input id="addressStreet" name="addressStreet" className="field-input" placeholder="e.g. 23 Road, FESTAC Town" />
-        </div>
-        <div>
-          <label className="field-label" htmlFor="pollingUnitCode">Polling Unit Code (if known)</label>
-          <input id="pollingUnitCode" name="pollingUnitCode" className="field-input" placeholder="e.g. PU 014 — 23 Road Junction" />
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+        <div className="mt-1">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            autoComplete="name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
         </div>
       </div>
 
       <div>
-        <label className="field-label" htmlFor="primaryConcern">Your Primary Concern for Constituency I *</label>
-        <select id="primaryConcern" name="primaryConcern" required className="field-input" defaultValue="">
-          <option value="" disabled>Select an issue…</option>
-          {CONCERNS.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          Email Address
+        </label>
+        <div className="mt-1">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
       </div>
 
-      <label className="flex items-start gap-3 text-xs text-brand-gray">
-        <input type="checkbox" name="consent" required className="mt-0.5 h-5 w-5 shrink-0 accent-brand-green" />
-        <span>
-          I consent to the Ola Western Campaign Organization storing and processing my contact details for
-          volunteer coordination, in accordance with the Nigeria Data Protection Act (NDPA) 2023. My data may be
-          used by the campaign CRM and automated WhatsApp assistant for communication purposes.
-        </span>
-      </label>
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+          Phone Number
+        </label>
+        <div className="mt-1">
+          <input
+            type="tel"
+            name="phone"
+            id="phone"
+            autoComplete="tel"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
 
-      {status === 'error' && (
-        <p role="alert" className="rounded-lg bg-red-50 px-4 py-2 text-sm text-brand-red">{message}</p>
+      <div>
+        <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+          Residential Address
+        </label>
+        <div className="mt-1">
+          <input
+            type="text"
+            name="address"
+            id="address"
+            autoComplete="street-address"
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="ward" className="block text-sm font-medium text-gray-700">
+          Ward
+        </label>
+        <div className="mt-1">
+          <input
+            type="text"
+            name="ward"
+            id="ward"
+            required
+            value={ward}
+            onChange={(e) => setWard(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+          Why do you want to volunteer?
+        </label>
+        <div className="mt-1">
+          <textarea
+            id="message"
+            name="message"
+            rows={4}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          disabled={submitting}
+          className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          {submitting ? 'Submitting...' : 'Become a Volunteer'}
+        </button>
+      </div>
+
+      {success && (
+        <div className="rounded-md bg-green-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-green-800">Thank you for your submission!</p>
+            </div>
+          </div>
+        </div>
       )}
 
-      <button type="submit" disabled={status === 'submitting'} className="btn-primary w-full disabled:opacity-60">
-        {status === 'submitting' ? 'Registering…' : 'Join the Movement'}
-      </button>
+      {error && (
+        <div className="rounded-md bg-red-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-red-800">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

@@ -4,6 +4,7 @@ import GalleryCarousel from '@/components/ui/GalleryCarousel';
 import PhotoSlot from '@/components/ui/PhotoSlot';
 import SocialLinksRow from '@/components/ui/SocialLinks';
 import VideoShelf from '@/components/ui/VideoShelf';
+import SocialShare from '@/components/ui/SocialShare';
 import { SITE } from '@/lib/content';
 import { listSocials } from '@/lib/store';
 import { ratioFor, slots } from '@/lib/slots';
@@ -51,6 +52,9 @@ export default async function GalleryPage() {
           ran in. Every image published here is real campaign documentation — no AI-generated images of the
           candidate are used anywhere on this site.
         </p>
+        <div className="mt-4">
+          <SocialShare title="From the Ground" />
+        </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {wall.map((g) => (
             <PhotoSlot

@@ -5,17 +5,17 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const NAV = [
-  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
-  { href: '/about', label: 'About Ola' },
   { href: '/impact', label: 'Track Record' },
   { href: '/blueprint', label: 'Blueprint' },
   { href: '/help-desk', label: 'Help Desk' },
   { href: '/truth-room', label: 'Truth Room' },
   { href: '/news', label: 'Newsroom' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/media-kit', label: 'Media Kit' },
   { href: '/contact', label: 'Contact' },
-  { href: '/join', label: 'Join' },
+  { href: '/volunteer', label: 'Volunteer' },
 ];
 
 export default function Header() {

@@ -4,6 +4,7 @@ import Icon from '@/components/ui/Icon';
 import RecordLedger from '@/components/impact/RecordLedger';
 import ReferenceLibrary from '@/components/impact/ReferenceLibrary';
 import SlotImage from '@/components/ui/SlotImage';
+import SocialShare from '@/components/ui/SocialShare';
 import { listAccomplishments, listReferences } from '@/lib/store';
 import { slots } from '@/lib/slots';
 
@@ -41,6 +42,9 @@ export default async function ImpactPage() {
         <p className="mt-2 max-w-2xl text-sm text-brand-gray">
           Press photographs of the projects above — credited to the outlet that published them.
         </p>
+        <div className="mt-4">
+          <SocialShare title="The Work, in Pictures" />
+        </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {['drainage-work', 'boreholes-water', 'food-fest', 'form-pickup'].map((slot) => (
             <SlotImage key={slot} slots={s} slot={slot} reuse />
@@ -53,6 +57,9 @@ export default async function ImpactPage() {
         <div className="container-site">
           <p className="section-kicker">Ledger of Service</p>
           <h2 className="section-title">Every contribution, categorized &amp; verifiable</h2>
+          <div className="mt-4">
+            <SocialShare title="Ledger of Service" />
+          </div>
           <RecordLedger items={accomplishments} />
         </div>
       </section>
