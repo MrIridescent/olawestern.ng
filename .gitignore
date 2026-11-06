@@ -8,6 +8,10 @@
 # Campaign data store (live leads & CMS content on the server)
 /data
 
+# Local source archive: raw artwork, strategy docs and review screenshots.
+# Kept on disk for hand-off; not part of the deployable app.
+/assets
+
 # Environment secrets — never commit these
 .env
 .env.local
@@ -19,3 +23,5 @@
 npm-debug.log*
 .vercel
 next-env.d.ts
+*.log
+tsconfig.tsbuildinfo

@@ -17,6 +17,7 @@ import NewsCarousel from '@/components/ui/NewsCarousel';
 import JoinMovementForm from '@/components/forms/JoinMovementForm';
 import WardImpactLocator from '@/components/home/WardImpactLocator';
 import PolicyFlipCards from '@/components/home/PolicyFlipCards';
+import Reveal from '@/components/hq/Reveal';
 
 export const revalidate = 3600;
 
@@ -131,6 +132,71 @@ export default async function HomePage() {
       {/* ── WARD LOCATOR + POLICY CARDS ──────────────────────── */}
       <WardImpactLocator whatsappNumber={SITE.whatsappNumber} />
       <PolicyFlipCards />
+
+      {/* ── DIGITAL CAMPAIGN HQ TEASER ──────────────────────── */}
+      <section className="relative overflow-hidden border-y-4 border-brand-electric bg-brand-navy py-14 sm:py-16">
+        <div className="hq-grid" aria-hidden />
+        <div className="container-site relative">
+          <Reveal>
+            <div className="grid items-center gap-9 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+              <div>
+                <p className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-brand-orange-bright">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-emerald" aria-hidden />
+                  The Digital Campaign HQ
+                </p>
+                <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
+                  Promises written down.
+                  <br />
+                  Receipts published.
+                </h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
+                  The campaign runs in public: a promise ledger with evidence, a Street Brief for every
+                  ward, and a ten-year plan the constituency can measure. No fake polls. No vanishing
+                  manifesto.
+                </p>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Link href="/hq" className="btn-primary w-full sm:w-auto">
+                    Enter the HQ <span aria-hidden>→</span>
+                  </Link>
+                  <Link
+                    href="/hq#ledger"
+                    className="btn w-full border border-white/25 text-white hover:bg-white/10 sm:w-auto"
+                  >
+                    Read the ledger
+                  </Link>
+                </div>
+              </div>
+
+              <div className="hq-glass rounded-2xl p-3 sm:p-4">
+                <ul className="divide-y divide-white/10">
+                  {[
+                    { n: '01', t: 'Promise ledger', b: 'Ten commitments. Four already delivered with evidence.' },
+                    { n: '02', t: 'Street Brief', b: 'Pick a ward and a priority. Get a three-step plan.' },
+                    { n: '03', t: 'The long game', b: 'Six chapters, from the first 100 days to 2035.' },
+                  ].map((row) => (
+                    <li key={row.n}>
+                      <Link
+                        href={row.n === '01' ? '/hq#ledger' : row.n === '02' ? '/hq#street-brief' : '/hq#long-game'}
+                        className="group flex items-center gap-4 rounded-xl px-3 py-4 transition-colors hover:bg-white/[0.06]"
+                      >
+                        <span className="font-display text-xs font-extrabold tabular-nums text-brand-orange-bright">{row.n}</span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block font-display text-base font-extrabold text-white">{row.t}</span>
+                          <span className="mt-0.5 block text-[11.5px] leading-relaxed text-white/60">{row.b}</span>
+                        </span>
+                        <span aria-hidden className="text-white/45 transition-transform group-hover:translate-x-1">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <p className="border-t border-white/10 px-3 pb-1 pt-3 text-[9.5px] uppercase tracking-[0.16em] text-white/40">
+                  Public by design · Built by I2SLTD
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ── WHY OLA — the three attestations ─────────────────── */}
       <section className="container-site py-16">

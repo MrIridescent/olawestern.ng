@@ -4,15 +4,28 @@ This document provides a comprehensive guide to deploying and managing the Ola W
 
 ## Deployment to Netlify
 
-The website is designed to be deployed on Netlify. To deploy the site, you will need to:
+The website deploys to Netlify with the native Next.js runtime so server routes and the admin CMS work.
 
 1.  Create a new site on Netlify and connect it to your Git repository.
-2.  Set the build command to `npm run export:sites`.
-3.  Set the `ADMIN_PASSWORD` environment variable in your Netlify project. This is crucial for securing your CMS.
+2.  Netlify reads `netlify.toml`: build command `npm run build`, publish directory `.next`, with the `@netlify/plugin-nextjs` runtime.
+3.  Set the `ADMIN_PASSWORD` and `ADMIN_SECRET` environment variables in the Netlify project.
+4.  Add `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` so leads persist. The local `data/db.json` store does not survive a serverless deploy.
+5.  Optionally add `RESEND_API_KEY`, `EMAIL_FROM` and `EMAIL_TO` for email notifications. Leads are saved even if email is not configured.
 
-## Build Command
+### Forms and the data store
 
-The build command for this project is `npm run export:sites`. This command will build the site and export it as a static site, which is ideal for deployment on Netlify.
+Every public form posts to a Next.js route handler:
+
+*   `/api/volunteer` — volunteer signup, saved with its NDPA 2023 consent timestamp.
+*   `/api/inquiry` — Ask Ola / media desk inquiries.
+*   `/api/issues` — constituent help-desk reports, held for ward verification.
+
+With Supabase configured, these writes go to Postgres and survive redeploys. Without it, they go to `data/db.json`, which is suitable for local development or a host with a persistent disk. A static export (`NEXT_OUTPUT=export`, publish `out`) disables every API route and is for design preview only.
+
+## Static preview build
+
+`npm run export:sites` produces the frozen `out/` bundle used for a Qoder Sites pitch preview. It has no server routes, forms or admin CMS.
+
 
 ## Admin CMS
 

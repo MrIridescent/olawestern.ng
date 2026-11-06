@@ -828,11 +828,26 @@ export async function deleteProfileFact(id: string): Promise<boolean> {
 
 export async function listSocials(): Promise<SocialRow[]> {
   const sb = getSupabase();
+  let rows: SocialRow[];
   if (sb) {
     const { data } = await sb.from('socials').select('*').order('sort', { ascending: true });
-    if (data && data.length) return data as SocialRow[];
+    rows = data && data.length ? (data as SocialRow[]) : [...load().socials];
+  } else {
+    rows = [...load().socials];
   }
-  return [...load().socials].sort((a, b) => a.sort - b.sort);
+  // Display-time normalization: only the official campaign line may ever be
+  // published, even if a stale row lingers in Supabase.
+  return rows
+    .map((row) =>
+      row.platform === 'whatsapp'
+        ? {
+            ...row,
+            handle: '+234 803 400 5708',
+            url: 'https://wa.me/2348034005708?text=SupportOlaWestern',
+          }
+        : row,
+    )
+    .sort((a, b) => a.sort - b.sort);
 }
 
 export async function upsertSocial(input: SocialRow): Promise<SocialRow> {
@@ -918,16 +933,34 @@ export async function deleteReference(id: string): Promise<boolean> {
   return db.references.length < before;
 }
 
+/**
+ * The desk retired its "assistant" framing when the public WhatsApp line moved
+ * to the campaign desk. Existing CMS rows may still carry the old sentence, so
+ * it is corrected at read time rather than left live until someone edits it.
+ */
+function retireAssistantCopy(settings: SiteSettings): SiteSettings {
+  const clean = (value: string) => value.replace(/campaign assistant/gi, 'campaign desk');
+  return {
+    ...settings,
+    hero_kicker: clean(settings.hero_kicker),
+    hero_title: clean(settings.hero_title),
+    hero_slogan: clean(settings.hero_slogan),
+    hero_body: clean(settings.hero_body),
+    cta_title: clean(settings.cta_title),
+    cta_body: clean(settings.cta_body),
+  };
+}
+
 export async function getSettings(): Promise<SiteSettings> {
   const sb = getSupabase();
   if (sb) {
     const { data } = await sb.from('site_settings').select('*').eq('id', 'site').single();
     if (data && data.hero_title) {
       const stats = Array.isArray(data.stats) ? data.stats : SEED_SETTINGS.stats;
-      return { ...(data as unknown as SiteSettings), stats };
+      return retireAssistantCopy({ ...(data as unknown as SiteSettings), stats });
     }
   }
-  return load().settings;
+  return retireAssistantCopy(load().settings);
 }
 
 export async function updateSettings(patch: Partial<SiteSettings>): Promise<SiteSettings> {

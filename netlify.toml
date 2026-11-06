@@ -1,16 +1,19 @@
-# Netlify config — see DEPLOY-netlify.md
-# Option A (default): native Next.js runtime — SSR + /api routes + full form capture.
+# Netlify config — native Next.js runtime (SSR) so /api form handlers and
+# /admin work in production. The campaign's forms persist leads through these
+# routes; a static export would silently drop every submission.
 
 [build]
-  command = "npm run export:sites"
-  publish = "out"
+  command = "npm run build"
+  publish = ".next"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "20"
 
-# Option B — static-only preview instead of SSR:
-# comment the [build] block above and use:
-# [build]
-#   command = "npm run export:sites"
-#   publish = "out"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Static-only preview (no forms, no /admin) — use only for design review:
+#   NEXT_OUTPUT=export
+#   npm run export:sites
+# and publish "out" instead of ".next".

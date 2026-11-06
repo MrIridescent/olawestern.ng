@@ -9,7 +9,7 @@ import { slots } from '@/lib/slots';
 export const metadata: Metadata = {
   title: 'Contact — Campaign Office, WhatsApp & Socials',
   description:
-    'Reach the Ola Western campaign: HQ at 32 Road by 3rd Avenue FESTAC Town, the campaign desk phone line, WhatsApp assistant, email and official social media handles.',
+    'Reach the Ola Western campaign: HQ at 32 Road by 3rd Avenue FESTAC Town, the campaign desk phone line, WhatsApp desk, email and official social media handles.',
 };
 
 export const revalidate = 3600;
@@ -55,8 +55,8 @@ export default async function ContactPage() {
                   <a className="underline hover:text-brand-green" href="tel:+2348034005708">{SITE.campaignDeskPhone}</a>
                 </li>
                 <li>
-                  <span className="font-semibold text-brand-dark">WhatsApp Assistant (24/7):</span>{' '}
-                  <a className="underline hover:text-brand-green" href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer">+234 904 125 8180</a>
+                  <span className="font-semibold text-brand-dark">WhatsApp desk:</span>{' '}
+                  <a className="underline hover:text-brand-green" href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer">{SITE.campaignDeskPhone}</a>
                 </li>
                 <li>
                   <span className="font-semibold text-brand-dark">Email:</span>{' '}
@@ -111,7 +111,7 @@ export default async function ContactPage() {
             <div className="rounded-2xl bg-brand-green p-6 text-center">
               <p className="font-display text-lg font-bold text-white">Prefer to talk to a human?</p>
               <p className="mx-auto mt-1 max-w-sm text-sm text-white/70">
-                Register as a volunteer and your ward team calls you back — or ask the AI Campaign Assistant any time.
+                Register as a volunteer and your ward team calls you back — or message the WhatsApp desk.
               </p>
               <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
                 <Link href="/join" className="btn-secondary w-full !border-white !text-white hover:!bg-white hover:!text-brand-green sm:w-auto">Volunteer</Link>

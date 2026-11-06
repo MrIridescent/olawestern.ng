@@ -14,7 +14,6 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 const SITE_URL = 'https://www.olawestern.ng';
 const EMAIL = 'ekabo@olawestern.ng';
 const PHONE = '+234 803 400 5708';
-const WHATSAPP = '+234 904 125 8180';
 const HQ = '32 Road by 3rd Avenue, FESTAC Town, Amuwo-Odofin, Lagos';
 
 const NAVY = rgb(0.043, 0.145, 0.271);
@@ -138,7 +137,7 @@ async function buildPdf() {
   cover.drawText(EMAIL, { x: 56, y: 54, size: 12, font: bold, color: WHITE });
   cover.drawText(SITE_URL.replace('https://', ''), { x: 56, y: 36, size: 10, font: regular, color: rgb(0.78, 0.83, 0.9) });
   cover.drawText(PHONE, { x: 355, y: 54, size: 10, font: bold, color: WHITE });
-  cover.drawText(`${WHATSAPP} (WhatsApp)`, { x: 355, y: 36, size: 9, font: regular, color: rgb(0.78, 0.83, 0.9) });
+  cover.drawText(`${PHONE} · desk & WhatsApp`, { x: 355, y: 36, size: 9, font: regular, color: rgb(0.78, 0.83, 0.9) });
   cover.drawText('Approved by the Ola Western Campaign Committee.', {
     x: 56, y: 16, size: 7.5, font: regular, color: rgb(0.55, 0.62, 0.72),
   });
@@ -249,7 +248,7 @@ async function buildPdf() {
   label(p3, 'Press and partnerships', 66, y - 18, bold, ORANGE, 8);
   p3.drawText(EMAIL, { x: 66, y: y - 38, size: 13, font: bold, color: WHITE });
   p3.drawText(SITE_URL.replace('https://', ''), { x: 66, y: y - 55, size: 10, font: regular, color: rgb(0.78, 0.83, 0.9) });
-  p3.drawText(`${PHONE}  /  ${WHATSAPP} (WhatsApp)`, { x: 66, y: y - 72, size: 9, font: regular, color: rgb(0.78, 0.83, 0.9) });
+  p3.drawText(`${PHONE} · desk & WhatsApp`, { x: 66, y: y - 72, size: 9, font: regular, color: rgb(0.78, 0.83, 0.9) });
   p3.drawText(HQ, { x: 66, y: y - 89, size: 9, font: regular, color: rgb(0.78, 0.83, 0.9) });
   p3.drawText('Media requests are answered by the campaign press desk.', { x: 66, y: y - 110, size: 7.5, font: regular, color: rgb(0.55, 0.62, 0.72) });
   y -= 150;
@@ -280,7 +279,6 @@ async function buildVcard() {
     'ORG:Ola Western Campaign Organization',
     'TITLE:APC Flagbearer, Lagos State House of Assembly',
     'TEL;TYPE=WORK,VOICE:+2348034005708',
-    'TEL;TYPE=CELL:+2349041258180',
     `EMAIL;TYPE=WORK,INTERNET:${EMAIL}`,
     `URL:${SITE_URL}`,
     `ADR;TYPE=WORK:;;${HQ};Amuwo-Odofin;Lagos;;Nigeria`,
@@ -294,8 +292,7 @@ async function buildBoilerplate() {
   const text = `OLAWESTERN 2027 - APPROVED PRESS BOILERPLATE
 Website: ${SITE_URL}
 Press email: ${EMAIL}
-Campaign desk: ${PHONE}
-WhatsApp: ${WHATSAPP}
+Campaign desk & WhatsApp: ${PHONE}
 HQ: ${HQ}
 
 SHORT BOILERPLATE (40 words)

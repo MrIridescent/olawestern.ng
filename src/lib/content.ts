@@ -20,8 +20,8 @@ export const SITE = {
   party: 'All Progressives Congress (APC)',
   slogan: '... towards responsible representation',
   hq: '32 Road by 3rd Avenue, FESTAC Town, Amuwo-Odofin LGA',
-  whatsappNumber: '2349041258180',
-  whatsappLink: 'https://wa.me/2349041258180?text=SupportOlaWestern',
+  whatsappNumber: '2348034005708',
+  whatsappLink: 'https://wa.me/2348034005708?text=SupportOlaWestern',
   email: 'ekabo@olawestern.ng',
   campaignDeskPhone: '+234 803 400 5708',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.olawestern.ng',
@@ -43,7 +43,7 @@ export const SEED_SETTINGS: SiteSettings = {
 };
 
 export const SOCIALS: SocialProfile[] = [
-  { platform: 'whatsapp', label: 'WhatsApp', handle: '+234 904 125 8180', url: 'https://wa.me/2349041258180?text=SupportOlaWestern' },
+  { platform: 'whatsapp', label: 'WhatsApp', handle: '+234 803 400 5708', url: 'https://wa.me/2348034005708?text=SupportOlaWestern' },
   { platform: 'x', label: 'X (Twitter)', handle: '@olawestern23', url: 'https://x.com/olawestern23' },
   { platform: 'instagram', label: 'Instagram', handle: '@olawestern23', url: 'https://www.instagram.com/olawestern23' },
   { platform: 'facebook', label: 'Facebook', handle: 'Ola Western Campaign [CONFIRM]', url: null },

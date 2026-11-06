@@ -40,7 +40,7 @@ export default async function JoinPage() {
               },
               {
                 title: 'Continue on WhatsApp',
-                body: 'The AI Campaign Assistant (+234 904 125 8180) answers policy questions 24/7 and keeps you updated on events and GOTV drives.',
+                body: 'The campaign desk (+234 803 400 5708) answers policy questions, logs ward issues and keeps you updated on events and GOTV drives.',
               },
             ].map((s, i) => (
               <li key={s.title} className="flex gap-4">
@@ -62,10 +62,10 @@ export default async function JoinPage() {
           <div className="card mt-8 border-brand-green/20 bg-brand-light">
             <h3 className="font-display text-base font-bold text-brand-green-dark">Already a supporter? Skip the form.</h3>
             <p className="mt-1 text-sm text-brand-gray">
-              Message <strong>SupportOlaWestern</strong> on WhatsApp and the assistant handles the rest.
+              Message <strong>SupportOlaWestern</strong> on WhatsApp and the desk takes it from there.
             </p>
             <a href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer" className="btn-blue mt-4">
-              Open WhatsApp Assistant
+              Open WhatsApp desk
             </a>
           </div>
         </div>

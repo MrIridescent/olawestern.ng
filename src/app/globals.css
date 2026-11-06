@@ -161,6 +161,166 @@ body {
   @apply h-24 md:hidden;
 }
 
+/* ── Digital Campaign HQ ─────────────────────────────────────────────────────
+   A dark command surface for the public record. Every effect here is
+   decoration over text that is already readable: nothing hides behind an
+   animation, and every moving element stops for prefers-reduced-motion. */
+
+.hq-hero {
+  background:
+    radial-gradient(900px 520px at 82% -10%, rgba(255, 87, 34, 0.4), transparent 60%),
+    radial-gradient(700px 560px at 8% 108%, rgba(16, 185, 129, 0.16), transparent 64%),
+    radial-gradient(800px 600px at 55% 40%, rgba(30, 58, 138, 0.5), transparent 70%),
+    linear-gradient(150deg, #05142a 0%, #0b2545 58%, #0e2c50 100%);
+}
+
+.hq-ops {
+  background:
+    radial-gradient(700px 420px at 100% 0%, rgba(255, 87, 34, 0.16), transparent 62%),
+    radial-gradient(600px 500px at 0% 100%, rgba(16, 185, 129, 0.1), transparent 65%),
+    linear-gradient(160deg, #071a33 0%, #0b2545 60%, #081c37 100%);
+}
+
+.hq-longgame {
+  background:
+    radial-gradient(760px 480px at 12% 0%, rgba(30, 58, 138, 0.45), transparent 62%),
+    radial-gradient(640px 520px at 92% 90%, rgba(255, 87, 34, 0.14), transparent 66%),
+    linear-gradient(170deg, #040f20 0%, #081c37 55%, #0b2545 100%);
+}
+
+/* A faint engineering grid: visible enough to feel like an operations room,
+   quiet enough not to compete with body copy. */
+.hq-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 30%, rgba(0, 0, 0, 0.85), transparent 78%);
+}
+
+.hq-glass {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.045) 48%, rgba(255, 255, 255, 0.02));
+  box-shadow:
+    0 30px 80px rgba(2, 6, 16, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.hq-gradient-text {
+  background: linear-gradient(100deg, #ff8a65 0%, #ff5722 42%, #ffb59e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Ticker */
+.hq-marquee {
+  animation: hq-marquee 38s linear infinite;
+  will-change: transform;
+}
+@keyframes hq-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Radar */
+.hq-radar {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.09), transparent 62%),
+    radial-gradient(circle at 50% 50%, rgba(7, 26, 51, 0.65), rgba(3, 10, 22, 0.2));
+  overflow: hidden;
+}
+.hq-radar::before,
+.hq-radar::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.09);
+}
+.hq-radar::before {
+  left: 50%;
+  top: 6%;
+  bottom: 6%;
+  width: 1px;
+}
+.hq-radar::after {
+  top: 50%;
+  left: 6%;
+  right: 6%;
+  height: 1px;
+}
+.hq-radar-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+.hq-radar-ring-1 { width: 33%; height: 33%; }
+.hq-radar-ring-2 { width: 66%; height: 66%; }
+.hq-radar-ring-3 { width: 99%; height: 99%; }
+.hq-radar-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(16, 185, 129, 0.36) 44deg, transparent 92deg);
+  animation: hq-sweep 5.2s linear infinite;
+}
+@keyframes hq-sweep {
+  to { transform: rotate(360deg); }
+}
+.hq-radar-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  background: #ff5722;
+  box-shadow: 0 0 0 5px rgba(255, 87, 34, 0.18), 0 0 22px rgba(255, 87, 34, 0.9);
+}
+.hq-radar-blip {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.16), 0 0 14px rgba(16, 185, 129, 0.8);
+  animation: hq-blip 2.8s ease-in-out infinite;
+}
+.hq-radar-blip-1 { left: 27%; top: 34%; animation-delay: 0.2s; }
+.hq-radar-blip-2 { left: 68%; top: 27%; animation-delay: 1.1s; }
+.hq-radar-blip-3 { left: 61%; top: 70%; animation-delay: 1.9s; }
+@keyframes hq-blip {
+  0%, 100% { opacity: 0.45; transform: scale(0.82); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hq-marquee,
+  .hq-radar-sweep,
+  .hq-radar-blip {
+    animation: none;
+  }
+  .hq-radar-sweep {
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(16, 185, 129, 0.16) 44deg, transparent 92deg);
+  }
+  .hq-radar-blip {
+    opacity: 0.9;
+  }
+}
+
 /* ── Live Desk ───────────────────────────────────────────────────────────────
    Two rules, both keyed off the class the overlay sets on <html> while it is
    armed. A voter's page never carries that class, so:

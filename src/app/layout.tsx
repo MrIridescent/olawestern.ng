@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileActionBar from '@/components/layout/MobileActionBar';
+import ScrollProgress from '@/components/hq/ScrollProgress';
 import LiveDesk from '@/components/livedesk/LiveDesk';
 import { SITE } from '@/lib/content';
 import './globals.css';
@@ -94,13 +95,17 @@ const personSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>
+      {/* Grammarly and similar extensions inject attributes into <body> before
+          React hydrates. Suppress the false-positive mismatch on this element
+          only; every child still hydrates normally. */}
+      <body suppressHydrationWarning>
         <script
           type="application/ld+json"
           // Static, developer-authored structured data — safe to inline.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <Header />
+        <ScrollProgress />
         <main id="main-content">{children}</main>
         <Footer />
         {/* Rendered last: its spacer sits below the footer so the fixed bar

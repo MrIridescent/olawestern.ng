@@ -142,8 +142,8 @@ export default async function MediaKitPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-between gap-2 rounded-lg border border-white/20 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition-colors hover:border-brand-electric/60 hover:bg-white/10"
             >
-              <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/70">WhatsApp</span>
-              <span className="font-mono text-[12px]">+234 904 125 8180</span>
+              <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/70">WhatsApp &amp; desk</span>
+              <span className="font-mono text-[12px]">{SITE.campaignDeskPhone}</span>
               <span className="text-[10px] font-bold uppercase tracking-wider text-brand-electric-bright">Chat</span>
             </a>
           </div>

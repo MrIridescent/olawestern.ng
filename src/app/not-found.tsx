@@ -11,7 +11,7 @@ export default function NotFound() {
         </h1>
         <p className="mt-3 max-w-md text-sm text-gray-200">
           The page you were looking for isn&rsquo;t in {SITE.constituency}. Head back to the
-          campaign homepage or ask the AI Campaign Assistant directly.
+          campaign homepage or message the campaign desk directly.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Link href="/" className="btn-primary">Back to Home</Link>

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { SITE } from '@/lib/content';
 
 /** Desktop keeps the six decisions a voter makes most often. The full map
  *  (Help Desk, Gallery, Blog, Volunteer) stays in the mobile drawer and footer. */
@@ -17,6 +18,7 @@ const PRIMARY_NAV = [
 ];
 
 const ALL_NAV = [
+  { href: '/hq', label: 'Digital Campaign HQ' },
   { href: '/about', label: 'About Ola Western' },
   { href: '/impact', label: 'Track Record' },
   { href: '/blueprint', label: 'Legislative Agenda' },
@@ -67,9 +69,6 @@ export default function Header() {
             <span className="block font-display text-[19px] font-extrabold tracking-tight">
               <span className="text-white">Ola</span><span className="text-brand-electric">Western</span>
             </span>
-            <span className="mt-1 hidden whitespace-nowrap text-[9px] font-semibold uppercase tracking-[0.19em] text-white/70 sm:block">
-              Lagos Assembly · Amuwo-Odofin 1
-            </span>
           </span>
         </Link>
 
@@ -80,7 +79,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative whitespace-nowrap px-2.5 py-2 text-[12.5px] font-semibold tracking-wide transition-colors after:absolute after:bottom-0.5 after:left-2.5 after:right-2.5 after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-electric after:transition-transform hover:text-white hover:after:scale-x-100 ${
+                className={`relative whitespace-nowrap px-2 py-2 text-[12.5px] font-semibold tracking-wide transition-colors after:absolute after:bottom-0.5 after:left-2 after:right-2 after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-brand-electric after:transition-transform hover:text-white hover:after:scale-x-100 ${
                   active ? 'text-white after:scale-x-100' : 'text-white/70'
                 }`}
               >
@@ -88,6 +87,22 @@ export default function Header() {
               </Link>
             );
           })}
+          <Link
+            href="/hq"
+            aria-label="Digital Campaign HQ"
+            title="Digital Campaign HQ"
+            className={`ml-2 inline-flex min-h-[44px] items-center gap-2 rounded-full border px-3 text-[12px] font-bold uppercase tracking-[0.1em] transition-colors ${
+              pathname.startsWith('/hq')
+                ? 'border-brand-electric/70 bg-brand-electric/15 text-white'
+                : 'border-white/20 text-white/80 hover:border-brand-electric/60 hover:text-white'
+            }`}
+          >
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-emerald opacity-60 motion-reduce:animate-none" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-emerald" />
+            </span>
+            HQ
+          </Link>
           <Link
             href="/join"
             className="btn ml-3 min-h-[44px] whitespace-nowrap rounded-full bg-brand-electric px-5 py-2 text-[13px] text-brand-navy shadow-[0_4px_14px_rgba(255,87,34,0.35)] hover:bg-brand-electric-dark hover:text-white"
@@ -134,7 +149,7 @@ export default function Header() {
             Join OlaWestern&rsquo;s Movement <span aria-hidden>→</span>
           </Link>
           <a
-            href="https://wa.me/2349041258180?text=SupportOlaWestern"
+            href={SITE.whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
             className="btn mt-2 w-full rounded-full border border-white/25 text-white hover:bg-white/10"

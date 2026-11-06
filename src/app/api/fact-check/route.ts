@@ -9,8 +9,7 @@ const VERDICTS = ['VERIFIED FACT', 'FALSE CLAIM', 'MISLEADING'] as const;
  * GET /api/fact-check — the Truth Engine query surface.
  * ?q=         full-text search across claim + explanation (tokens AND-ed)
  * ?verdict=   VERIFIED FACT | FALSE CLAIM | MISLEADING
- * Consumed by the Truth Room page, the AI Campaign Assistant widget and the
- * War Room sync verification.
+ * Consumed by the Truth Room page and the War Room sync verification.
  */
 export async function GET(request: NextRequest) {
   try {

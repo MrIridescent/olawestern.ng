@@ -2,64 +2,11 @@
 
 import { useMemo, useState } from 'react';
 import { WARDS, type Ward } from '@/types';
-
-interface WardBrief {
-  headline: string;
-  commitments: string[];
-  onTheGround: string;
-  townHall: string;
-}
-
-/**
- * Ward-specific commitments from the published agenda and record.
- * Town-hall slots are described as a cycle, never as invented dates.
- */
-const BRIEFS: Record<Ward, WardBrief> = {
-  'Festac I': {
-    headline: 'Roads, drainage and the 1st Avenue standard',
-    commitments: [
-      'Finish the 1st Avenue rebuild and extend the same standard to adjoining avenues.',
-      'Clear and maintain the 7th Avenue drainage channel before every rainy season.',
-      'Publish a ward-by-ward road and street-light schedule the Assembly can be held to.',
-    ],
-    onTheGround: '1st Avenue rebuilt (2023) · 7th Avenue drainage desilting supported (2018)',
-    townHall: 'Quarterly open-door cycle · next slot confirmed by the Festac I ward desk',
-  },
-  'Festac II': {
-    headline: '23 Road, schools and the everyday commute',
-    commitments: [
-      'Push the full rehabilitation of 23 Road through FHA–state–LGA cooperation.',
-      'Protect school routes and pedestrian crossings with lighting and traffic calming.',
-      'Open a constituency feedback desk that reports back on every request.',
-    ],
-    onTheGround: '23 Road rehabilitation is a published agenda item · ward feedback desk open',
-    townHall: 'Quarterly open-door cycle · next slot confirmed by the Festac II ward desk',
-  },
-  'Festac III': {
-    headline: 'Water, security and community infrastructure',
-    commitments: [
-      'Extend the borehole drive and publish a maintenance schedule for each pump.',
-      'Support estate security coordination with the LGA and Lagos State command.',
-      'Create youth digital-skill and sports hubs inside the ward.',
-    ],
-    onTheGround: 'Six-ward borehole drive delivered · palliative outreach across the constituency',
-    townHall: 'Quarterly open-door cycle · next slot confirmed by the Festac III ward desk',
-  },
-  'Mile 2 / Housing Estate': {
-    headline: 'Market livelihoods and safe transport corridors',
-    commitments: [
-      'Protect Agboju and Mile 2 traders from arbitrary levies and demolition notices.',
-      'Fix the drainage and lighting around busy transport corridors.',
-      'Route constituent complaints through a named ward captain, not a queue.',
-    ],
-    onTheGround: 'Agboju trader engagement documented · market-protection bill on the agenda',
-    townHall: 'Quarterly open-door cycle · next slot confirmed by the Mile 2 ward desk',
-  },
-};
+import { WARD_BRIEFS } from '@/lib/hq';
 
 export default function WardImpactLocator({ whatsappNumber }: { whatsappNumber: string }) {
   const [ward, setWard] = useState<Ward>('Festac I');
-  const brief = useMemo(() => BRIEFS[ward], [ward]);
+  const brief = useMemo(() => WARD_BRIEFS[ward], [ward]);
 
   const waHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     `Hello OlaWestern campaign. I live in ${ward} and want to speak with my ward coordinator.`,

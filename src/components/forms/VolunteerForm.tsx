@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { WARDS } from '@/types';
 
 export default function VolunteerForm() {
   const [name, setName] = useState('');
@@ -9,8 +10,10 @@ export default function VolunteerForm() {
   const [address, setAddress] = useState('');
   const [ward, setWard] = useState('');
   const [message, setMessage] = useState('');
+  const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [successNote, setSuccessNote] = useState('Thank you for your submission!');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,14 +28,16 @@ export default function VolunteerForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, phone, address, ward, message }),
+        body: JSON.stringify({ name, email, phone, address, ward, message, consent }),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.error || 'Something went wrong');
       }
 
+      setSuccessNote(data.message || 'Thank you for your submission!');
       setSuccess(true);
       setName('');
       setEmail('');
@@ -40,6 +45,7 @@ export default function VolunteerForm() {
       setAddress('');
       setWard('');
       setMessage('');
+      setConsent(false);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -126,15 +132,23 @@ export default function VolunteerForm() {
           Ward
         </label>
         <div className="mt-1">
-          <input
-            type="text"
+          <select
             name="ward"
             id="ward"
             required
             value={ward}
             onChange={(e) => setWard(e.target.value)}
             className="field-input"
-          />
+          >
+            <option value="" disabled>
+              Select your ward
+            </option>
+            {WARDS.map((w) => (
+              <option key={w} value={w}>
+                {w}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -152,6 +166,22 @@ export default function VolunteerForm() {
             className="field-input"
           />
         </div>
+      </div>
+
+      <div className="flex items-start gap-3 rounded-lg border border-brand-navy/10 bg-brand-navy/[0.03] p-4">
+        <input
+          id="consent"
+          name="consent"
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 h-4 w-4 flex-none accent-brand-electric"
+        />
+        <label htmlFor="consent" className="text-xs leading-relaxed text-brand-navy/75">
+          I agree to the campaign storing these details under the Nigeria Data Protection Act 2023, solely so
+          the ward team can contact me about volunteering. I can ask for my data to be removed at any time.
+        </label>
       </div>
 
       <div>
@@ -173,7 +203,7 @@ export default function VolunteerForm() {
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">Thank you for your submission!</p>
+              <p className="text-sm font-medium text-green-800">{successNote}</p>
             </div>
           </div>
         </div>

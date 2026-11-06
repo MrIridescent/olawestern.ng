@@ -36,7 +36,7 @@ export default function PrivacyPage() {
             <ul className="list-disc space-y-1 pl-5">
               <li><strong>Volunteer registration:</strong> name, phone number, optional email, ward, street, polling unit code, your top community concern, and your consent record.</li>
               <li><strong>Ask Ola / rumor reports:</strong> name, phone, ward, message type and the text you submit.</li>
-              <li><strong>WhatsApp assistant chats:</strong> your phone number and the messages you choose to send us.</li>
+              <li><strong>WhatsApp desk chats:</strong> your phone number and the messages you choose to send us.</li>
               <li><strong>Basic analytics:</strong> aggregate, non-identifying usage statistics for campaign reporting.</li>
             </ul>
             <p className="mt-2">We do not collect your PVC number, NIN, BVN, religion, or any sensitive personal data as defined by the NDPA.</p>
