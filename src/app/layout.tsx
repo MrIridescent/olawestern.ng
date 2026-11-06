@@ -5,6 +5,7 @@ import MobileActionBar from '@/components/layout/MobileActionBar';
 import LiveDesk from '@/components/livedesk/LiveDesk';
 import { SITE } from '@/lib/content';
 import './globals.css';
+import '@/styles/embla.css';
 
 import { Inter, Cormorant_Garamond } from 'next/font/google';
 
@@ -100,11 +101,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
         {/* Rendered last: its spacer sits below the footer so the fixed bar
             never covers the footer's links on phones. */}
-        <MobileActionBar whatsappLink={SITE.whatsappLink} />
+        <MobileActionBar />
         {/* The campaign desk's editing surface. Mounts nothing at all unless the
             session probe says an admin is looking, so a voter's page is byte-for-byte
             the site they have always been served. */}

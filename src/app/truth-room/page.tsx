@@ -22,9 +22,9 @@ export default async function TruthRoomPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Reputation Defense Desk</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Reputation Defense Desk</p>
           <h1 className="hero-title">The Truth Room</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Every claim checked. Every rumor answered with evidence. Press releases and official
             statements from the campaign office at 32 Road, FESTAC Town.
           </p>

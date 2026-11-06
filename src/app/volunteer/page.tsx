@@ -4,7 +4,8 @@ export default function VolunteerPage() {
   return (
     <div className="bg-white py-16 sm:py-24">
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-gray-100 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+        <div className="relative isolate overflow-hidden border-t-4 border-brand-orange bg-brand-light px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+          <p className="section-kicker">Volunteer Portal</p>
           <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Join the Movement
           </h2>

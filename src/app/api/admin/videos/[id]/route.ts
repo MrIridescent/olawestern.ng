@@ -9,7 +9,7 @@ import { checkEmbeddable } from '@/lib/youtube';
 export const dynamic = 'force-dynamic';
 
 /** PATCH /api/admin/videos/[id] — retitle, re-slot or unpublish an appearance. */
-export async function PATCH(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -31,7 +31,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
     if (b.featured !== undefined) patch.featured = !!b.featured;
     if (b.published !== undefined) patch.published = !!b.published;
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updateVideo(context.params.id, patch);
+    const ok = await updateVideo((await context.params).id, patch);
     if (!ok) return notFound('Video');
     revalidateMedia();
     return NextResponse.json({ success: true });
@@ -41,10 +41,10 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 }
 
 /** DELETE /api/admin/videos/[id] — remove an appearance from the library. */
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteVideo(context.params.id);
+    const ok = await deleteVideo((await context.params).id);
     if (!ok) return notFound('Video');
     revalidateMedia();
     return NextResponse.json({ success: true });

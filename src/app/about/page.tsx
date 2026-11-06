@@ -9,6 +9,7 @@ export default function AboutPage() {
       <section className="hero-gradient relative overflow-hidden">
         <div className="container-site grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
           <div>
+            <p className="section-kicker">The Man Behind The Record</p>
             <AnimatedText>
               <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
                 Hon. Engr. Folorunsho Olaitan Segun (Ola Western)

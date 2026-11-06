@@ -4,6 +4,10 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
+  if (!process.env.RESEND_API_KEY) {
+    return NextResponse.json({ error: 'Resend API key is not configured' }, { status: 500 });
+  }
+
   try {
     const body = await req.json();
     const { name, email, phone, address, ward, message } = body;

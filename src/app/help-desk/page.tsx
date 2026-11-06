@@ -23,9 +23,9 @@ export default async function HelpDeskPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-14 text-center sm:py-16">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">The Department of Community Engagement</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">The Department of Community Engagement</p>
           <h1 className="hero-title">The Constituent Help Desk</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             A blocked drain should not have to wait for an election. Report what is broken on your
             street, watch the status move in public, and book time at the open door — the same desk
             run from 32 Road for years, pledged to become a permanent office of a Constituency I lawmaker.
@@ -38,7 +38,7 @@ export default async function HelpDeskPage() {
             ].map((s) => (
               <div key={s.k} className="rounded-2xl bg-white/10 px-2 py-4 ring-1 ring-white/15">
                 <dd className="font-display text-2xl font-bold text-white sm:text-3xl">{s.v}</dd>
-                <dt className="mt-1 text-[11px] font-bold uppercase tracking-wider text-brand-green-light">{s.k}</dt>
+                <dt className="mt-1 text-[11px] font-bold uppercase tracking-wider text-white/70">{s.k}</dt>
               </div>
             ))}
           </dl>
@@ -96,7 +96,7 @@ export default async function HelpDeskPage() {
           <h2 className="font-display text-2xl font-bold leading-tight text-white sm:text-3xl">
             This is what accessible representation looks like — before office.
           </h2>
-          <p className="max-w-2xl text-sm text-brand-green-light">
+          <p className="max-w-2xl text-sm text-white/70">
             The desk at {SITE.hq} is the same office that cleared drains, sank boreholes and rebuilt
             roads. Keep it permanently in the House of Assembly — add your name to the movement.
           </p>

@@ -56,7 +56,7 @@ export const posts: BlogPost[] = [
   },
   {
     id: 'investing-in-our-people',
-    title: 'Our Greatest Asset: Investing in Amuwo's People',
+    title: "Our Greatest Asset: Investing in Amuwo's People",
     date: '2026-08-18',
     author: 'Hon. Ola Western',
     summary: 'My agenda for human capital development, focusing on schools that sing, clinics that heal, and empowering our youth, women, and the physically challenged.',

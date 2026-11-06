@@ -7,16 +7,18 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ id: post.id }));
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const post = await getBlogPost(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const post = await getBlogPost(id);
   if (!post) {
     return {};
   }
   return { title: post.title, description: post.summary };
 }
 
-export default async function BlogPostPage({ params }: { params: { id: string } }) {
-  const post = await getBlogPost(params.id);
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const post = await getBlogPost(id);
 
   if (!post) {
     notFound();
@@ -27,7 +29,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
           <h1 className="hero-title">{post.title}</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             {post.date} by {post.author}
           </p>
         </div>

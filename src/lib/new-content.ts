@@ -91,61 +91,89 @@ export const NEW_ACCOMPLISHMENTS: Accomplishment[] = [
 
 export const NEW_PROFILE_FACTS: ProfileFact[] = [
 	{
-		label: 'Primary & Secondary Education',
+		id: 'fact-education',
+		key: 'Primary & Secondary Education',
 		value: "St. Mary's Primary School; St. Lawrence Grammar School.",
-		confirmed: true
+		note: null,
+		sort: 4
 	},
 	{
-		label: 'Tertiary Education',
+		id: 'fact-tertiary-education',
+		key: 'Tertiary Education',
 		value:
 			'Osun State Polytechnic (HND, Business Administration), Lagos State University (B.Sc., Accounting), Yaba College of Technology (HND, Civil Engineering), CJ College (Diploma, Mental Health and Addiction)',
-		confirmed: true
+		note: null,
+		sort: 5
 	},
 	{
-		label: 'Corporate Experience',
+		id: 'fact-corporate-experience',
+		key: 'Corporate Experience',
 		value:
 			'CEO of Western Group of Companies (Western Logistics, Western Construction, Western Entertainment)',
-		confirmed: true,
-		note: 'A successful entrepreneur with a strong background in business and engineering.'
+		note: 'A successful entrepreneur with a strong background in business and engineering.',
+		sort: 6
 	},
 	{
-		label: 'Political Experience',
+		id: 'fact-political-experience',
+		key: 'Political Experience',
 		value:
 			'Member, Lagos State House of Assembly (2015-2019); Chairman, House Committee on Waterfront Infrastructure Development.',
-		confirmed: true
+		note: null,
+		sort: 7
 	},
 	{
-		label: 'Awards & Honours',
+		id: 'fact-awards',
+		key: 'Awards & Honours',
 		value:
 			'ECOWAS Youth Parliament Role Model, Symbol of Hope, Grand Commander of African Youths, Amuwo-Odofin Man of the Year (2017, 2018).',
-		confirmed: true
+		note: null,
+		sort: 8
 	}
 ];
 
 export const NEW_FACT_CHECKS: FactCheck[] = [
 	{
-		claim: 'Provided six boreholes for potable water.',
-		verification_source_url:
-			'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/',
-		status: 'verified'
+		id: 'fc-mandate',
+		created_at: '2026-10-20T09:00:00Z',
+		claim_summary: '“The APC primary result did not reflect the will of the ward executives.”',
+		verdict: 'FALSE CLAIM',
+		detailed_explanation:
+			'The record shows the opposite, twice. In May 2022 Ola Western won the APC primary for Amuwo-Odofin Constituency I with 12 of 20 accredited delegate votes (60%), defeating the incumbent and three other contenders under a Primary Election Committee witnessed by INEC, Police, DSS and NSCDC observers. In May 2026 he won the party’s consensus primary again — this time on a mandate of over 3,000 votes across the wards — and was formally presented as flagbearer alongside the House of Representatives candidate. Both results were certified through the party’s own primary structures and covered by the press.',
+		official_document_url:
+			'https://festaconline.com.ng/ola-folorunsho-emerges-apc-flagbearer-for-amuwo-constituency-i-with-3k-votes/',
+		is_featured: true
 	},
 	{
-		claim: 'Donated two 500KVA transformers to the community.',
-		verification_source_url:
-			'https://www.amuwolefinro.com/2018/04/hon-folorunsho-ola-western-donates-2.html',
-		status: 'verified'
+		id: 'fc-no-record',
+		created_at: '2026-10-22T10:00:00Z',
+		claim_summary: '“The candidate has no record of community investment.”',
+		verdict: 'FALSE CLAIM',
+		detailed_explanation:
+			'The Track Record page of this site itemises a dated, press-documented ledger of pre-office service: clean-water boreholes across six Amuwo-Odofin wards and the 7th Avenue drainage desilting (2018, FestacOnline and The Nation); executive approval secured for six FESTAC roads including the rebuild of 1st Avenue (2023); the Ola Western Food Fest feeding over 1,000 households (2024, P.M. Express, The Sun, Vanguard); the NIWA jetty negotiation that wrote Mile 2 youths into the ecological project; and a “Take Back FESTAC” Community Builders Award (December 2025, Vanguard and The Guardian). Every entry on the ledger links to the report behind it.',
+		official_document_url:
+			'https://festaconline.com.ng/7th-avenue-festac-to-get-support-on-drainage-clearing/',
+		is_featured: false
 	},
 	{
-		claim: 'Launched a free school bus shuttle for students.',
-		verification_source_url:
-			'https://www.vanguardngr.com/2017/09/lawmaker-flags-off-free-school-bus-shuttle-constituents/',
-		status: 'verified'
+		id: 'fc-ballot',
+		created_at: '2026-10-25T11:00:00Z',
+		claim_summary: 'Which seat and which party is Ola Western running on?',
+		verdict: 'VERIFIED FACT',
+		detailed_explanation:
+			'Hon. Engr. Folorunsho Olaitan Segun (Ola Western) is the candidate of the All Progressives Congress (APC) for the Lagos State House of Assembly representing Amuwo-Odofin Constituency I — FESTAC Town I, FESTAC Town II, FESTAC Town III and Mile 2 / Housing Estate. Any ballot or slogan variation circulating outside this site and the campaign’s official channels should be reported through Ask Ola.',
+		official_document_url:
+			'https://festaconline.com.ng/ola-folorunsho-emerges-apc-flagbearer-for-amuwo-constituency-i-with-3k-votes/',
+		is_featured: false
 	},
 	{
-		claim: 'Distributed COVID-19 palliatives to constituents.',
-		verification_source_url:
-			'https://www.independent.ng/covid-19-lawmaker-distributes-cash-food-items-to-constituents/',
-		status: 'verified'
+		id: 'fc-accessible',
+		created_at: '2026-10-28T10:00:00Z',
+		claim_summary: '“Lawmakers are far removed from the people who elected them.”',
+		verdict: 'VERIFIED FACT',
+		detailed_explanation:
+			'Ola Western is different by geography: he lives, worships near, trades and runs Western Concrete inside FESTAC Town, and his campaign office at 32 Road by 3rd Avenue is the same door residents have knocked on for boreholes, drainage machines, hospital bills and food palliatives for years — before any ballot existed. That is the practical meaning of “Always here, always accessible”: the representative experiences the same roads, the same floods and the same streetlights as the constituency.',
+		official_document_url: null,
+		is_featured: false
 	}
 ];
 
@@ -182,19 +210,35 @@ export const NEW_PRESS_ITEMS: PressItem[] = [
 
 export const NEW_REFERENCE_LINKS: ReferenceLink[] = [
 	{
-		title: 'Verification: Borehole Projects',
+		id: 'ref-link-0',
+		year: 2018,
+		date: 'March 2018',
+		outlet: 'FestacOnline',
+		headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin',
 		url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/'
 	},
 	{
-		title: 'Verification: Transformer Donations',
+		id: 'ref-link-1',
+		year: 2018,
+		date: 'April 2018',
+		outlet: 'Amuwolefinro',
+		headline: 'Hon. Folorunsho Ola Western donates two 500KVA transformers',
 		url: 'https://www.amuwolefinro.com/2018/04/hon-folorunsho-ola-western-donates-2.html'
 	},
 	{
-		title: 'Verification: Free School Bus Initiative',
+		id: 'ref-link-2',
+		year: 2017,
+		date: 'September 2017',
+		outlet: 'Vanguard',
+		headline: 'Lawmaker flags off free school bus shuttle for constituents',
 		url: 'https://www.vanguardngr.com/2017/09/lawmaker-flags-off-free-school-bus-shuttle-constituents/'
 	},
 	{
-		title: 'Verification: COVID-19 Relief Efforts',
+		id: 'ref-link-3',
+		year: 2020,
+		date: '2020',
+		outlet: 'The Independent',
+		headline: 'COVID-19: Lawmaker distributes cash, food items to constituents',
 		url: 'https://www.independent.ng/covid-19-lawmaker-distributes-cash-food-items-to-constituents/'
 	}
 ];

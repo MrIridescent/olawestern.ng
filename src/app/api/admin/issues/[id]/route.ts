@@ -15,7 +15,7 @@ function revalidated() {
  * PATCH /api/admin/issues/[id] — triage a report: move the status, write the
  * public progress note, and gate publication.
  */
-export async function PATCH(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -36,7 +36,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
       return NextResponse.json({ success: false, error: 'Nothing to update.' }, { status: 400 });
     }
 
-    const ok = await updateIssue(context.params.id, patch);
+    const ok = await updateIssue((await context.params).id, patch);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidated();
     return NextResponse.json({ success: true });
@@ -46,9 +46,9 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 }
 
 /** DELETE /api/admin/issues/[id] — remove a row (spam / duplicate reports). */
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   if (!isAdminRequest(request)) return unauthorized();
-  const ok = await deleteIssue(context.params.id);
+  const ok = await deleteIssue((await context.params).id);
   if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
   revalidated();
   return NextResponse.json({ success: true });

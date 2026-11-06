@@ -33,9 +33,9 @@ export default async function NewsPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Live Community Newsfeed</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Live Community Newsfeed</p>
           <h1 className="hero-title">The Newsroom</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Every official statement from {SITE.hq}, curated community coverage of Constituency I,
             and rapid-response notes — published only after executive review.
           </p>

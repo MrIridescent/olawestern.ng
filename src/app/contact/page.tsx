@@ -22,9 +22,9 @@ export default async function ContactPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-14 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Reach The Campaign</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Reach The Campaign</p>
           <h1 className="hero-title">Contact Ola Western HQ</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Responsible representation starts with an open door. Call, write, message on WhatsApp — or walk in.
           </p>
         </div>
@@ -110,7 +110,7 @@ export default async function ContactPage() {
 
             <div className="rounded-2xl bg-brand-green p-6 text-center">
               <p className="font-display text-lg font-bold text-white">Prefer to talk to a human?</p>
-              <p className="mx-auto mt-1 max-w-sm text-sm text-brand-green-light">
+              <p className="mx-auto mt-1 max-w-sm text-sm text-white/70">
                 Register as a volunteer and your ward team calls you back — or ask the AI Campaign Assistant any time.
               </p>
               <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">

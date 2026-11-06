@@ -1,16 +1,5 @@
 import { createClient, type ContentfulClientApi } from 'contentful';
-
-const space = process.env.CONTENTFUL_SPACE_ID;
-const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
-
-if (!space || !accessToken) {
-  throw new Error('Contentful space ID and access token must be provided.');
-}
-
-const client: ContentfulClientApi<any> = createClient({
-  space,
-  accessToken,
-});
+import { getBlogPost as getLocalBlogPost, listBlogPosts as listLocalBlogPosts } from './blog';
 
 export interface BlogPost {
   id: string;
@@ -19,6 +8,21 @@ export interface BlogPost {
   author: string;
   summary: string;
   content: string;
+}
+
+/**
+ * Contentful is the editorial source of truth once credentials are present.
+ * Until then — and if the API is unreachable — the site serves the authored
+ * posts in `src/lib/blog.ts`, so the newsroom never 500s for a missing key.
+ */
+const space = process.env.CONTENTFUL_SPACE_ID;
+const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
+
+const client: ContentfulClientApi<any> | null =
+  space && accessToken ? createClient({ space, accessToken }) : null;
+
+export function contentfulConfigured(): boolean {
+  return client !== null;
 }
 
 function parseBlogPost(entry: any): BlogPost {
@@ -33,21 +37,36 @@ function parseBlogPost(entry: any): BlogPost {
 }
 
 export async function listBlogPosts(): Promise<BlogPost[]> {
-  const entries = await client.getEntries({
-    content_type: 'blogPost',
-    order: ['-fields.date'],
-  });
-  return entries.items.map(parseBlogPost);
+  if (!client) return listLocalBlogPosts();
+
+  try {
+    const entries = await client.getEntries({
+      content_type: 'blogPost',
+      order: ['-fields.date'],
+    });
+    if (!entries.items.length) return listLocalBlogPosts();
+    return entries.items.map(parseBlogPost);
+  } catch (err) {
+    console.error('[contentful] listBlogPosts failed, serving local posts:', err);
+    return listLocalBlogPosts();
+  }
 }
 
 export async function getBlogPost(id: string): Promise<BlogPost | null> {
-  const entries = await client.getEntries({
-    content_type: 'blogPost',
-    'fields.slug': id,
-    limit: 1,
-  });
-  if (entries.items.length > 0) {
-    return parseBlogPost(entries.items[0]);
+  if (!client) return getLocalBlogPost(id) ?? null;
+
+  try {
+    const entries = await client.getEntries({
+      content_type: 'blogPost',
+      'fields.slug': id,
+      limit: 1,
+    });
+    if (entries.items.length > 0) {
+      return parseBlogPost(entries.items[0]);
+    }
+    return getLocalBlogPost(id) ?? null;
+  } catch (err) {
+    console.error('[contentful] getBlogPost failed, serving local post:', err);
+    return getLocalBlogPost(id) ?? null;
   }
-  return null;
 }

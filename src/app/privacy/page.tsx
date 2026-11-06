@@ -12,9 +12,9 @@ export default function PrivacyPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-14 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Data Protection</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Data Protection</p>
           <h1 className="font-display text-3xl font-bold text-white sm:text-4xl">Privacy Policy</h1>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-brand-green-light">
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-white/70">
             Under the Nigeria Data Protection Act (NDPA) 2023 · Last updated: November 2026
           </p>
         </div>

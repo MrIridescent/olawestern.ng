@@ -9,11 +9,11 @@ export const dynamic = 'force-dynamic';
 /** DELETE /api/admin/socials/[id] — take a channel off the site. */
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteSocial(context.params.id);
+    const ok = await deleteSocial((await context.params).id);
     if (!ok) return notFound('Social channel');
     revalidateCopy();
     return NextResponse.json({ success: true });

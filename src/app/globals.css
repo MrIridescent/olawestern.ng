@@ -4,7 +4,10 @@
 
 :root {
   --brand-green: #00794a;
-  --brand-blue: #17607f;
+  --brand-blue: #1e3a8a;
+  --brand-orange: #ff5722;
+  --brand-navy: #0b2545;
+  --brand-emerald: #10b981;
 }
 
 html {
@@ -29,46 +32,123 @@ body {
   .container-site {
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
-  /* 44px+ tap targets everywhere (Nigerian mobile first) */
+  /* 48px+ tap targets everywhere (Nigerian mobile first). */
   .btn {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-bold transition-all duration-200 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2;
   }
+  /* Electric Orange fill with Imperial Navy type: 4.9:1, so the campaign's
+     loudest button is also its most legible one. Hover flips to deep orange. */
   .btn-primary {
-    @apply btn bg-brand-green text-white hover:bg-brand-green-dark focus:ring-brand-green;
+    @apply btn bg-brand-electric text-brand-navy shadow-[0_4px_14px_rgba(255,87,34,0.35)] hover:bg-brand-electric-dark hover:text-white focus:ring-brand-electric;
   }
   .btn-secondary {
-    @apply btn border-2 border-brand-green text-brand-green hover:bg-brand-green hover:text-white focus:ring-brand-green;
+    @apply btn border-2 border-brand-navy bg-white text-brand-navy hover:bg-brand-navy hover:text-white focus:ring-brand-navy;
   }
   .btn-blue {
-    @apply btn bg-brand-blue text-white hover:bg-brand-blue-dark focus:ring-brand-blue;
+    @apply btn bg-brand-blue text-white hover:bg-brand-navy focus:ring-brand-blue;
+  }
+  .btn-accent {
+    @apply btn bg-brand-electric text-brand-navy shadow-[0_4px_14px_rgba(255,87,34,0.35)] hover:bg-brand-electric-dark hover:text-white focus:ring-brand-electric;
   }
   .section-title {
-    @apply font-display text-2xl font-bold tracking-tight text-brand-dark sm:text-4xl;
+    @apply font-display text-2xl font-bold tracking-tight text-brand-navy sm:text-4xl;
+  }
+  /* The orange underline — one consistent accent wherever a section opens. */
+  .section-title::after {
+    content: '';
+    @apply mt-3 block h-[3px] w-10 rounded-full bg-brand-electric;
   }
   /* Page hero headline — mobile first */
   .hero-title {
-    @apply font-display text-[1.75rem] font-bold leading-tight text-white sm:text-5xl;
+    @apply font-display text-[1.75rem] font-extrabold leading-tight tracking-tight text-white sm:text-5xl;
   }
   .section-kicker {
-    @apply mb-2 inline-block rounded-full bg-brand-green-light px-4 py-1 text-xs font-bold uppercase tracking-widest text-brand-green;
+    @apply mb-2 inline-flex items-center gap-2 rounded-full border border-brand-electric/25 bg-brand-electric-light px-4 py-1 text-xs font-bold uppercase tracking-widest text-brand-electric-dark;
+  }
+  .section-kicker::before {
+    content: '';
+    @apply inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-brand-electric;
   }
   .card {
-    @apply rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md sm:p-6;
+    @apply rounded-2xl border border-[#E2E8F0] bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand-electric/40 hover:shadow-xl hover:shadow-brand-navy/10;
   }
   .field-label {
-    @apply mb-1 block text-sm font-semibold text-brand-dark;
+    @apply mb-1 block text-sm font-semibold text-brand-navy;
   }
   .field-input {
-    @apply min-h-[48px] w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base focus:border-brand-green focus:outline-none focus:ring-1 focus:ring-brand-green sm:text-sm;
+    @apply min-h-[48px] w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-base focus:border-brand-electric focus:outline-none focus:ring-1 focus:ring-brand-electric sm:text-sm;
+  }
+  /* Emerald verification pill — the only green in the conversion path. */
+  .verified-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-brand-emerald/30 bg-brand-emerald/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-200;
   }
 }
 
-/* Decorative hero gradient — deep, low-glare wash for calm PR tone */
+/* Command-centre hero — Imperial Navy with an Electric Orange signal glow. */
 .hero-gradient {
+  position: relative;
   background:
-    radial-gradient(1100px 480px at 85% 10%, rgba(23, 96, 127, 0.18), transparent 60%),
-    radial-gradient(900px 600px at 10% 90%, rgba(0, 121, 74, 0.28), transparent 65%),
-    linear-gradient(150deg, #05201a 0%, #0a3327 55%, #10303b 100%);
+    radial-gradient(760px 480px at 88% -6%, rgba(255, 87, 34, 0.34), transparent 62%),
+    radial-gradient(620px 500px at 4% 108%, rgba(30, 58, 138, 0.58), transparent 66%),
+    radial-gradient(900px 540px at 58% 55%, rgba(16, 185, 129, 0.09), transparent 68%),
+    linear-gradient(148deg, #071a33 0%, #0b2545 58%, #102a4c 100%);
+  border-bottom: 4px solid var(--brand-orange);
+}
+.hero-gradient::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 0.7px, transparent 0.7px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 78%);
+  opacity: 0.35;
+}
+.hero-gradient > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Kickers sitting on the dark hero read in the signal orange. */
+.hero-gradient .section-kicker {
+  background-color: rgba(255, 87, 34, 0.16) !important;
+  border-color: rgba(255, 138, 101, 0.5) !important;
+  color: #ffb59e !important;
+}
+
+::selection {
+  background: rgba(255, 87, 34, 0.3);
+  color: #071a33;
+}
+
+/* ── Policy flip cards ─────────────────────────────────────────────────────── */
+.flip-card {
+  perspective: 1400px;
+}
+.flip-card-inner {
+  position: relative;
+  height: 100%;
+  min-height: 21.5rem;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (max-width: 640px) {
+  .flip-card-inner { min-height: 24rem; }
+}
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner { transition: none; }
 }
 
 /* Verdict badges — muted, AA-contrast */
@@ -78,7 +158,7 @@ body {
 
 /* Sticky mobile action bar sits above content, below the tab bar mentally */
 .mobile-cta-spacer {
-  @apply h-20 xl:hidden;
+  @apply h-24 md:hidden;
 }
 
 /* ── Live Desk ───────────────────────────────────────────────────────────────

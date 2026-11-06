@@ -14,9 +14,9 @@ export default async function BlogPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Campaign Trail</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Campaign Trail</p>
           <h1 className="hero-title">Blog</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             The latest news, updates, and stories from the campaign trail.
           </p>
         </div>

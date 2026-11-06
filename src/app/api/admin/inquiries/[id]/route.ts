@@ -10,7 +10,7 @@ const STATUSES = ['new', 'reviewed', 'answered'] as const;
 /** PATCH /api/admin/inquiries/[id] — update triage status. */
 export async function PATCH(
   request: NextRequest,
-  context: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
@@ -18,7 +18,7 @@ export async function PATCH(
     if (!STATUSES.includes(b.status)) {
       return NextResponse.json({ success: false, error: 'status must be new | reviewed | answered.' }, { status: 400 });
     }
-    const ok = await updateInquiryStatus(context.params.id, b.status);
+    const ok = await updateInquiryStatus((await context.params).id, b.status);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/admin');
     return NextResponse.json({ success: true });
@@ -34,11 +34,11 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteInquiry(context.params.id);
+    const ok = await deleteInquiry((await context.params).id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/admin');
     return NextResponse.json({ success: true });

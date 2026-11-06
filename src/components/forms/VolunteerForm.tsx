@@ -48,9 +48,9 @@ export default function VolunteerForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 text-left">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="field-label">
           Full Name
         </label>
         <div className="mt-1">
@@ -62,13 +62,13 @@ export default function VolunteerForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="field-label">
           Email Address
         </label>
         <div className="mt-1">
@@ -80,13 +80,13 @@ export default function VolunteerForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="phone" className="field-label">
           Phone Number
         </label>
         <div className="mt-1">
@@ -98,13 +98,13 @@ export default function VolunteerForm() {
             required
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="address" className="field-label">
           Residential Address
         </label>
         <div className="mt-1">
@@ -116,13 +116,13 @@ export default function VolunteerForm() {
             required
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="ward" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="ward" className="field-label">
           Ward
         </label>
         <div className="mt-1">
@@ -133,13 +133,13 @@ export default function VolunteerForm() {
             required
             value={ward}
             onChange={(e) => setWard(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="message" className="field-label">
           Why do you want to volunteer?
         </label>
         <div className="mt-1">
@@ -149,7 +149,7 @@ export default function VolunteerForm() {
             rows={4}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="field-input"
           />
         </div>
       </div>
@@ -158,7 +158,7 @@ export default function VolunteerForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          className="btn-accent w-full"
         >
           {submitting ? 'Submitting...' : 'Become a Volunteer'}
         </button>

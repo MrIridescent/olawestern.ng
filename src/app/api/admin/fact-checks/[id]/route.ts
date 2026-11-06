@@ -14,7 +14,7 @@ const VERDICTS: FactVerdict[] = ['VERIFIED FACT', 'FALSE CLAIM', 'MISLEADING'];
  * Only the ledger's own fields are copied, each validated — a Truth Room ruling
  * is public evidence, so a stray key or a made-up verdict must not reach the row.
  */
-export async function PATCH(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -41,7 +41,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
     }
     if (b.is_featured !== undefined) patch.is_featured = !!b.is_featured;
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updateFactCheck(context.params.id, patch);
+    const ok = await updateFactCheck((await context.params).id, patch);
     if (!ok) return notFound('Truth Room entry');
     revalidatePath('/truth-room');
     revalidatePath('/');
@@ -52,10 +52,10 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 }
 
 /** DELETE /api/admin/fact-checks/[id] */
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteFactCheck(context.params.id);
+    const ok = await deleteFactCheck((await context.params).id);
     if (!ok) return notFound('Truth Room entry');
     revalidatePath('/truth-room');
     revalidatePath('/');

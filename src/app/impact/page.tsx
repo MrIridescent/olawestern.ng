@@ -24,9 +24,9 @@ export default async function ImpactPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Before He Sought Office</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Before He Sought Office</p>
           <h1 className="hero-title">The Record of Service</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Years of showing up in FESTAC Town and Mile 2 — roads, youth, security and quiet
             philanthropy — long before a ballot was printed. Every entry below is verifiable.
           </p>

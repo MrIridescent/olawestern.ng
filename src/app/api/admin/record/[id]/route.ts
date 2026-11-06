@@ -20,7 +20,7 @@ const CATEGORIES: AccomplishmentCategory[] = [
  * The public page is the campaign's promise of an open ledger, so a wrong date
  * or ward is fixed in place rather than deleted and re-typed.
  */
-export async function PATCH(request: NextRequest, context: { params: { id: string } }): Promise<NextResponse> {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
     const b = await request.json();
@@ -59,7 +59,7 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
       patch.verification_source_url = keep.url;
     }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-        const ok = await updateAccomplishment(context.params.id, patch);
+        const ok = await updateAccomplishment((await context.params).id, patch);
     if (!ok) return notFound('Track record entry');
     revalidatePath('/impact');
     revalidatePath('/');
@@ -70,10 +70,10 @@ export async function PATCH(request: NextRequest, context: { params: { id: strin
 }
 
 /** DELETE /api/admin/record/[id] — remove a track-record entry. */
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-        const ok = await deleteAccomplishment(context.params.id);
+        const ok = await deleteAccomplishment((await context.params).id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/impact');
     revalidatePath('/');

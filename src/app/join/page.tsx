@@ -16,9 +16,9 @@ export default async function JoinPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">Constituent Portal</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">Constituent Portal</p>
           <h1 className="hero-title">Join the Movement</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             One form. One ward captain. One street at a time — from 1st Avenue to Mile 2.
           </p>
         </div>

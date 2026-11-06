@@ -22,13 +22,13 @@ export const SITE = {
   hq: '32 Road by 3rd Avenue, FESTAC Town, Amuwo-Odofin LGA',
   whatsappNumber: '2349041258180',
   whatsappLink: 'https://wa.me/2349041258180?text=SupportOlaWestern',
-  email: 'olawesternco@gmail.com',
+  email: 'ekabo@olawestern.ng',
   campaignDeskPhone: '+234 803 400 5708',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.olawestern.ng',
 } as const;
 
 export const SEED_SETTINGS: SiteSettings = {
-  hero_kicker: 'Responsible Representation for Amuwo-Odofin I',
+  hero_kicker: 'APC Flagbearer · Amuwo-Odofin Constituency I',
   hero_title: 'Hon. Engr. Folorunsho Olaitan Segun',
   hero_slogan: 'A Track Record of Service, A Vision for the Future.',
   hero_body: "From infrastructure to empowerment, Ola Western has consistently delivered for the people of Amuwo-Odofin. Now, he's ready to bring that same dedication to the Lagos State House of Assembly.",
@@ -68,7 +68,7 @@ export const PROFILE_FACTS: ProfileFactRow[] = [
 ];
 
 export const REFERENCE_LINKS: ReferenceRow[] = [
-  ...NEW_REFERENCE_LINKS.map((link, i) => ({ ...link, id: `ref-link-${i}`})),
+  ...NEW_REFERENCE_LINKS,
   { id: 'ref-1', year: 2018, date: 'March 2018', outlet: 'FestacOnline', headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin', url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/' },
   { id: 'ref-2', year: 2018, date: 'March 2018', outlet: 'The Nation', headline: 'Council partners investor on CSR projects in Amuwo-Odofin', url: 'https://thenationonlineng.net/council-partners-investor-csr/' },
 ];

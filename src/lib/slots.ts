@@ -8,6 +8,7 @@
  * picture yet. Captions and outlet credits travel with the photo.
  */
 import { listMedia } from './store';
+import { MEDIA_POSITIONS } from './content';
 
 import type { GallerySlide, MediaAsset } from '@/types';
 import type { SlotRatio } from '@/components/ui/PhotoSlot';
@@ -20,11 +21,21 @@ const RATIO_TEXT: Record<string, SlotRatio> = {
   '3:4': 'tall',
 };
 
+/**
+ * Build the slot → frame lookup from the single declaration in
+ * `MEDIA_POSITIONS`. These maps used to be left empty, which made every
+ * unknown slot fall back to 16:9 — a portrait was cropped through the head
+ * on the home hero.
+ */
 export const SLOT_RATIOS: Record<string, SlotRatio> = {};
-
 export const SLOT_LABELS: Record<string, string> = {};
-
 const SLOT_RATIO_TEXT: Record<string, string> = {};
+
+for (const position of MEDIA_POSITIONS) {
+  SLOT_RATIOS[position.slot] = RATIO_TEXT[position.ratio] ?? 'wide';
+  SLOT_LABELS[position.slot] = position.label;
+  SLOT_RATIO_TEXT[position.slot] = position.ratio;
+}
 
 export function ratioFor(slot: string): SlotRatio {
   return SLOT_RATIOS[slot] ?? 'wide';

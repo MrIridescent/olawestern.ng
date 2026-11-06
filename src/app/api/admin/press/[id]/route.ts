@@ -14,11 +14,12 @@ const SOURCES: PressItem['source'][] = ['campaign_hq', 'festaconline', 'partner_
  * `publish: false` takes it off the public newsfeed but keeps the text, so a
  * typo found after publishing is a fix rather than a delete-and-retype.
  */
-type RouteContext = { params: { id: string } };
+type RouteContext = { params: Promise<{ id: string }> };
 
 export async function PATCH(request: NextRequest, context: RouteContext): Promise<NextResponse> {
   if (!isAdminRequest(request)) return unauthorized();
   try {
+    const { id } = await context.params;
     const b = await request.json();
     const patch: Partial<PressItem> = {};
     if (b.title !== undefined) {
@@ -46,14 +47,14 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
     }
     if (b.publish !== undefined) {
       if (b.publish) {
-        const current = (await listPress()).find((p) => p.id === context.params.id);
+        const current = (await listPress()).find((p) => p.id === id);
         patch.published_at = current?.published_at ?? new Date().toISOString();
       } else {
         patch.published_at = null;
       }
     }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updatePress(context.params.id, patch);
+    const ok = await updatePress(id, patch);
     if (!ok) return notFound('Press release');
     revalidatePath('/news');
     revalidatePath('/');
@@ -67,7 +68,8 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
 export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deletePress(context.params.id);
+    const { id } = await context.params;
+    const ok = await deletePress(id);
     if (!ok) return NextResponse.json({ success: false, error: 'Not found.' }, { status: 404 });
     revalidatePath('/news');
     revalidatePath('/');

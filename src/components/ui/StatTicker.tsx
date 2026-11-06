@@ -26,7 +26,7 @@ export default function StatTicker({ stats }: { stats: readonly Stat[] }) {
   return (
     <div ref={ref} className="grid grid-cols-2 gap-6 md:grid-cols-4">
       {stats.map((s, i) => (
-        <div key={s.label} className="rounded-2xl bg-white/5 p-5 text-center ring-1 ring-white/10 backdrop-blur">
+        <div key={s.label} className="rounded-2xl border-t-2 border-brand-orange/60 bg-white/5 p-5 text-center ring-1 ring-white/10 backdrop-blur">
           <p
             className="font-display text-3xl font-bold text-white sm:text-4xl"
             data-ow={`settings.stats.${i}.value`}
@@ -38,7 +38,7 @@ export default function StatTicker({ stats }: { stats: readonly Stat[] }) {
             <AnimatedValue value={s.value} active={visible} />
           </p>
           <p
-            className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-green-light"
+            className="mt-1 text-xs font-semibold uppercase tracking-widest text-brand-orange-bright"
             data-ow={`settings.stats.${i}.label`}
             data-ow-label="Stat label"
           >
@@ -54,13 +54,21 @@ function AnimatedValue({ value, active }: { value: string; active: boolean }) {
   const target = Number(value.replace(/[^0-9]/g, ''));
   const hasNumber = !Number.isNaN(target) && target > 0;
   const suffix = value.replace(/[0-9,]/g, '');
-  const [n, setN] = useState(0);
+  // Start on the real figure so the band is never readable as "0+" before the
+  // count-up fires; the animation resets to zero only when it is actually seen.
+  const [n, setN] = useState(hasNumber ? target : 0);
 
   useEffect(() => {
     if (!active || !hasNumber) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      setN(target);
+      return;
+    }
     const duration = 1400;
     const start = performance.now();
     let raf: number;
+    setN(0);
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / duration);
       const eased = 1 - Math.pow(1 - p, 3);

@@ -23,11 +23,11 @@ export default async function BlueprintPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-16 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">The Manifesto</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">The Manifesto</p>
           <h1 className="hero-title">
             The Legislative Blueprint
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Four concrete deliverables for the Lagos State House of Assembly — bills, motions and
             oversight, not vague promises.
           </p>

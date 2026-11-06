@@ -15,7 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/gallery',
     '/contact',
     '/join',
+    '/blog',
+    '/media-kit',
     '/privacy',
+    '/terms',
   ];
   return routes.map((r) => ({
     url: `${SITE.siteUrl}${r}`,

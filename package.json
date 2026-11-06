@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "build:media-kit": "node scripts/build-media-kit.mjs",
     "export:sites": "node scripts/sites-export.mjs"
   },
   "dependencies": {
@@ -16,13 +17,17 @@
     "@mui/material": "^9.5.0",
     "@supabase/supabase-js": "^2.45.0",
     "contentful": "^11.12.10",
-    "framer-motion": "^14.9.0",
-    "gsap": "^3.15.0",
+    "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^14.9.1",
+    "gsap": "^3.15.1",
     "lucide-react": "^1.67.0",
     "next": "^16.4.5",
+    "pdf-lib": "^1.17.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "resend": "^6.37.0",
     "styled-components": "^6.6.0",
+    "styled-icons": "^10.47.1",
     "use-count-up": "^3.0.1"
   },
   "devDependencies": {
@@ -30,11 +35,11 @@
     "@types/node": "^20.14.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.72.1",
-    "@typescript-eslint/parser": "^8.72.1",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
     "autoprefixer": "^10.4.19",
-    "eslint": "^10.14.0",
-    "eslint-config-next": "^16.4.5",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^15.5.29",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3"

@@ -26,9 +26,9 @@ export default async function GalleryPage() {
     <>
       <section className="hero-gradient">
         <div className="container-site py-14 text-center">
-          <p className="section-kicker !bg-white/10 !text-brand-green-light">On The Ground</p>
+          <p className="section-kicker !bg-white/10 !text-white/70">On The Ground</p>
           <h1 className="hero-title">Campaign Gallery</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-brand-green-light">
+          <p className="mx-auto mt-4 max-w-2xl text-white/70">
             Town halls, street inspections, markets and youth tournaments across Festac I–III and Mile 2.
           </p>
         </div>

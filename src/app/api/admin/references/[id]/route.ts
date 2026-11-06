@@ -7,7 +7,7 @@ import { revalidateReferences } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 
-type RouteContext = { params: { id: string } };
+type RouteContext = { params: Promise<{ id: string }> };
 
 /** PATCH /api/admin/references/[id] — correct a citation (same rules as POST). */
 export async function PATCH(request: NextRequest, context: RouteContext): Promise<NextResponse> {
@@ -36,7 +36,7 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
     }
     if (b.year !== undefined) { const y = year(b.year); if (y) patch.year = y; }
     if (Object.keys(patch).length === 0) return badRequest('Nothing to update.');
-    const ok = await updateReference(context.params.id, patch);
+    const ok = await updateReference((await context.params).id, patch);
     if (!ok) return notFound('Reference');
     revalidateReferences();
     return NextResponse.json({ success: true });
@@ -49,7 +49,7 @@ export async function PATCH(request: NextRequest, context: RouteContext): Promis
 export async function DELETE(request: NextRequest, context: RouteContext) {
   if (!isAdminRequest(request)) return unauthorized();
   try {
-    const ok = await deleteReference(context.params.id);
+    const ok = await deleteReference((await context.params).id);
     if (!ok) return notFound('Reference');
     revalidateReferences();
     return NextResponse.json({ success: true });

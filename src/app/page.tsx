@@ -13,6 +13,10 @@ import { SITE } from '@/lib/content';
 import type { FactCheck, PressItem } from '@/types';
 
 import VisitorCounter from '@/components/ui/VisitorCounter';
+import NewsCarousel from '@/components/ui/NewsCarousel';
+import JoinMovementForm from '@/components/forms/JoinMovementForm';
+import WardImpactLocator from '@/components/home/WardImpactLocator';
+import PolicyFlipCards from '@/components/home/PolicyFlipCards';
 
 export const revalidate = 3600;
 
@@ -35,44 +39,98 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────────────── */}
+      {/* ── HERO COMMAND CENTRE ──────────────────────────────── */}
       <section className="hero-gradient relative overflow-hidden">
-        <div className="container-site grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
+        <div className="container-site grid items-center gap-10 py-12 md:grid-cols-[1.08fr_0.92fr] md:gap-12 md:py-20">
           <div>
+            <span className="verified-pill">
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
+                <path fillRule="evenodd" d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0z" clipRule="evenodd" />
+              </svg>
+              <span data-ow="settings.hero_kicker" data-ow-label="Hero kicker">{settings.hero_kicker}</span>
+            </span>
+
+            <p
+              className="mt-5 text-[11px] font-bold uppercase tracking-[0.22em] text-white/75"
+              data-ow="settings.hero_title"
+              data-ow-label="Candidate name"
+            >
+              {settings.hero_title}
+            </p>
+
             <AnimatedText>
-              <h1 className="font-display text-[1.85rem] font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-                <span data-ow="settings.hero_title" data-ow-label="Headline">{settings.hero_title}</span>
-                <span
-                  className="mt-3 block text-xl font-semibold italic text-brand-green-light sm:text-3xl"
-                  data-ow="settings.hero_slogan"
-                  data-ow-label="Slogan"
-                >
-                  {settings.hero_slogan}
-                </span>
+              <h1 className="mt-2 font-display text-[2rem] font-extrabold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+                Effective Legislative Representation for{' '}
+                <span className="text-brand-electric-bright">Amuwo-Odofin 1</span>
               </h1>
             </AnimatedText>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-200" data-ow="settings.hero_body" data-ow-label="Hero paragraph">
+
+            <p
+              className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/70 sm:text-base"
+              data-ow="settings.hero_body"
+              data-ow-label="Hero paragraph"
+            >
               {settings.hero_body}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-              <Link href="/impact" className="btn-primary">See the proven record</Link>
-              <Link href="/join" className="btn-secondary !border-white !text-white hover:!bg-white hover:!text-brand-dark">
-                Join the Movement
+
+            <div className="mt-7 max-w-xl">
+              <JoinMovementForm whatsappNumber={SITE.whatsappNumber} />
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px]">
+              <Link
+                href="/impact"
+                className="font-bold text-white underline decoration-brand-electric decoration-2 underline-offset-4 transition-colors hover:text-brand-electric-bright"
+              >
+                See the proven record <span aria-hidden>→</span>
               </Link>
+              <a
+                href={SITE.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-white/75 transition-colors hover:text-white"
+              >
+                or message the desk directly
+              </a>
             </div>
           </div>
 
           {/* Portrait panel — the CMS photo filed under `candidate-portrait`. */}
-          <div className="mx-auto w-full max-w-sm md:max-w-md">
-            <SlotImage slots={s} slot="candidate-portrait" priority className="ring-1 ring-white/20" />
+          <div className="relative mx-auto w-full max-w-[21rem] sm:max-w-sm md:max-w-md">
+            <div className="absolute -inset-2.5 rounded-[1.6rem] border border-brand-electric/35" aria-hidden />
+            <div className="relative">
+              <span className="absolute left-3 top-3 z-10 rounded-full border border-white/20 bg-brand-navy/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur">
+                APC · 2027
+              </span>
+              <SlotImage
+                slots={s}
+                slot="candidate-portrait"
+                priority
+                className="relative ring-1 ring-white/20 [&_figcaption_a]:text-brand-electric-bright [&_figcaption_p]:text-white/65"
+              />
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Ticker */}
-        <div className="container-site pb-16">
+      {/* ── CONSTITUENT IMPACT METRICS ───────────────────────── */}
+      <section className="border-y-4 border-brand-electric bg-brand-navy-deep py-7">
+        <div className="container-site">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-electric-bright">
+              The record, in numbers
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.14em] text-white/70">
+              Constituency I · Amuwo-Odofin
+            </p>
+          </div>
           <StatTicker stats={settings.stats} />
         </div>
       </section>
+
+      {/* ── WARD LOCATOR + POLICY CARDS ──────────────────────── */}
+      <WardImpactLocator whatsappNumber={SITE.whatsappNumber} />
+      <PolicyFlipCards />
 
       {/* ── WHY OLA — the three attestations ─────────────────── */}
       <section className="container-site py-16">
@@ -80,8 +138,8 @@ export default async function HomePage() {
         <h2 className="section-title">Three things this constituency can attest to</h2>
         <StaggeredCardAnimation>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="card">
-              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+            <div className="card border-t-2 border-t-brand-orange/30">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-orange-light p-3 text-brand-orange">
                 <Icon name="shield" />
               </span>
               <h3 className="font-display text-lg font-bold">Always here, always accessible</h3>
@@ -91,8 +149,8 @@ export default async function HomePage() {
                 door that opens onto the Assembly.
               </p>
             </div>
-            <div className="card">
-              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+            <div className="card border-t-2 border-t-brand-orange/30">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-orange-light p-3 text-brand-orange">
                 <Icon name="road" />
               </span>
               <h3 className="font-display text-lg font-bold">Delivering before office</h3>
@@ -102,8 +160,8 @@ export default async function HomePage() {
                 each entry linked to its press report.
               </p>
             </div>
-            <div className="card">
-              <span className="mb-4 inline-flex rounded-xl bg-brand-green-light p-3 text-brand-green">
+            <div className="card border-t-2 border-t-brand-orange/30">
+              <span className="mb-4 inline-flex rounded-xl bg-brand-orange-light p-3 text-brand-orange">
                 <Icon name="youth" />
               </span>
               <h3 className="font-display text-lg font-bold">Representing our shared reality</h3>
@@ -123,7 +181,7 @@ export default async function HomePage() {
 
       {/* ── THE DESK IS OPEN ───────────────────────────────────── */}
       <section className="container-site py-16">
-        <div className="rounded-3xl bg-brand-light p-6 sm:p-10">
+        <div className="rounded-3xl border border-brand-orange/20 bg-brand-orange-light p-6 shadow-sm sm:p-10">
           <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
             <div>
               <p className="section-kicker">Always Here, Always Accessible</p>
@@ -147,7 +205,7 @@ export default async function HomePage() {
                 { t: 'Sit down with the team', b: 'Physical or WhatsApp open-door slots, confirmed by your ward desk.' },
               ].map((f, i) => (
                 <li key={f.t} className="card flex items-start gap-4 !p-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-green font-display text-sm font-bold text-white">{i + 1}</span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange font-display text-sm font-bold text-white">{i + 1}</span>
                   <span>
                     <span className="block text-sm font-bold text-brand-dark">{f.t}</span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-brand-gray">{f.b}</span>
@@ -208,34 +266,32 @@ export default async function HomePage() {
             </div>
             <Link href="/news" className="btn-secondary">Full Community Newsfeed</Link>
           </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {news.map((n) => (
-              <article key={n.id} className="card">
-                <p className="text-xs font-semibold uppercase tracking-widest text-brand-blue-dark">
-                  {n.source === 'campaign_hq' ? 'Campaign HQ · 32 Road' : n.source === 'festaconline' ? 'Community Press' : 'Partner Statement'}
-                  {' — '}
-                  {new Date(n.published_at ?? n.created_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </p>
-                <h3 className="mt-2 font-display text-lg font-bold leading-snug" data-ow={`press.${n.id}.title`} data-ow-label="Release headline">{n.title}</h3>
-                <p className="mt-2 line-clamp-3 text-sm text-brand-gray" data-ow={`press.${n.id}.summary`} data-ow-label="Standfirst">{n.summary}</p>
-              </article>
-            ))}
+          <div className="mt-8">
+            <NewsCarousel news={news} />
           </div>
         </div>
       </section>
 
       {/* ── CTA BAND ─────────────────────────────────────────── */}
-      <section className="bg-brand-green">
-        <div className="container-site flex flex-col items-center gap-6 py-14 text-center">
-          <h2 className="font-display text-2xl font-bold leading-tight text-white sm:text-3xl" data-ow="settings.cta_title" data-ow-label="Closing band title">
+      <section className="relative overflow-hidden bg-brand-navy">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-navy-deep via-brand-navy to-brand-navy-deep" aria-hidden />
+        <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-electric/30 blur-3xl" aria-hidden />
+        <div className="container-site relative flex flex-col items-center gap-6 py-14 text-center">
+          <span className="h-1 w-16 rounded-full bg-brand-electric" aria-hidden />
+          <h2 className="font-display text-2xl font-extrabold leading-tight text-white sm:text-3xl" data-ow="settings.cta_title" data-ow-label="Closing band title">
             {settings.cta_title}
           </h2>
-          <p className="max-w-2xl text-brand-green-light" data-ow="settings.cta_body" data-ow-label="Closing band paragraph">{settings.cta_body}</p>
+          <p className="max-w-2xl text-white/70" data-ow="settings.cta_body" data-ow-label="Closing band paragraph">{settings.cta_body}</p>
           <div className="flex w-full flex-col justify-center gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
-            <Link href="/join" className="btn-secondary w-full !border-white !text-white hover:!bg-white hover:!text-brand-green sm:w-auto">
-              Volunteer Now
+            <Link href="/join" className="btn-primary w-full sm:w-auto">
+              Volunteer Now <span aria-hidden>→</span>
             </Link>
-            <a href={SITE.whatsappLink} target="_blank" rel="noopener noreferrer" className="btn w-full bg-white text-brand-green hover:bg-brand-green-light sm:w-auto">
+            <a
+              href={SITE.whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn w-full border-2 border-white/30 text-white hover:bg-white/10 sm:w-auto"
+            >
               Chat on WhatsApp
             </a>
           </div>

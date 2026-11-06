@@ -241,13 +241,39 @@ export function storageState(): { backend: 'supabase' | 'file'; writable: boolea
 
 /* ── Truth Engine ledger ─────────────────────────────────────── */
 
+/**
+ * Rows written by the pre-CMS schema carry `claim`/`status` and no `created_at`.
+ * They cannot render as a FactCard (no verdict, evidence or date), so the public
+ * ledger only surfaces records in the current shape. The originals stay in the
+ * data file untouched for a future migration.
+ */
+function isFactCheck(row: unknown): row is FactCheck {
+  const r = row as Partial<FactCheck> | null;
+  return (
+    !!r &&
+    typeof r.id === 'string' &&
+    typeof r.claim_summary === 'string' &&
+    r.claim_summary.trim().length > 0 &&
+    typeof r.created_at === 'string' &&
+    r.created_at.length > 0 &&
+    (r.verdict === 'VERIFIED FACT' || r.verdict === 'FALSE CLAIM' || r.verdict === 'MISLEADING')
+  );
+}
+
 export async function listFactChecks(): Promise<FactCheck[]> {
   const sb = getSupabase();
   if (sb) {
     const { data } = await sb.from('fact_checks').select('*').order('is_featured', { ascending: false }).order('created_at', { ascending: false });
-    if (data && data.length) return data as FactCheck[];
+    const rows = (data ?? []).filter(isFactCheck);
+    if (rows.length) return rows;
   }
-  return [...load().fact_checks].sort((a, b) => Number(b.is_featured) - Number(a.is_featured) || b.created_at.localeCompare(a.created_at));
+  return load()
+    .fact_checks.filter(isFactCheck)
+    .sort(
+      (a, b) =>
+        Number(!!b.is_featured) - Number(!!a.is_featured) ||
+        b.created_at.localeCompare(a.created_at),
+    );
 }
 
 export async function addFactCheck(input: Omit<FactCheck, 'id' | 'created_at'> & { id?: string }): Promise<FactCheck> {
