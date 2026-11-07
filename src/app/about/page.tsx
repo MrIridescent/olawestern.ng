@@ -1,7 +1,4 @@
 import AnimatedText from '@/components/ui/AnimatedText';
-import StaggeredCardAnimation from '@/components/ui/StaggeredCardAnimation';
-import Link from 'next/link';
-import Icon from '@/components/ui/Icon';
 
 export default function AboutPage() {
   return (

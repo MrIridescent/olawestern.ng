@@ -4,6 +4,9 @@ const nextPlugin = require('@next/eslint-plugin-next');
 
 module.exports = [
   {
+    ignores: ['.next/**', 'node_modules/**', 'out/**', 'public/**', 'next-env.d.ts'],
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
@@ -19,6 +22,15 @@ module.exports = [
       ...typescriptEslint.configs.recommended.rules,
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
+      // Supabase rows and Contentful entries arrive untyped; these two rules
+      // would otherwise flag every honest cast at the API boundary.
+      '@typescript-eslint/no-explicit-any': 'off',
+      // Unused function parameters are intentional when they satisfy a
+      // callback signature; ignore the `_`-prefixed ones.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrors: 'none' },
+      ],
     },
   },
   {

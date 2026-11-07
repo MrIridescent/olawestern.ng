@@ -82,6 +82,40 @@ body {
   .verified-pill {
     @apply inline-flex items-center gap-2 rounded-full border border-brand-emerald/30 bg-brand-emerald/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-emerald-200;
   }
+  /* Long-form campaign blog. Tailwind Typography is not installed, so the
+     handful of tags a rich-text post actually uses are styled here rather than
+     leaving the article at browser defaults. */
+  .article-body {
+    @apply mx-auto max-w-3xl text-[1.0625rem] leading-[1.8] text-brand-gray;
+  }
+  .article-body > * + * {
+    @apply mt-6;
+  }
+  .article-body h2 {
+    @apply mt-10 font-display text-2xl font-bold leading-snug text-brand-navy;
+  }
+  .article-body h3 {
+    @apply mt-8 font-display text-xl font-bold leading-snug text-brand-navy;
+  }
+  .article-body a {
+    @apply font-semibold text-brand-electric-dark underline underline-offset-4;
+  }
+  .article-body ul,
+  .article-body ol {
+    @apply ml-6 space-y-2;
+  }
+  .article-body ul {
+    @apply list-disc;
+  }
+  .article-body ol {
+    @apply list-decimal;
+  }
+  .article-body blockquote {
+    @apply border-l-4 border-brand-electric pl-5 font-medium italic text-brand-navy;
+  }
+  .article-body strong {
+    @apply font-bold text-brand-navy;
+  }
 }
 
 /* Command-centre hero — Imperial Navy with an Electric Orange signal glow. */
@@ -347,3 +381,33 @@ html.ow-armed [data-ow-missing] {
 }
 /* No pointer-events tricks: the overlay's capture-phase handler preventDefaults
    the tap before a link can navigate, so a tappable source chip stays tappable. */
+
+/* ── Netlify HUD guardrail ───────────────────────────────────────────────────
+   Netlify injects a "Powered by Netlify" iframe at the bottom-right corner
+   with the maximum possible z-index. On a phone it covered the Join bar, and
+   at the very foot of a page it rested on the legal links. Keep the badge
+   visible where there is room, make it click-through so it can never swallow
+   a tap, take it off small screens entirely, and reserve footer space so it
+   does not sit on top of the legal row. */
+#nl-badge-frame,
+#nl-hud-frame,
+iframe[src*=".netlify/scripts/hud"] {
+  /* Clicks pass through to the page, and the fixed Join bar / footer content
+     stack above the badge instead of underneath it. */
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+
+@media (max-width: 767px) {
+  #nl-badge-frame,
+  #nl-hud-frame,
+  iframe[src*=".netlify/scripts/hud"] {
+    z-index: 0 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #site-footer {
+    padding-bottom: 4.5rem;
+  }
+}

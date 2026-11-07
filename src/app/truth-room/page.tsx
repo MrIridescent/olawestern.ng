@@ -1,21 +1,28 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import AskOlaForm from '@/components/forms/AskOlaForm';
 import FactCard from '@/components/truth/FactCard';
+import PoliticalWisdom from '@/components/truth/PoliticalWisdom';
+import PressArchive from '@/components/truth/PressArchive';
+import TruthDesk from '@/components/truth/TruthDesk';
 import TruthLedger from '@/components/truth/TruthLedger';
-import { listFactChecks } from '@/lib/store';
-import SlotImage from '@/components/ui/SlotImage';
-import { slots } from '@/lib/slots';
+import ReferenceLibrary from '@/components/impact/ReferenceLibrary';
+import { listFactChecks, listReferences } from '@/lib/store';
+import { FEATURED_ARCHIVE } from '@/lib/pressArchive';
 
 export const metadata: Metadata = {
   title: 'Truth Room — Fact Check & Reputation Defense',
   description:
-    'The official fact-checking desk of the Ola Western campaign: verified facts, debunked claims, press releases, and the Ask Ola submission channel.',
+    'The official fact-checking and civic desk of the Ola Western campaign: verified facts, debunked claims, every published mention, and sourced answers on Amuwo-Odofin Constituency I and the Lagos State House of Assembly.',
 };
 
 export const revalidate = 900;
 
 export default async function TruthRoomPage() {
-  const [facts, media] = await Promise.all([listFactChecks(), slots()]);
+  const [facts, references] = await Promise.all([
+    listFactChecks(),
+    listReferences(),
+  ]);
   const featured = facts.filter((f) => f.is_featured);
 
   return (
@@ -25,11 +32,18 @@ export default async function TruthRoomPage() {
           <p className="section-kicker !bg-white/10 !text-white/70">Reputation Defense Desk</p>
           <h1 className="hero-title">The Truth Room</h1>
           <p className="mx-auto mt-4 max-w-2xl text-white/70">
-            Every claim checked. Every rumor answered with evidence. Press releases and official
-            statements from the campaign office at 32 Road, FESTAC Town.
+            Every claim checked. Every mention linked to its source. Ask the live desk below, or work
+            through the ledger of official rulings, the press record and the civic brief on
+            Amuwo-Odofin Constituency I, the Lagos State House of Assembly and Amuwo politics.
           </p>
         </div>
       </section>
+
+      <section className="container-site pt-10" id="truth-desk">
+        <TruthDesk factCount={facts.length} />
+      </section>
+
+      <PoliticalWisdom />
 
       {featured.length > 0 && (
         <section className="container-site pt-14">
@@ -50,16 +64,35 @@ export default async function TruthRoomPage() {
       </section>
 
       {/* What the record looks like when it is photographed and published. */}
-      <section className="container-site pb-14">
-        <p className="section-kicker">Evidence</p>
-        <h2 className="section-title text-2xl">Documented, dated and credited</h2>
-        <p className="mt-2 max-w-2xl text-sm text-brand-gray">
-          Press photographs of the events the campaign stands on — each one carries the outlet that took it
-          and the report it ran in, so a claim can be checked instead of argued about.
-        </p>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <SlotImage slots={media} slot="consensus" reuse />
-          <SlotImage slots={media} slot="primary-night" reuse />
+      <PressArchive
+        photos={FEATURED_ARCHIVE}
+        heading="Documented, dated and credited"
+        intro="Press photographs of the events the campaign stands on — each one carries the outlet that took it, the date and the report it ran in, so a claim can be checked instead of argued about. The full archive is on the gallery page."
+        id="photographic-record"
+      />
+
+      {/* Every independent mention, linked to the outlet that published it. */}
+      <section className="bg-brand-light py-14" id="every-mention">
+        <div className="container-site">
+          <p className="section-kicker">Every Mention</p>
+          <h2 className="section-title text-2xl">Check the source, not a screenshot</h2>
+          <p className="mt-2 max-w-2xl text-sm text-brand-gray">
+            If Ola Western has been named in the press, the report is listed here with its outlet and
+            date, linked straight to the published page. Anyone can open the original, read it in
+            full and judge for themselves.
+          </p>
+          <ReferenceLibrary links={references} />
+          <p className="mt-10 rounded-2xl bg-white px-6 py-5 text-sm text-brand-gray">
+            Campaign-issued statements are in the{' '}
+            <Link href="/news" className="font-bold text-brand-green underline underline-offset-2">
+              newsroom
+            </Link>
+            , and the dated service record behind the rulings is on the{' '}
+            <Link href="/impact" className="font-bold text-brand-green underline underline-offset-2">
+              Impact page
+            </Link>
+            . If a mention is missing, send it through Ask Ola and the media desk will check it.
+          </p>
         </div>
       </section>
 

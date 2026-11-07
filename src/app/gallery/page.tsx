@@ -1,24 +1,22 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import GalleryCarousel from '@/components/ui/GalleryCarousel';
 import PhotoSlot from '@/components/ui/PhotoSlot';
-import SocialLinksRow from '@/components/ui/SocialLinks';
+import PressArchive from '@/components/truth/PressArchive';
 import VideoShelf from '@/components/ui/VideoShelf';
 import SocialShare from '@/components/ui/SocialShare';
-import { SITE } from '@/lib/content';
-import { listSocials } from '@/lib/store';
+import { PRESS_ARCHIVE } from '@/lib/pressArchive';
 import { ratioFor, slots } from '@/lib/slots';
 
 export const metadata: Metadata = {
   title: 'Gallery — Photos, Events & Media Kit',
   description:
-    'Campaign photography and broadcast video from FESTAC Town and Mile 2 — town halls, street inspections, youth tournaments, market engagements — plus the press media kit for Amuwo-Odofin Constituency I.',
+    'The full photographic record from FESTAC Town and Mile 2 — town halls, street inspections, youth tournaments, markets, rallies and press coverage of Ola Western, every frame credited and linked to its source.',
 };
 
 export const revalidate = 3600;
 
 export default async function GalleryPage() {
-  const [s, socials] = await Promise.all([slots(), listSocials()]);
+  const s = await slots();
   const photos = s.slides();
   const wall = photos;
 
@@ -75,6 +73,14 @@ export default async function GalleryPage() {
           ))}
         </div>
       </section>
+
+      {/* ── PRESS ARCHIVE ────────────────────────────────────── */}
+      <PressArchive
+        photos={PRESS_ARCHIVE}
+        heading="Every frame, every source"
+        intro="The campaign's photographic record, rebuilt from the outlets that published it: primaries, rallies, the food distributions, the youth tournaments, the drainage works and the borehole inspections. Each frame keeps its own shape and links straight to the report it came from."
+        id="press-archive"
+      />
 
       {/* ── BROADCAST VIDEO ──────────────────────────────────── */}
       <VideoShelf

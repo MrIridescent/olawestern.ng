@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { WARDS } from '@/types';
+import { SITE } from '@/lib/content';
 
 export default function VolunteerForm() {
   const [name, setName] = useState('');
@@ -204,6 +205,14 @@ export default function VolunteerForm() {
             </div>
             <div className="ml-3">
               <p className="text-sm font-medium text-green-800">{successNote}</p>
+              <a
+                href={SITE.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-block text-xs font-bold text-brand-green underline underline-offset-2"
+              >
+                Introduce yourself to the ward desk on WhatsApp ↗
+              </a>
             </div>
           </div>
         </div>

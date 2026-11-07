@@ -190,7 +190,6 @@ function VideoCard({ row, onPatch, onRemove }: { row: VideoRow; onPatch: (id: st
 
   return (
     <div className={`${cardCls} grid gap-4 sm:grid-cols-[160px_1fr]`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <a href={`https://www.youtube.com/watch?v=${row.youtube_id}`} target="_blank" rel="noopener noreferrer nofollow" className="block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

@@ -171,7 +171,7 @@ CREATE INDEX IF NOT EXISTS idx_media_public ON media (published, featured DESC, 
 CREATE INDEX IF NOT EXISTS idx_videos_public ON videos (published, featured DESC, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_profile_facts_sort ON profile_facts (sort);
 CREATE INDEX IF NOT EXISTS idx_socials_sort ON socials (sort);
-CREATE INDEX IF NOT EXISTS idx_references_year ON references (year DESC, outlet);
+CREATE INDEX IF NOT EXISTS idx_references_year ON press_references (year DESC, outlet);
 
 -- NDPA 2023 note: `volunteers.consent_at` exists so a deletion or objection
 -- request can be answered with the date the consent was captured. Media,

@@ -16,6 +16,8 @@ export default function IssueReportForm() {
   const [status, setStatus] = useState<Status>('idle');
   // State for the message to be displayed to the user.
   const [message, setMessage] = useState('');
+  // The stored report id, shown back to the reporter as a follow-up reference.
+  const [reference, setReference] = useState('');
 
   /**
    * @summary Handles the form submission.
@@ -49,6 +51,7 @@ export default function IssueReportForm() {
       });
       const json = await res.json();
       if (!res.ok || !json.success) throw new Error(json.error ?? 'An unknown error occurred.');
+      setReference(String(json.data?.id ?? ''));
       setStatus('success');
       setMessage(json.message ?? 'Your report has been received. The ward team will verify it and publish the status.');
     } catch (err) {
@@ -63,10 +66,22 @@ export default function IssueReportForm() {
       <div className="card border-brand-green bg-brand-green-light text-center">
         <p className="font-display text-xl font-bold text-brand-green">Report Logged</p>
         <p className="mt-2 text-sm text-brand-dark">{message}</p>
+        {reference && (
+          <p className="mx-auto mt-3 max-w-full break-all rounded-lg bg-white/70 px-3 py-2 text-xs text-brand-dark">
+            <span className="font-bold">Reference:</span> <code>{reference}</code>
+          </p>
+        )}
         <p className="mt-3 text-xs text-brand-gray">
-          You can follow up on your report by phone. Please keep the reference number handy.
+          Quote this reference when the ward desk calls back, so your report can be found immediately.
         </p>
-        <button type="button" onClick={() => setStatus('idle')} className="btn-secondary mt-4">
+        <button
+          type="button"
+          onClick={() => {
+            setStatus('idle');
+            setReference('');
+          }}
+          className="btn-secondary mt-4"
+        >
           Report Another Issue
         </button>
       </div>

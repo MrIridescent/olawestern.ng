@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Icon from '@/components/ui/Icon';
 import RecordLedger from '@/components/impact/RecordLedger';
 import ReferenceLibrary from '@/components/impact/ReferenceLibrary';
 import SlotImage from '@/components/ui/SlotImage';
@@ -69,6 +68,15 @@ export default async function ImpactPage() {
         <p className="section-kicker">Don&rsquo;t Take Our Word for It</p>
         <h2 className="section-title">The public record, source by source</h2>
         <ReferenceLibrary links={references} />
+
+        <div className="mt-10 rounded-2xl bg-brand-light px-6 py-5">
+          <p className="text-sm text-brand-gray">
+            This ledger is the service record, not the whole paper trail. The official statements are
+            in the <Link href="/news" className="font-bold text-brand-green underline underline-offset-2">newsroom</Link>,
+            and every claim we have tested — including the ones marked false — is answered in the{' '}
+            <Link href="/truth-room" className="font-bold text-brand-green underline underline-offset-2">Truth Room</Link>.
+          </p>
+        </div>
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────── */}

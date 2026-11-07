@@ -8,7 +8,7 @@
  * and rumours do not belong in a public record.
  */
 import { useCallback, useEffect, useState } from 'react';
-import { api, btnCls, btnDanger, btnGhost, cardCls, inputCls, labelCls, type Status } from './cms';
+import { api, btnCls, btnDanger, cardCls, inputCls, labelCls, type Status } from './cms';
 import { Field, StatusLine } from './Ui';
 
 interface SourceRow {

@@ -3,12 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { listPress } from '@/lib/store';
 import { SITE } from '@/lib/content';
+import { SHARE_PACK, SHARE_PACK_ZIP } from '@/lib/share-pack';
 import CopyValue from '@/components/media/CopyValue';
 
 export const metadata: Metadata = {
   title: 'Media Kit — Logos, Press Kit & Official Assets',
   description:
-    'Download the official OlaWestern 2027 media kit, logos, social graphics and press contacts. Website olawestern.ng · press email ekabo@olawestern.ng.',
+    'Download the official OlaWestern 2027 media kit, logos, 22 shareable stickers and press contacts. Website olawestern.ng · press email ekabo@olawestern.ng.',
 };
 
 export const revalidate = 3600;
@@ -117,8 +118,8 @@ export default async function MediaKitPage() {
             <p className="section-kicker">Official Assets · 2027</p>
             <h1 className="hero-title">The Media Kit</h1>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              Approved biographies, the record, the agenda, logos and shareable graphics for newsrooms,
-              partners and supporters. Every file carries the official website and press email.
+              Approved biographies, the record, the agenda, logos and 22 share-ready stickers for
+              newsrooms, partners and supporters. Official contact details are printed on the core kit.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a href="#downloads" className="btn-primary w-full sm:w-auto">
@@ -131,6 +132,9 @@ export default async function MediaKitPage() {
                 {SITE.email}
               </a>
             </div>
+            <a href="#share-pack" className="mt-3 inline-block text-xs font-semibold text-white/70 underline decoration-white/30 underline-offset-4 hover:text-brand-electric-bright">
+              or jump to the 22-piece share pack ↓
+            </a>
           </div>
 
           <div className="mx-auto mt-10 grid max-w-3xl gap-2 sm:grid-cols-3">
@@ -201,6 +205,34 @@ export default async function MediaKitPage() {
             })}
           </div>
 
+          <div className="mt-5 overflow-hidden rounded-2xl bg-brand-navy p-5 text-white sm:p-6">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-electric font-display text-lg font-extrabold text-brand-navy">
+                  22
+                </span>
+                <div>
+                  <p className="font-display text-lg font-bold">The share pack: 22 ready-to-post designs</p>
+                  <p className="mt-1 max-w-xl text-sm leading-relaxed text-white/70">
+                    Stickers and badges for WhatsApp, Instagram, X and ward groups. Take them one at a
+                    time or grab the whole ZIP — no email gate.
+                  </p>
+                </div>
+              </div>
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                <a
+                  href="#share-pack"
+                  className="inline-flex min-h-[46px] items-center justify-center rounded-lg border border-white/25 px-4 text-xs font-bold text-white transition-colors hover:bg-white/10"
+                >
+                  Browse all 22
+                </a>
+                <a href={SHARE_PACK_ZIP} download className="btn-primary min-h-[46px] !px-4 text-xs">
+                  Download ZIP <span aria-hidden>↓</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-brand-electric/20 bg-brand-electric-light p-5 sm:flex-row sm:items-center">
             <div>
               <p className="font-display text-base font-bold text-brand-navy">Need a bespoke quote, a high-res portrait or a comment?</p>
@@ -230,7 +262,51 @@ export default async function MediaKitPage() {
             </p>
           </div>
 
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 overflow-hidden rounded-2xl bg-black shadow-[0_24px_60px_rgba(3,7,18,0.28)] lg:grid lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="flex min-h-[240px] items-center justify-center p-6 sm:p-8">
+              <Image
+                src="/images/logos/ola-western-monogram-orange.webp"
+                alt="Ola Western metallic OW monogram with a green, blue and electric-orange light accent"
+                width={1200}
+                height={800}
+                sizes="(max-width: 1024px) 100vw, 640px"
+                className="h-auto w-full max-w-[560px] object-contain"
+              />
+            </div>
+            <div className="border-t border-white/10 p-6 sm:p-8 lg:border-l lg:border-t-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-electric-bright">The monogram</p>
+              <h3 className="mt-2 font-display text-2xl font-extrabold tracking-tight text-white">
+                OW, lit in campaign colours
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Brushed silver with neon green and electric blue, finished with the campaign&apos;s
+                orange accent. Built for dark title cards, social avatars and event screens.
+              </p>
+              <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-white/10 pt-4 text-xs">
+                <div>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">Format</dt>
+                  <dd className="mt-0.5 font-semibold text-white">PNG</dd>
+                </div>
+                <div>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">Canvas</dt>
+                  <dd className="mt-0.5 font-semibold text-white">1536 × 1024</dd>
+                </div>
+                <div className="col-span-2">
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/50">Best on</dt>
+                  <dd className="mt-0.5 font-semibold text-white">Dark backgrounds · keep clear space</dd>
+                </div>
+              </dl>
+              <a
+                href="/images/logos/ola-western-monogram-orange.png"
+                download
+                className="btn-primary mt-5 w-full min-h-[46px] text-xs"
+              >
+                Download the monogram <span aria-hidden>↓</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {LOGOS.map((logo) => (
               <div key={logo.file} className="overflow-hidden rounded-2xl border border-[#E2E8F0] bg-white shadow-sm">
                 <div className="flex aspect-square items-center justify-center bg-white p-6">
@@ -309,6 +385,85 @@ export default async function MediaKitPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SHARE PACK ───────────────────────────────────────── */}
+      <section id="share-pack" className="scroll-mt-24 bg-brand-navy py-14 text-white sm:py-16">
+        <div className="container-site">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="section-kicker">Share pack · 22 designs</p>
+              <h2 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                Take the message everywhere.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/70">
+                Stickers and badges for WhatsApp status, Instagram, X and ward groups. Tap any design
+                to download the full-resolution PNG, or take the complete pack in one ZIP.
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col items-start gap-2 sm:items-end">
+              <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/70">
+                22 PNG · ZIP 4.8 MB
+              </span>
+              <a href={SHARE_PACK_ZIP} download className="btn-primary min-h-[46px] text-xs">
+                Download all 22 <span aria-hidden>↓</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+            {SHARE_PACK.map((asset) => (
+              <a
+                key={asset.id}
+                href={asset.file}
+                download
+                aria-label={`Download ${asset.title} — ${asset.kind} PNG`}
+                className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white shadow-[0_10px_30px_rgba(3,7,18,0.22)] transition-all hover:-translate-y-0.5 hover:border-brand-electric/70 hover:shadow-[0_18px_40px_rgba(3,7,18,0.35)]"
+              >
+                <div className="flex h-36 shrink-0 items-center justify-center overflow-hidden bg-white p-2.5 sm:h-40 sm:p-3 lg:h-44">
+                  <Image
+                    src={asset.thumb}
+                    alt={`${asset.title} — Ola Western campaign ${asset.kind.toLowerCase()}`}
+                    width={asset.width}
+                    height={asset.height}
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 280px"
+                    className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="mt-auto flex items-center justify-between gap-2 border-t border-[#E2E8F0] px-3 py-2.5 sm:px-4 sm:py-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-[11px] font-extrabold uppercase tracking-[0.08em] text-brand-navy">
+                      {asset.title}
+                    </p>
+                    <p className="mt-0.5 text-[10px] text-brand-gray">
+                      PNG · {asset.width}×{asset.height}
+                    </p>
+                  </div>
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-electric text-sm font-bold text-brand-navy transition-colors group-hover:bg-brand-navy group-hover:text-white"
+                    aria-hidden
+                  >
+                    ↓
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-5 sm:flex-row sm:items-center">
+            <p className="max-w-2xl text-xs leading-relaxed text-white/70">
+              Keep the marks intact, credit <span className="font-semibold text-white">OlaWestern Campaign Organization</span>{' '}
+              and pair every repost with{' '}
+              <a href={SITE.siteUrl} className="font-semibold text-brand-electric-bright underline underline-offset-2">
+                {websiteLabel}
+              </a>
+              . No invented endorsement.
+            </p>
+            <a href={SHARE_PACK_ZIP} download className="btn-primary min-h-[46px] shrink-0 text-xs">
+              Get the ZIP <span aria-hidden>↓</span>
+            </a>
           </div>
         </div>
       </section>

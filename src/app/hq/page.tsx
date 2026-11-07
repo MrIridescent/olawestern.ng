@@ -290,12 +290,12 @@ export default async function HqPage() {
                     Four wards. Four different jobs.
                   </h2>
                 </div>
-                <a
+                <Link
                   href="/#ward-impact"
                   className="text-[11px] font-bold uppercase tracking-[0.14em] text-brand-orange-bright hover:text-white"
                 >
                   See the ward locator <span aria-hidden>→</span>
-                </a>
+                </Link>
               </div>
             </Reveal>
 

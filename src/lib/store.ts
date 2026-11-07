@@ -14,7 +14,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { getSupabase, getSupabaseAdmin, getWriteClient } from './supabase';
-import { SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_PRESS_ITEMS, SEED_SETTINGS, SEED_VERSION } from './content';
+import {
+  SEED_ACCOMPLISHMENTS, SEED_FACT_CHECKS, SEED_PRESS_ITEMS, SEED_REFERENCES, SEED_SETTINGS, SEED_VERSION,
+} from './content';
 import type {
   Accomplishment, CommunityIssue, FactCheck, MediaAsset, PressItem, ProfileFactRow,
   PublicIssue, ReferenceRow, SiteSettings, SocialRow, VideoItem,
@@ -91,7 +93,7 @@ function freshDb(): Db {
     videos: [],
     profile_facts: [],
     socials: [],
-    references: [],
+    references: SEED_REFERENCES.map((r) => ({ ...r })),
     settings: SEED_SETTINGS,
     removed: [],
   };
@@ -121,14 +123,45 @@ function resyncSeeds(db: Db): boolean {
   if (db.seed_version === SEED_VERSION) return false;
   const base = freshDb();
 
-  const merge = <T extends { id: string }>(bundled: T[], stored: T[]): T[] => {
+  /**
+   * Bundled rows own their `id`. Stored rows are kept only when the bundle does
+   * not already own them by id AND does not already describe the same thing by
+   * its natural key — a release is the same release when it has the same slug,
+   * a citation is the same citation when it points at the same URL. Without the
+   * natural-key check an older CMS row written under a fresh UUID resurfaced
+   * beside its bundled twin, so /news showed every release twice.
+   */
+  const merge = <T extends { id: string }>(
+    bundled: T[],
+    stored: T[],
+    key?: (row: T) => string | null | undefined,
+  ): T[] => {
     const owned = new Set(bundled.map((r) => r.id));
-    return [...bundled, ...stored.filter((r) => !owned.has(r.id))];
+    const seen = new Set<string>();
+    if (key) {
+      for (const row of bundled) {
+        const k = key(row);
+        if (k) seen.add(k);
+      }
+    }
+    return [
+      ...bundled,
+      ...stored.filter((r) => {
+        if (owned.has(r.id)) return false;
+        if (!key) return true;
+        const k = key(r);
+        if (!k) return true;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      }),
+    ];
   };
 
   db.fact_checks = merge(base.fact_checks, db.fact_checks);
   db.accomplishments = merge(base.accomplishments, db.accomplishments);
-  db.press_releases = merge(base.press_releases, db.press_releases);
+  db.press_releases = merge(base.press_releases, db.press_releases, (r) => r.slug);
+  db.references = merge(base.references, db.references, (r) => r.url);
 
   // A row the desk deleted stays deleted, even when a later content drop bundles it again.
   const gone = new Set(db.removed ?? []);
@@ -137,6 +170,7 @@ function resyncSeeds(db: Db): boolean {
     db.fact_checks = keep(db.fact_checks);
     db.accomplishments = keep(db.accomplishments);
     db.press_releases = keep(db.press_releases);
+    db.references = keep(db.references);
   }
 
   db.seed_version = SEED_VERSION;
@@ -381,6 +415,21 @@ export async function deleteAccomplishment(id: string): Promise<boolean> {
 /* ── Press / newsfeed ────────────────────────────────────────── */
 
 /**
+ * One card per release. A slug is the release's public address, so two rows
+ * sharing it are the same story no matter which UUID they carry — the newer
+ * copy (first in, because callers sort by date) wins.
+ */
+function dedupePress(rows: PressItem[]): PressItem[] {
+  const seen = new Set<string>();
+  return rows.filter((r) => {
+    const k = r.slug || r.id;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
+/**
  * Newsroom releases. Public pages pass `publishedOnly` so a release the desk took
  * offline disappears from the feed without being deleted.
  */
@@ -391,11 +440,38 @@ export async function listPress(opts?: { publishedOnly?: boolean }): Promise<Pre
     if (opts?.publishedOnly) q = q.not('published_at', 'is', null);
     const { data } = await q;
     if (data && data.length) {
-      return (data as any[]).map((r) => ({ ...r, summary: r.summary ?? r.excerpt ?? '' }));
+      return dedupePress((data as any[]).map((r) => ({ ...r, summary: r.summary ?? r.excerpt ?? '' })));
     }
   }
-  const rows = [...load().press_releases].sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? ''));
+  const rows = dedupePress([...load().press_releases].sort((a, b) => (b.published_at ?? '').localeCompare(a.published_at ?? '')));
   return opts?.publishedOnly ? rows.filter((p) => p.published_at) : rows;
+}
+
+/**
+ * One published release, addressed by its canonical slug. Unpublished drafts stay
+ * unreachable on the public site even if someone guesses their address.
+ */
+export async function getPressBySlug(slug: string): Promise<PressItem | null> {
+  const sb = getSupabase();
+  if (sb) {
+    // A slug is unique in the app, but an older CMS row can share it with a bundled
+    // seed row under a different id. Ask for exactly one row (newest first): a bare
+    // maybeSingle() errors on two matches and would turn a live release into a 404.
+    const { data } = await sb
+      .from('press_releases')
+      .select('*')
+      .eq('slug', slug)
+      .not('published_at', 'is', null)
+      .order('published_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (data) {
+      const row = data as any;
+      return { ...row, summary: row.summary ?? row.excerpt ?? '' } as PressItem;
+    }
+  }
+  const row = load().press_releases.find((p) => p.slug === slug && p.published_at);
+  return row ? { ...row } : null;
 }
 
 export async function addPress(input: {
@@ -883,13 +959,27 @@ export async function deleteSocial(id: string): Promise<boolean> {
  * Press citations. The Postgres table is `press_references` because REFERENCES
  * is a reserved word in SQL; the file store keeps the shorter `references` key.
  */
+/**
+ * One citation per published URL. Two rows pointing at the same report are the
+ * same evidence, so the newest copy wins and the library never lists it twice.
+ */
+function dedupeReferences(rows: ReferenceRow[]): ReferenceRow[] {
+  const seen = new Set<string>();
+  return rows.filter((r) => {
+    const k = r.url || r.id;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+}
+
 export async function listReferences(): Promise<ReferenceRow[]> {
   const sb = getSupabase();
   if (sb) {
     const { data } = await sb.from('press_references').select('*').order('year', { ascending: false });
-    if (data && data.length) return data as ReferenceRow[];
+    if (data && data.length) return dedupeReferences(data as ReferenceRow[]);
   }
-  return [...load().references].sort((a, b) => b.year - a.year);
+  return dedupeReferences([...load().references].sort((a, b) => b.year - a.year));
 }
 
 export async function addReference(input: Omit<ReferenceRow, 'id'> & { id?: string }): Promise<ReferenceRow> {

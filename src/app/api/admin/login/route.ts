@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 }
 
 /** DELETE /api/admin/login — logout. */
-export async function DELETE(request: NextRequest) {
+export async function DELETE(_request: NextRequest) {
   const res = NextResponse.json({ success: true });
   res.cookies.set(ADMIN_COOKIE, '', { httpOnly: true, path: '/', maxAge: 0 });
   return res;

@@ -78,20 +78,29 @@ export default function RecordLedger({ items }: { items: Accomplishment[] }) {
             {/* An entry with no report behind it stays invisible to a voter; the desk
                 sees a red chip here once the editing layer is on (globals.css), so the
                 integrity report always has something to point at and something to fix. */}
-            <a
-              href={a.verification_source_url ?? undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-ow={`record.${a.id}.verification_source_url`}
-              data-ow-label="Source link"
-              data-ow-value={a.verification_source_url ?? ''}
-              {...(a.verification_source_url ? {} : { 'data-ow-missing': '1' })}
-              className={`mt-3 inline-block min-h-[44px] text-xs font-bold underline underline-offset-2 ${
-                a.verification_source_url ? 'text-brand-green' : 'text-white'
-              }`}
-            >
-              {a.verification_source_url ? 'Verified in the press →' : 'Add the report that proves this'}
-            </a>
+            {a.verification_source_url ? (
+              <a
+                href={a.verification_source_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ow={`record.${a.id}.verification_source_url`}
+                data-ow-label="Source link"
+                data-ow-value={a.verification_source_url}
+                className="mt-3 inline-flex min-h-[44px] items-center text-xs font-bold text-brand-green underline underline-offset-2"
+              >
+                Verified in the press →
+              </a>
+            ) : (
+              <span
+                data-ow={`record.${a.id}.verification_source_url`}
+                data-ow-label="Source link"
+                data-ow-value=""
+                data-ow-missing="1"
+                className="mt-3 inline-flex min-h-[44px] items-center text-xs font-semibold text-brand-gray"
+              >
+                Campaign record — the published report is being filed
+              </span>
+            )}
           </article>
         ))}
       </div>

@@ -8,10 +8,9 @@ import { SITE } from '@/lib/content';
 import './globals.css';
 import '@/styles/embla.css';
 
-import { Inter, Cormorant_Garamond } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '700'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.siteUrl),
@@ -55,6 +54,10 @@ export const metadata: Metadata = {
     description: 'Official website of Hon. Engr. Folorunsho Olaitan Segun (Ola Western) — CEO of Western Concrete, APC Flagbearer for Lagos State House of Assembly (Amuwo-Odofin Constituency I).',
     images: ['/og.png'],
   },
+  // Credit where it is due — machine-readable, never competing with the campaign.
+  creator: 'I2SLTD',
+  authors: [{ name: 'I2SLTD', url: 'https://i2sltd.tech' }],
+  publisher: 'I2SLTD',
   // Favicon: src/app/icon.svg is auto-detected by the App Router.
   robots: { index: true, follow: true },
   other: {
@@ -92,6 +95,16 @@ const personSchema = {
   },
 };
 
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: `${SITE.candidateName} — Official Portfolio`,
+  url: SITE.siteUrl,
+  inLanguage: ['en-NG', 'pcm', 'yo'],
+  creator: { '@type': 'Organization', name: 'I2SLTD', url: 'https://i2sltd.tech' },
+  publisher: { '@type': 'Organization', name: 'I2SLTD', url: 'https://i2sltd.tech' },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
@@ -103,6 +116,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           // Static, developer-authored structured data — safe to inline.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
         />
         <Header />
         <ScrollProgress />

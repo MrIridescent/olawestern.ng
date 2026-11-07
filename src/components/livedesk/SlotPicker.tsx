@@ -30,7 +30,7 @@ export interface SlotPickerProps {
 
 type Stage = 'choose' | 'upload';
 
-export default function SlotPicker({ slot, label, ratio, exact, boundId, anchor, onClose, onSaved }: SlotPickerProps) {
+export default function SlotPicker({ slot, label, ratio, exact, anchor, onClose, onSaved }: SlotPickerProps) {
   const [rows, setRows] = useState<MediaAsset[] | null>(null);
   const [stage, setStage] = useState<Stage>('choose');
   const [err, setErr] = useState<string | null>(null);

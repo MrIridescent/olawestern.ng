@@ -11,6 +11,7 @@ import { useState } from 'react';
 export default function JoinMovementForm({ whatsappNumber }: { whatsappNumber: string }) {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [waLink, setWaLink] = useState<string | null>(null);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -27,7 +28,11 @@ export default function JoinMovementForm({ whatsappNumber }: { whatsappNumber: s
     const text = encodeURIComponent(
       `Hello OlaWestern campaign. I want to join the movement in Amuwo-Odofin Constituency 1. My WhatsApp number is +${international}.`,
     );
-    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, '_blank', 'noopener,noreferrer');
+    const href = `https://wa.me/${whatsappNumber}?text=${text}`;
+    // Some mobile browsers block window.open from a submit handler. Keep the
+    // link on screen so the handoff is never a dead end.
+    setWaLink(href);
+    window.open(href, '_blank', 'noopener,noreferrer');
     setPhone('');
   }
 
@@ -63,6 +68,19 @@ export default function JoinMovementForm({ whatsappNumber }: { whatsappNumber: s
       {error ? (
         <p id="join-error" role="alert" className="mt-2 text-xs font-semibold text-brand-electric-bright">
           {error}
+        </p>
+      ) : waLink ? (
+        <p className="mt-2 text-[11px] leading-relaxed text-white/75">
+          WhatsApp should open in a new tab. If it did not,{' '}
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-brand-electric-bright underline underline-offset-2 hover:text-white"
+          >
+            tap here to reach the campaign desk
+          </a>
+          .
         </p>
       ) : (
         <p className="mt-2 text-[11px] leading-relaxed text-white/75">

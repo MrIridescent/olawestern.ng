@@ -8,7 +8,7 @@ export default async function Footer() {
   const websiteLabel = SITE.siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
   return (
-    <footer className="bg-brand-navy-dark text-white">
+    <footer id="site-footer" className="bg-brand-navy-dark text-white">
       <div className="h-1 w-full bg-gradient-to-r from-brand-electric via-brand-electric-bright to-brand-electric" aria-hidden />
 
       <div className="container-site grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
@@ -89,24 +89,14 @@ export default async function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 text-center text-xs text-white/70 sm:flex-row sm:items-start sm:text-left">
           <div className="space-y-1.5">
             <p>© {new Date().getFullYear()} Ola Western Campaign Organization · All rights reserved.</p>
-            <p className="text-[11px]">
-              Developer by{' '}
-              <a
-                href="https://linktr.ee/i2sltd.tech"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-bold text-brand-electric-bright transition-colors hover:text-white"
-              >
-                @I2sltd.tech
-              </a>
-            </p>
+            <p className="text-[11px]">Developed by @i2sltd.tech</p>
             <a
-              href="https://linktr.ee/i2sltd.tech"
+              href="https://i2sltd.tech"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-[11px] text-white/65 transition-colors hover:text-white"
             >
-              linktr.ee/i2sltd.tech ↗
+              i2sltd.tech ↗
             </a>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:justify-end">

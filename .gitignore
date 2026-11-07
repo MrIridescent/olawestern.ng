@@ -12,6 +12,9 @@
 # Kept on disk for hand-off; not part of the deployable app.
 /assets
 
+# Local research captures and review screenshots (HTML, PDF text, PNG).
+/.preview
+
 # Environment secrets — never commit these
 .env
 .env.local
@@ -22,6 +25,7 @@
 *.pem
 npm-debug.log*
 .vercel
+.netlify
 next-env.d.ts
 *.log
 tsconfig.tsbuildinfo

@@ -10,7 +10,7 @@ import {
 } from './new-content';
 
 
-export const SEED_VERSION = '2026-11-04-fixed';
+export const SEED_VERSION = '2026-11-07-dedupe-by-slug';
 
 export const SITE = {
   candidateName: 'Hon. Engr. Folorunsho Olaitan Segun',
@@ -35,10 +35,10 @@ export const SEED_SETTINGS: SiteSettings = {
   cta_title: 'Get Involved',
   cta_body: 'Join the movement to bring effective and responsible representation to our constituency. Volunteer, donate, or simply spread the word.',
   stats: [
-    { value: '6+', label: 'Boreholes Drilled' },
-    { value: '2', label: 'Transformers Donated' },
-    { value: '200+', label: 'Widows Supported' },
-    { value: '1000s', label: 'Lives Impacted' },
+    { value: '6', label: 'Boreholes per ward' },
+    { value: '4', label: 'Wards covered' },
+    { value: '500', label: 'Homes fed at Christmas' },
+    { value: '700+', label: 'Households at Food Fest' },
   ],
 };
 
@@ -67,11 +67,7 @@ export const PROFILE_FACTS: ProfileFactRow[] = [
   { id: 'fact-faith', key: 'Faith', value: null, note: 'Awaiting campaign confirmation', sort: 18 },
 ];
 
-export const REFERENCE_LINKS: ReferenceRow[] = [
-  ...NEW_REFERENCE_LINKS,
-  { id: 'ref-1', year: 2018, date: 'March 2018', outlet: 'FestacOnline', headline: 'Good news: 6 wards to get boreholes in Amuwo-Odofin', url: 'https://festaconline.com.ng/good-news-6-wardsto-get-boreholes-amuwoodofin/' },
-  { id: 'ref-2', year: 2018, date: 'March 2018', outlet: 'The Nation', headline: 'Council partners investor on CSR projects in Amuwo-Odofin', url: 'https://thenationonlineng.net/council-partners-investor-csr/' },
-];
+export const REFERENCE_LINKS: ReferenceRow[] = [...NEW_REFERENCE_LINKS];
 
 export type { ReferenceRow as ReferenceLink };
 
@@ -89,6 +85,7 @@ export const MEDIA_POSITIONS = [
 export const SEED_ACCOMPLISHMENTS: Accomplishment[] = [...NEW_ACCOMPLISHMENTS];
 export const SEED_PRESS_ITEMS: PressItem[] = [...NEW_PRESS_ITEMS];
 export const SEED_FACT_CHECKS: FactCheck[] = [...NEW_FACT_CHECKS];
+export const SEED_REFERENCES: ReferenceRow[] = [...NEW_REFERENCE_LINKS];
 
 export const BLUEPRINT = [
   {

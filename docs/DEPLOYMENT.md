@@ -11,6 +11,16 @@ The website deploys to Netlify with the native Next.js runtime so server routes 
 3.  Set the `ADMIN_PASSWORD` and `ADMIN_SECRET` environment variables in the Netlify project.
 4.  Add `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` so leads persist. The local `data/db.json` store does not survive a serverless deploy.
 5.  Optionally add `RESEND_API_KEY`, `EMAIL_FROM` and `EMAIL_TO` for email notifications. Leads are saved even if email is not configured.
+6.  To switch on the conversational Truth Desk, add `OPENAI_API_KEY` or `GEMINI_API_KEY` (optionally `TRUTH_AI_PROVIDER`, `OPENAI_MODEL`, `GEMINI_MODEL`). Up to three keys per provider are supported via `_2` and `_3` suffixes (`OPENAI_API_KEY_2`, `GEMINI_API_KEY_3`, …); the desk rotates on rejection, rate limits, timeouts and provider errors, and starts each question on the next key. Without a key, `/truth-room` shows setup instructions and `/api/truth-room/chat` returns `503 AI_NOT_CONFIGURED` — it never produces a canned answer.
+
+### Truth Desk (live AI)
+
+`/api/truth-room/chat` is a real language-model route, not a simulated demo:
+
+*   It calls the OpenAI Chat Completions API or Google Gemini `generateContent`, whichever is configured; `TRUTH_AI_PROVIDER=auto` (default) tries OpenAI then Gemini when both keys exist. Each provider's three keys are tried in rotation before falling back to the other provider.
+*   Answers are grounded in the published fact-check ledger, track record, newsroom, profile and legislative agenda. The model is instructed to say when the record is silent rather than guess, to cite `[S#]` evidence ids, and to answer hostile or sarcastic messages factually without mirroring the tone.
+*   Requests are capped at 10 per minute per instance, 1,000 characters per question and 8 history turns; each provider call times out after 15 seconds.
+*   No key material is returned to the browser, and provider error details stay in server logs.
 
 ### Forms and the data store
 
