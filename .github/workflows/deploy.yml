@@ -1,4 +1,4 @@
-name: Deploy — Ola Western Campaign Web
+name: CI — Ola Western Campaign Web
 
 on:
   push:
@@ -6,9 +6,19 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-deploy:
+  verify:
+    name: Typecheck, lint and production build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,18 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type-check & production build
-        run: npm run build
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      - name: Typecheck
+        run: npx tsc --noEmit
 
-      # Vercel deployment (enable the Vercel GitHub App, or swap for your host)
-      - name: Deploy to Vercel (main only)
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
+      - name: Lint
+        run: npm run lint
+
+      - name: Production build
+        run: npm run build
