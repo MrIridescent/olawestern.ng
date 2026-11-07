@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import MobileActionBar from '@/components/layout/MobileActionBar';
+import VisitBeacon from '@/components/ui/VisitBeacon';
 import ScrollProgress from '@/components/hq/ScrollProgress';
 import LiveDesk from '@/components/livedesk/LiveDesk';
 import { SITE } from '@/lib/content';
@@ -125,6 +126,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ScrollProgress />
         <main id="main-content">{children}</main>
         <Footer />
+        {/* One durable visit per browser per day, on every public page. */}
+        <VisitBeacon />
         {/* Rendered last: its spacer sits below the footer so the fixed bar
             never covers the footer's links on phones. */}
         <MobileActionBar />

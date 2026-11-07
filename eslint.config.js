@@ -4,7 +4,7 @@ const nextPlugin = require('@next/eslint-plugin-next');
 
 module.exports = [
   {
-    ignores: ['.next/**', 'node_modules/**', 'out/**', 'public/**', 'next-env.d.ts'],
+    ignores: ['.next/**', '.netlify/**', 'node_modules/**', 'out/**', 'public/**', 'next-env.d.ts'],
   },
   {
     files: ['**/*.{ts,tsx}'],

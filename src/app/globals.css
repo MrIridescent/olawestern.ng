@@ -382,32 +382,16 @@ html.ow-armed [data-ow-missing] {
 /* No pointer-events tricks: the overlay's capture-phase handler preventDefaults
    the tap before a link can navigate, so a tappable source chip stays tappable. */
 
-/* ── Netlify HUD guardrail ───────────────────────────────────────────────────
+/* ── Netlify HUD / badge ─────────────────────────────────────────────────────
    Netlify injects a "Powered by Netlify" iframe at the bottom-right corner
-   with the maximum possible z-index. On a phone it covered the Join bar, and
-   at the very foot of a page it rested on the legal links. Keep the badge
-   visible where there is room, make it click-through so it can never swallow
-   a tap, take it off small screens entirely, and reserve footer space so it
-   does not sit on top of the legal row. */
+   with the maximum possible z-index. The campaign does not want the badge on
+   the public site, so hide the injected frame on every screen size. The frame
+   is added by Netlify's script after load; `display: none` applies whenever it
+   appears, and no footer padding is needed for it any more.
+   Note: the badge is part of Netlify's free-plan footprint. Removing it
+   officially requires a plan that includes badge removal. */
 #nl-badge-frame,
 #nl-hud-frame,
 iframe[src*=".netlify/scripts/hud"] {
-  /* Clicks pass through to the page, and the fixed Join bar / footer content
-     stack above the badge instead of underneath it. */
-  pointer-events: none !important;
-  z-index: 10 !important;
-}
-
-@media (max-width: 767px) {
-  #nl-badge-frame,
-  #nl-hud-frame,
-  iframe[src*=".netlify/scripts/hud"] {
-    z-index: 0 !important;
-  }
-}
-
-@media (min-width: 768px) {
-  #site-footer {
-    padding-bottom: 4.5rem;
-  }
+  display: none !important;
 }
